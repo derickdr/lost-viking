@@ -21,26 +21,26 @@ function introSplashText () {
                 timer.after(textDelay, function () {
                     introText2 = textsprite.create("are lost!!! Find your", 0, 1)
                     introText2.setKind(SpriteKind.SplashText)
-                    introText2.setPosition(80, 30)
+                    introText2.setPosition(80, 28)
                 })
                 if (playing == false) {
                     timer.after(textDelay, function () {
                         introText3 = textsprite.create("way home to Vikingville,", 0, 1)
                         introText3.setKind(SpriteKind.SplashText)
-                        introText3.setPosition(80, 46)
+                        introText3.setPosition(80, 42)
                     })
                     if (playing == false) {
                         timer.after(textDelay, function () {
                             introText4 = textsprite.create("but beware the Evil", 0, 1)
                             introText4.setKind(SpriteKind.SplashText)
-                            introText4.setPosition(80, 60)
+                            introText4.setPosition(80, 56)
                         })
                         if (playing == false) {
                             timer.after(textDelay, function () {
                                 introText5 = textsprite.create("Terra-Tron!!!", 0, 4)
-                                scaling.scaleToPercent(introText5, 150, ScaleDirection.Uniformly, ScaleAnchor.Middle)
+                                scaling.scaleToPercent(introText5, 175, ScaleDirection.Uniformly, ScaleAnchor.Middle)
                                 introText5.setKind(SpriteKind.SplashText)
-                                introText5.setPosition(80, 76)
+                                introText5.setPosition(80, 72)
                                 if (playing == false) {
                                     timer.after(textDelay, function () {
                                         introText6 = sprites.create(img`
