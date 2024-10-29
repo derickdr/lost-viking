@@ -57,7 +57,7 @@ function createProjectile (weapon: number) {
     }
 }
 sprites.onCreated(SpriteKind.Rocket, function (sprite) {
-    sprite.lifespan = 2000
+    sprite.lifespan = playerProjectileLifespan
 })
 function createPlasma2 () {
     for (let value of sprites.allOfKind(SpriteKind.Viking)) {
@@ -326,6 +326,8 @@ function initializeConsts () {
     side2 = 2
     rocketVY = -100
     sideRocketVX = 50
+    playerProjectileLifespan = 1500
+    enemyProojectileLifespan = 2000
 }
 function createRocketTrails () {
     for (let value of sprites.allOfKind(SpriteKind.Rocket)) {
@@ -387,7 +389,7 @@ function createShield (cause: boolean) {
     }
 }
 sprites.onCreated(SpriteKind.Plasma, function (sprite) {
-    sprite.lifespan = 2000
+    sprite.lifespan = playerProjectileLifespan
 })
 function createRocket1 () {
     for (let value of sprites.allOfKind(SpriteKind.Viking)) {
@@ -1164,6 +1166,9 @@ function initializeProtossAssets () {
         `
     ]
 }
+sprites.onCreated(SpriteKind.Projectile, function (sprite) {
+    sprite.lifespan = enemyProojectileLifespan
+})
 function loadGameAssets () {
     // 0 - missile powerup
     // 1 - bomb powerup
@@ -1305,6 +1310,9 @@ function createTrailEffects () {
     createPlasmaTrails()
     createDroneRocketTrails()
 }
+sprites.onCreated(SpriteKind.DroneRocket, function (sprite) {
+    sprite.lifespan = playerProjectileLifespan
+})
 let projectile: Sprite = null
 let gameUIAssets: Image[] = []
 let supportAssets: Image[] = []
@@ -1318,6 +1326,7 @@ let zergAssets: Image[] = []
 let thrusterEffectOffset = 0
 let shieldSprite: Sprite = null
 let thrusterFire: Sprite = null
+let enemyProojectileLifespan = 0
 let thrusterOffset = 0
 let causedByBomb = false
 let invulnerable = false
@@ -1330,6 +1339,7 @@ let getThisGuyHome: Sprite = null
 let particles2: Image[] = []
 let blastFire: Sprite = null
 let plasma: Sprite = null
+let playerProjectileLifespan = 0
 let side2 = 0
 let side1 = 0
 let basic0 = 0
