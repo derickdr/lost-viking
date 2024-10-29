@@ -72,6 +72,14 @@ function createPlasma2 () {
         }
     }
 }
+function frontBlast (x: number, y: number) {
+    for (let index = 0; index < 6; index++) {
+        blastFire = sprites.create(particles2[randint(4, 5)], SpriteKind.Effect)
+        blastFire.setVelocity(randint(-50, 50), randint(-10, 20))
+        blastFire.setPosition(x + randint(-2, 2), y + randint(-2, 2))
+        blastFire.lifespan = randint(200, 300)
+    }
+}
 function initializePlayer () {
     initializePlayerAssets()
     getThisGuyHome = sprites.create(playerAssets[1], SpriteKind.Viking)
@@ -275,6 +283,22 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
 sprites.onDestroyed(SpriteKind.Shield, function (sprite) {
     invulnerable = false
 })
+function backBlast (x: number, y: number) {
+    for (let index = 0; index < 4; index++) {
+        blastFire = sprites.create(particles2[randint(4, 5)], SpriteKind.Effect)
+        blastFire.setVelocity(randint(-40, 40), -50)
+        blastFire.setPosition(x + randint(-2, 2), y + randint(-2, 2))
+        blastFire.lifespan = randint(200, 300)
+    }
+    timer.after(50, function () {
+        for (let index = 0; index < 4; index++) {
+            blastFire = sprites.create(particles2[randint(4, 5)], SpriteKind.Effect)
+            blastFire.setVelocity(randint(-40, 40), -50)
+            blastFire.setPosition(x + randint(-2, 2), y + randint(-2, 2))
+            blastFire.lifespan = randint(80, 150)
+        }
+    })
+}
 function initializeGame () {
     initializeConsts()
     initializeTemp()
@@ -389,9 +413,38 @@ function createRocket1 () {
         }
     }
 }
+function sideBlast (x: number, y: number) {
+    for (let index = 0; index < 4; index++) {
+        blastFire = sprites.create(particles2[randint(4, 5)], SpriteKind.Effect)
+        blastFire.setVelocity(randint(-10, -40), randint(-10, -40))
+        blastFire.setPosition(x + randint(-2, 2), y + randint(-2, 2))
+        blastFire.lifespan = randint(200, 300)
+    }
+    for (let index = 0; index < 4; index++) {
+        blastFire = sprites.create(particles2[randint(4, 5)], SpriteKind.Effect)
+        blastFire.setVelocity(randint(10, 40), randint(-10, -40))
+        blastFire.setPosition(x + randint(-2, 2), y + randint(-2, 2))
+        blastFire.lifespan = randint(200, 300)
+    }
+    timer.after(50, function () {
+        for (let index = 0; index < 4; index++) {
+            blastFire = sprites.create(particles2[randint(4, 5)], SpriteKind.Effect)
+            blastFire.setVelocity(randint(-10, -40), randint(-10, -40))
+            blastFire.setPosition(x + randint(-2, 2), y + randint(-2, 2))
+            blastFire.lifespan = randint(80, 150)
+        }
+        for (let index = 0; index < 4; index++) {
+            blastFire = sprites.create(particles2[randint(4, 5)], SpriteKind.Effect)
+            blastFire.setVelocity(randint(10, 40), randint(-10, -40))
+            blastFire.setPosition(x + randint(-2, 2), y + randint(-2, 2))
+            blastFire.lifespan = randint(80, 150)
+        }
+    })
+}
 sprites.onOverlap(SpriteKind.DroneRocket, SpriteKind.BasicEnemy, function (sprite, otherSprite) {
     sprites.destroy(sprite)
-    sprites.destroy(otherSprite, effects.fire, 100)
+    radialBlast(otherSprite.x, otherSprite.y)
+    sprites.destroy(otherSprite)
 })
 function createPlasmaTrails () {
     for (let value of sprites.allOfKind(SpriteKind.Plasma)) {
@@ -441,7 +494,8 @@ function createVikingThrusterTrail () {
 }
 sprites.onOverlap(SpriteKind.Rocket, SpriteKind.BasicEnemy, function (sprite, otherSprite) {
     sprites.destroy(sprite)
-    sprites.destroy(otherSprite, effects.fire, 100)
+    radialBlast(otherSprite.x, otherSprite.y)
+    sprites.destroy(otherSprite)
 })
 function initializeZergAssets () {
     zergAssets = [
@@ -636,6 +690,11 @@ function createDroneTrails () {
         thrusterFire.setPosition(value.x, value.y)
         thrusterFire.lifespan = randint(10, 30)
     }
+}
+function radialBlast (x: number, y: number) {
+    backBlast(x, y)
+    sideBlast(x, y)
+    frontBlast(x, y)
 }
 function createDroneRocketTrails () {
     for (let value of sprites.allOfKind(SpriteKind.DroneRocket)) {
@@ -1162,6 +1221,15 @@ function loadGameAssets () {
         4 5 
         `
     ]
+    // 0 - red
+    // 1 - violet
+    // 2 - pink
+    // 3 - white
+    // 4 - yellow
+    // 5 - orange
+    // 6 - light blue
+    // 7 - teal
+    // 8 - blue
     particles2 = [
     img`
         2 
@@ -1180,6 +1248,15 @@ function loadGameAssets () {
         `,
     img`
         4 
+        `,
+    img`
+        9 
+        `,
+    img`
+        6 
+        `,
+    img`
+        8 
         `
     ]
     gameUIAssets = [img`
@@ -1206,7 +1283,8 @@ function loadGameAssets () {
 }
 sprites.onOverlap(SpriteKind.Plasma, SpriteKind.BasicEnemy, function (sprite, otherSprite) {
     sprites.destroy(sprite)
-    sprites.destroy(otherSprite, effects.disintegrate, 100)
+    radialBlast(otherSprite.x, otherSprite.y)
+    sprites.destroy(otherSprite)
 })
 function createBasic () {
     for (let value of sprites.allOfKind(SpriteKind.Viking)) {
@@ -1239,7 +1317,6 @@ let zergCombatAssets: Image[] = []
 let zergAssets: Image[] = []
 let thrusterEffectOffset = 0
 let shieldSprite: Sprite = null
-let particles2: Image[] = []
 let thrusterFire: Sprite = null
 let thrusterOffset = 0
 let causedByBomb = false
@@ -1250,6 +1327,8 @@ let terranAssets: Image[] = []
 let notCausedByBomb = false
 let playerAssets: Image[] = []
 let getThisGuyHome: Sprite = null
+let particles2: Image[] = []
+let blastFire: Sprite = null
 let plasma: Sprite = null
 let side2 = 0
 let side1 = 0
