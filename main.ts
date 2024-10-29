@@ -11,7 +11,7 @@ namespace SpriteKind {
     export const UI = SpriteKind.create()
 }
 function introSplashText () {
-    textDelay = 800
+    textDelay = 1000
     timer.after(textDelay, function () {
         introText1 = textsprite.create("You, Mighty Viking,", 0, 1)
         introText1.setKind(SpriteKind.SplashText)
@@ -30,6 +30,7 @@ function introSplashText () {
                     introText4.setPosition(80, 60)
                     timer.after(textDelay, function () {
                         introText5 = textsprite.create("Terra-Tron!!!", 0, 4)
+                        scaling.scaleToPercent(introText5, 150, ScaleDirection.Uniformly, ScaleAnchor.Middle)
                         introText5.setKind(SpriteKind.SplashText)
                         introText5.setPosition(80, 76)
                         timer.after(textDelay, function () {
