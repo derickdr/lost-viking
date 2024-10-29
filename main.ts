@@ -1,3 +1,12 @@
+namespace SpriteKind {
+    export const Viking = SpriteKind.create()
+    export const Shield = SpriteKind.create()
+}
+function initializePlayer () {
+    getThisGuyHome = sprites.create(playerAssets[1], SpriteKind.Viking)
+    getThisGuyHome.setPosition(80, 150)
+    createShield(notCausedByBomb)
+}
 function initializeTerranAssets () {
     terranAssets = [
     img`
@@ -184,8 +193,65 @@ function initializeTerranAssets () {
         `
     ]
 }
+sprites.onDestroyed(SpriteKind.Shield, function (sprite) {
+    invulnerable = false
+})
 function initializeGame () {
     loadGameAssets()
+    initializePlayer()
+}
+function initializeConsts () {
+    causedByBomb = true
+    notCausedByBomb = false
+}
+function createShield (cause: boolean) {
+    for (let value of sprites.allOfKind(SpriteKind.Viking)) {
+        shieldSprite = sprites.create(playerCombatAssets[4], SpriteKind.Shield)
+        invulnerable = true
+        if (cause == notCausedByBomb) {
+            shieldSprite.lifespan = 4000
+            shieldSprite.setFlag(SpriteFlag.Invisible, true)
+            timer.after(800, function () {
+                shieldSprite.setFlag(SpriteFlag.Invisible, false)
+                timer.after(800, function () {
+                    shieldSprite.setFlag(SpriteFlag.Invisible, true)
+                    timer.after(800, function () {
+                        shieldSprite.setFlag(SpriteFlag.Invisible, false)
+                        timer.after(800, function () {
+                            shieldSprite.setFlag(SpriteFlag.Invisible, true)
+                            timer.after(800, function () {
+                                shieldSprite.setFlag(SpriteFlag.Invisible, false)
+                            })
+                        })
+                    })
+                })
+            })
+        } else {
+            shieldSprite.lifespan = 6000
+            shieldSprite.setFlag(SpriteFlag.Invisible, true)
+            timer.after(800, function () {
+                shieldSprite.setFlag(SpriteFlag.Invisible, false)
+                timer.after(800, function () {
+                    shieldSprite.setFlag(SpriteFlag.Invisible, true)
+                    timer.after(800, function () {
+                        shieldSprite.setFlag(SpriteFlag.Invisible, false)
+                        timer.after(800, function () {
+                            shieldSprite.setFlag(SpriteFlag.Invisible, true)
+                            timer.after(800, function () {
+                                shieldSprite.setFlag(SpriteFlag.Invisible, false)
+                                timer.after(800, function () {
+                                    shieldSprite.setFlag(SpriteFlag.Invisible, true)
+                                    timer.after(800, function () {
+                                        shieldSprite.setFlag(SpriteFlag.Invisible, false)
+                                    })
+                                })
+                            })
+                        })
+                    })
+                })
+            })
+        }
+    }
 }
 function initializeZergAssets () {
     zergAssets = [
@@ -443,7 +509,7 @@ function initializePlayerAssets () {
     // 1 - left rocket
     // 2 - right rocket
     // 3 - plasma
-    // 4 - bomb shield
+    // 4 - shield
     // 5 - bomb particle
     // 6 - missile blinker effect
     // 7 - plasma blinker effect
@@ -645,6 +711,11 @@ function initializePlayerAssets () {
         `
     ]
 }
+function initializeTemp () {
+    invulnerable = false
+    playerX = 0
+    playerY = 0
+}
 function initializeProtossAssets () {
     protossAssets = [
     img`
@@ -832,10 +903,6 @@ function initializeProtossAssets () {
     ]
 }
 function loadGameAssets () {
-    initializePlayerAssets()
-    initializeZergAssets()
-    initializeTerranAssets()
-    initializeProtossAssets()
     // 0 - missile powerup
     // 1 - bomb powerup
     // 2 - plasma powerup
@@ -930,16 +997,40 @@ function loadGameAssets () {
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         `]
+    initializePlayerAssets()
+    initializeZergAssets()
+    initializeTerranAssets()
+    initializeProtossAssets()
 }
 let gameUIAssets: Image[] = []
 let particles2: Image[] = []
 let supportAssets: Image[] = []
 let protossCombatAssets: Image[] = []
 let protossAssets: Image[] = []
-let playerCombatAssets: Image[] = []
-let playerAssets: Image[] = []
+let playerY = 0
+let playerX = 0
 let zergCombatAssets: Image[] = []
 let zergAssets: Image[] = []
+let playerCombatAssets: Image[] = []
+let shieldSprite: Sprite = null
+let causedByBomb = false
+let invulnerable = false
 let terranCombatAssets: Image[] = []
 let terranAssets: Image[] = []
+let notCausedByBomb = false
+let playerAssets: Image[] = []
+let getThisGuyHome: Sprite = null
 initializeGame()
+forever(function () {
+    // if invulnerable true
+    // > centre resulting shield on player
+    if (invulnerable == true) {
+        for (let value of sprites.allOfKind(SpriteKind.Player)) {
+            playerX = value.x
+            playerY = value.y
+        }
+        for (let value of sprites.allOfKind(SpriteKind.Shield)) {
+            value.setPosition(playerX, playerY)
+        }
+    }
+})
