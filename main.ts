@@ -2,24 +2,68 @@ namespace SpriteKind {
     export const Viking = SpriteKind.create()
     export const Shield = SpriteKind.create()
     export const Plasma = SpriteKind.create()
+    export const Rocket = SpriteKind.create()
+}
+function createRocket2 () {
+    for (let value of sprites.allOfKind(SpriteKind.Viking)) {
+        spawnOffset = cannonOffset
+        for (let index = 0; index < 2; index++) {
+            rocketSprite = sprites.create(playerCombatAssets[0], SpriteKind.Rocket)
+            scaling.scaleToPercent(rocketSprite, 80, ScaleDirection.Uniformly, ScaleAnchor.Middle)
+            rocketSprite.setPosition(value.x + spawnOffset, value.y - 4)
+            rocketSprite.vy = -110
+            spawnOffset = spawnOffset * -1
+        }
+        spawnOffset = cannonOffset
+        increment1 = 1
+        spawnVX = sideRocketVX
+        for (let index = 0; index < 2; index++) {
+            sideRocketSprite = sprites.create(playerCombatAssets[increment1], SpriteKind.Rocket)
+            sideRocketSprite.setPosition(value.x + spawnOffset, value.y - 4)
+            sideRocketSprite.setVelocity(spawnVX, rocketVY)
+            spawnOffset = spawnOffset * -1
+            spawnVX = spawnVX * -1
+            increment1 += 1
+        }
+        spawnOffset = cannonOffset
+        increment1 = 1
+        spawnVX = sideRocketVX + 20
+        for (let index = 0; index < 2; index++) {
+            sideRocketSprite = sprites.create(playerCombatAssets[increment1], SpriteKind.Rocket)
+            sideRocketSprite.setPosition(value.x + spawnOffset, value.y - 4)
+            sideRocketSprite.setVelocity(spawnVX, rocketVY + 5)
+            spawnOffset = spawnOffset * -1
+            spawnVX = spawnVX * -1
+            increment1 += 1
+        }
+    }
 }
 function createProjectile (weapon: number) {
     if (weapon == plasma2) {
-    	
+        createPlasma1()
     } else if (weapon == plasma1) {
-    	
+        createPlasma2()
     } else if (weapon == basic0) {
-        for (let value of sprites.allOfKind(SpriteKind.Viking)) {
-            for (let index = 0; index < 4; index++) {
-                leftPlasma = sprites.create(playerCombatAssets[3], SpriteKind.Plasma)
-                leftPlasma.setPosition(value.x + cannonOffset, value.y)
-                leftPlasma.vy = -50
-            }
-        }
+        createBasic()
     } else if (weapon == side1) {
-    	
+        createRocket1()
     } else if (weapon == side2) {
-    	
+        createRocket2()
+    }
+}
+sprites.onCreated(SpriteKind.Rocket, function (sprite) {
+    sprite.lifespan = 2000
+})
+function createPlasma2 () {
+    for (let value of sprites.allOfKind(SpriteKind.Viking)) {
+        spawnOffset = cannonOffset
+        for (let index = 0; index < 2; index++) {
+            plasma = sprites.create(playerCombatAssets[3], SpriteKind.Plasma)
+            scaling.scaleToPercent(plasma, 50, ScaleDirection.Uniformly, ScaleAnchor.Middle)
+            plasma.setPosition(value.x + spawnOffset, value.y - 4)
+            plasma.vy = -110
+            spawnOffset = spawnOffset * -1
+        }
     }
 }
 function initializePlayer () {
@@ -231,6 +275,14 @@ function initializeGame () {
     loadGameAssets()
     initializePlayer()
 }
+function createPlasma1 () {
+    for (let value of sprites.allOfKind(SpriteKind.Viking)) {
+        plasma = sprites.create(playerCombatAssets[3], SpriteKind.Plasma)
+        scaling.scaleToPercent(plasma, 50, ScaleDirection.Uniformly, ScaleAnchor.Middle)
+        plasma.setPosition(value.x, value.y - 8)
+        plasma.vy = -110
+    }
+}
 function initializeConsts () {
     causedByBomb = true
     notCausedByBomb = false
@@ -238,12 +290,14 @@ function initializeConsts () {
     leftThrusterY = 0
     rightThrusterX = 0
     rightThrusterY = 0
-    cannonOffset = 8
+    cannonOffset = 4
     plasma2 = -2
     plasma1 = -1
     basic0 = 0
     side1 = 1
     side2 = 2
+    rocketVY = -100
+    sideRocketVX = 50
 }
 function createShield (cause: boolean) {
     for (let value of sprites.allOfKind(SpriteKind.Viking)) {
@@ -292,6 +346,32 @@ function createShield (cause: boolean) {
                     })
                 })
             })
+        }
+    }
+}
+sprites.onCreated(SpriteKind.Plasma, function (sprite) {
+    sprite.lifespan = 2000
+})
+function createRocket1 () {
+    for (let value of sprites.allOfKind(SpriteKind.Viking)) {
+        spawnOffset = cannonOffset
+        for (let index = 0; index < 2; index++) {
+            rocketSprite = sprites.create(playerCombatAssets[0], SpriteKind.Rocket)
+            scaling.scaleToPercent(rocketSprite, 80, ScaleDirection.Uniformly, ScaleAnchor.Middle)
+            rocketSprite.setPosition(value.x + spawnOffset, value.y - 4)
+            rocketSprite.vy = -110
+            spawnOffset = spawnOffset * -1
+        }
+        spawnOffset = cannonOffset
+        increment1 = 1
+        spawnVX = sideRocketVX
+        for (let index = 0; index < 2; index++) {
+            sideRocketSprite = sprites.create(playerCombatAssets[increment1], SpriteKind.Rocket)
+            sideRocketSprite.setPosition(value.x + spawnOffset, value.y - 4)
+            sideRocketSprite.setVelocity(spawnVX, rocketVY)
+            spawnOffset = spawnOffset * -1
+            spawnVX = spawnVX * -1
+            increment1 += 1
         }
     }
 }
@@ -548,8 +628,8 @@ function initializePlayerAssets () {
         ....................
         `]
     // 0 - forward rocket
-    // 1 - left rocket
-    // 2 - right rocket
+    // 1 - right rocket
+    // 2 - left rocket
     // 3 - plasma
     // 4 - shield
     // 5 - bomb particle
@@ -570,16 +650,6 @@ function initializePlayerAssets () {
         . 5 . 
         `,
     img`
-        d 2 . 
-        2 5 . 
-        1 4 . 
-        . 5 . 
-        . 1 5 
-        . . 1 
-        . . 4 
-        . . 5 
-        `,
-    img`
         . 2 d 
         . 5 2 
         . 4 1 
@@ -590,22 +660,32 @@ function initializePlayerAssets () {
         5 . . 
         `,
     img`
-        . b b 3 a b a b a a b 3 . 
-        b d a a a 9 1 1 c 6 a 3 b 
-        b d 3 b c 6 1 b 3 b a c b 
-        . b b 3 6 b 3 b 3 6 b 3 1 
-        b 1 3 . . b b 6 b b 1 c b 
-        . 1 . . 1 b 1 1 1 3 a c b 
-        . 3 . b 1 9 9 b a a c . . 
-        . . b 3 1 a 1 a c b 6 b . 
-        3 b a 1 c c 9 1 b 1 b . . 
-        b a c c b 3 1 9 b 3 . b b 
-        . b a 9 c c 6 3 b 1 b 3 . 
-        . . 3 b a 3 9 a c b b 3 3 
-        3 3 . 1 b 3 3 6 3 a 3 b b 
-        . . b b 3 b b b 6 b a 1 b 
-        . b b 6 b 6 1 c 1 a c b 3 
-        3 1 6 3 c a a a b b 3 1 . 
+        d 2 . 
+        2 5 . 
+        1 4 . 
+        . 5 . 
+        . 1 5 
+        . . 1 
+        . . 4 
+        . . 5 
+        `,
+    img`
+        . . . b a b a . . . 
+        . . a 9 1 1 c 6 . . 
+        . b c 6 1 b 3 b a . 
+        b 3 6 b 3 b 3 6 b . 
+        3 . . b b 6 b b 1 c 
+        . . 1 b 1 1 1 3 a c 
+        . b 1 9 9 b a a c . 
+        b 3 1 a 1 a c b 6 b 
+        a 1 c c 9 1 b 1 b . 
+        c c b 3 1 9 b 3 . b 
+        a 9 c c 6 3 b 1 b 3 
+        . b a 3 9 a c b b 3 
+        . 1 b 3 3 6 3 a 3 . 
+        . b 3 b b b 6 b . . 
+        . . b 6 1 c 1 a . . 
+        . . . . a a . . . . 
         `,
     img`
         ..............................
@@ -1039,12 +1119,22 @@ function loadGameAssets () {
     initializeTerranAssets()
     initializeProtossAssets()
 }
+function createBasic () {
+    for (let value of sprites.allOfKind(SpriteKind.Viking)) {
+        spawnOffset = cannonOffset
+        for (let index = 0; index < 2; index++) {
+            rocketSprite = sprites.create(playerCombatAssets[0], SpriteKind.Rocket)
+            rocketSprite.setPosition(value.x + spawnOffset, value.y - 4)
+            rocketSprite.vy = -110
+            spawnOffset = spawnOffset * -1
+        }
+    }
+}
 let gameUIAssets: Image[] = []
 let particles2: Image[] = []
 let supportAssets: Image[] = []
 let protossCombatAssets: Image[] = []
 let protossAssets: Image[] = []
-let spawnOffset = 0
 let playerY = 0
 let playerX = 0
 let zergCombatAssets: Image[] = []
@@ -1062,14 +1152,21 @@ let terranAssets: Image[] = []
 let notCausedByBomb = false
 let playerAssets: Image[] = []
 let getThisGuyHome: Sprite = null
-let cannonOffset = 0
-let playerCombatAssets: Image[] = []
-let leftPlasma: Sprite = null
+let plasma: Sprite = null
 let side2 = 0
 let side1 = 0
 let basic0 = 0
 let plasma1 = 0
 let plasma2 = 0
+let rocketVY = 0
+let sideRocketSprite: Sprite = null
+let sideRocketVX = 0
+let spawnVX = 0
+let increment1 = 0
+let playerCombatAssets: Image[] = []
+let rocketSprite: Sprite = null
+let cannonOffset = 0
+let spawnOffset = 0
 initializeGame()
 forever(function () {
 	
