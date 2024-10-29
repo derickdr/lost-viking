@@ -9,7 +9,12 @@ namespace SpriteKind {
     export const BasicEnemy = SpriteKind.create()
     export const SplashText = SpriteKind.create()
     export const UI = SpriteKind.create()
+    export const BackgroundElement = SpriteKind.create()
+    export const Edge = SpriteKind.create()
 }
+sprites.onOverlap(SpriteKind.BackgroundElement, SpriteKind.Edge, function (sprite, otherSprite) {
+    sprites.destroy(sprite)
+})
 function introSplashText () {
     textDelay = 1000
     if (playing == false) {
@@ -1011,6 +1016,10 @@ function loadMapAssets () {
         . . . . . . . . . . . . . . . . 
         `
     ]
+    edgeSprite = sprites.create(img`
+        f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f 
+        `, SpriteKind.Edge)
+    edgeSprite.y = 161
 }
 function createShield (cause: boolean) {
     for (let value of sprites.allOfKind(SpriteKind.Viking)) {
@@ -1850,6 +1859,25 @@ function initializeProtossAssets () {
 sprites.onCreated(SpriteKind.Projectile, function (sprite) {
     sprite.lifespan = enemyProojectileLifespan
 })
+function createSpaceDust (lvl: number) {
+    if (currentStage > 0) {
+        if (Math.percentChance(1)) {
+            stardustSprite = sprites.create(particles2[colorPaths[starColor]._pickRandom()], SpriteKind.BackgroundElement)
+            stardustSprite.setPosition(randint(0, 160), 0)
+            stardustSprite.vy = randint(10, 30)
+        }
+        if (Math.percentChance(3)) {
+            stardustSprite = sprites.create(particles2[colorPaths[starColor]._pickRandom()], SpriteKind.BackgroundElement)
+            stardustSprite.setPosition(randint(0, 160), 0)
+            stardustSprite.vy = randint(20, 60)
+        }
+        if (Math.percentChance(3)) {
+            stardustSprite = sprites.create(particles2[colorPaths[starColor]._pickRandom()], SpriteKind.BackgroundElement)
+            stardustSprite.setPosition(randint(0, 160), 0)
+            stardustSprite.vy = randint(10, 15)
+        }
+    }
+}
 function loadGameAssets () {
     // 0 - missile powerup
     // 1 - bomb powerup
@@ -2059,6 +2087,7 @@ sprites.onCreated(SpriteKind.DroneRocket, function (sprite) {
 })
 let gameUIAssets: Image[] = []
 let supportAssets: Image[] = []
+let stardustSprite: Sprite = null
 let protossCombatAssets: Image[] = []
 let protossAssets: Image[] = []
 let bombTotal = 0
@@ -2071,6 +2100,7 @@ let zergCombatAssets: Image[] = []
 let zergAssets: Image[] = []
 let thrusterEffectOffset = 0
 let shieldSprite: Sprite = null
+let edgeSprite: Sprite = null
 let doodads: Image[] = []
 let thrusterFire: Sprite = null
 let starColor = 0
@@ -2130,4 +2160,5 @@ initializeGame()
 forever(function () {
     createVikingThrusterTrail()
     createTrailEffects()
+    createSpaceDust(currentStage)
 })
