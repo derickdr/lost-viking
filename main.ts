@@ -12,131 +12,145 @@ namespace SpriteKind {
 }
 function introSplashText () {
     textDelay = 1000
-    timer.after(textDelay, function () {
-        introText1 = textsprite.create("You, Mighty Viking,", 0, 1)
-        introText1.setKind(SpriteKind.SplashText)
-        introText1.setPosition(80, 14)
+    if (playing == false) {
         timer.after(textDelay, function () {
-            introText2 = textsprite.create("are lost!!! Find your", 0, 1)
-            introText2.setKind(SpriteKind.SplashText)
-            introText2.setPosition(80, 30)
-            timer.after(textDelay, function () {
-                introText3 = textsprite.create("way home to Vikingville,", 0, 1)
-                introText3.setKind(SpriteKind.SplashText)
-                introText3.setPosition(80, 46)
+            introText1 = textsprite.create("You, Mighty Viking,", 0, 1)
+            introText1.setKind(SpriteKind.SplashText)
+            introText1.setPosition(80, 14)
+            if (playing == false) {
                 timer.after(textDelay, function () {
-                    introText4 = textsprite.create("but beware the Evil", 0, 1)
-                    introText4.setKind(SpriteKind.SplashText)
-                    introText4.setPosition(80, 60)
-                    timer.after(textDelay, function () {
-                        introText5 = textsprite.create("Terra-Tron!!!", 0, 4)
-                        scaling.scaleToPercent(introText5, 150, ScaleDirection.Uniformly, ScaleAnchor.Middle)
-                        introText5.setKind(SpriteKind.SplashText)
-                        introText5.setPosition(80, 76)
-                        timer.after(textDelay, function () {
-                            introText6 = sprites.create(img`
-                                2..2.2222....222...222...2222...22.....2..2..222..22222....2.....222..2..2..2222....2...2..222...2..2..2...2...2
-                                2..2.2.......2..2.2...2..2.....2..2....22.2.2...2...2......2......2...2.2...2.......2...2.2...2..2..2..2...2...2
-                                2222.222.....2..2.2...2..222....2......2.22.2...2...2......2......2...22....222......2.2..2...2..2..2..2...2...2
-                                2..2.2.......2..2.2...2..2.......2.....2..2.2...2...2......2......2...2.2...2.........2...2...2..2..2..2...2...2
-                                2..2.2.......2..2.2...2..2.....2..2....2..2.2...2...2......2......2...2..2..2.........2...2...2..2..2...........
-                                2..2.2222....222...222...2222...22.....2..2..222....2......2222..222..2..2..2222......2....222....22...2...2...2
-                                `, SpriteKind.SplashText)
-                            animation.runImageAnimation(
-                            introText6,
-                            [img`
-                                2..2.2222....222...222...2222...22.....2..2..222..22222....2.....222..2..2..2222....2...2..222...2..2..2...2...2
-                                2..2.2.......2..2.2...2..2.....2..2....22.2.2...2...2......2......2...2.2...2.......2...2.2...2..2..2..2...2...2
-                                2222.222.....2..2.2...2..222....2......2.22.2...2...2......2......2...22....222......2.2..2...2..2..2..2...2...2
-                                2..2.2.......2..2.2...2..2.......2.....2..2.2...2...2......2......2...2.2...2.........2...2...2..2..2..2...2...2
-                                2..2.2.......2..2.2...2..2.....2..2....2..2.2...2...2......2......2...2..2..2.........2...2...2..2..2...........
-                                2..2.2222....222...222...2222...22.....2..2..222....2......2222..222..2..2..2222......2....222....22...2...2...2
-                                `,img`
-                                ................................................................................................................
-                                ................................................................................................................
-                                ................................................................................................................
-                                ................................................................................................................
-                                ................................................................................................................
-                                ................................................................................................................
-                                `],
-                            750,
-                            true
-                            )
-                            scaling.scaleToPercent(introText6, 120, ScaleDirection.Uniformly, ScaleAnchor.Middle)
-                            introText6.setPosition(80, 92)
-                            timer.after(2000, function () {
-                                aButtonSprite = sprites.create(img`
-                                    . . . . 6 6 6 6 6 6 6 . . . . 
-                                    . . 6 6 7 7 7 7 7 7 7 6 6 . . 
-                                    . 6 6 7 7 7 8 8 8 7 7 7 6 6 . 
-                                    . 6 7 7 7 8 8 7 8 8 7 7 7 6 . 
-                                    . c 7 7 8 8 8 8 8 8 8 7 7 c . 
-                                    . c 9 7 8 7 7 7 7 7 8 7 9 c . 
-                                    . c 9 9 7 7 7 7 7 7 7 9 9 c . 
-                                    . c 6 6 9 9 9 9 9 9 9 6 6 c . 
-                                    c c 6 6 6 6 6 6 6 6 6 6 6 c c 
-                                    c d c c 6 6 6 6 6 6 6 c c d c 
-                                    c d d d c c c c c c c d d d c 
-                                    c c b d d d d d d d d d b c c 
-                                    c c c c c b b b b b c c c c c 
-                                    c c b b b b b b b b b b b c c 
-                                    . c c b b b b b b b b b c c . 
-                                    . . . c c c c c c c c c . . . 
-                                    `, SpriteKind.UI)
-                                aButtonSprite.setPosition(84, 108)
-                                animation.runImageAnimation(
-                                aButtonSprite,
-                                [img`
-                                    . . . . 6 6 6 6 6 6 6 . . . . 
-                                    . . 6 6 7 7 7 7 7 7 7 6 6 . . 
-                                    . 6 6 7 7 7 8 8 8 7 7 7 6 6 . 
-                                    . 6 7 7 7 8 8 7 8 8 7 7 7 6 . 
-                                    . c 7 7 8 8 8 8 8 8 8 7 7 c . 
-                                    . c 9 7 8 7 7 7 7 7 8 7 9 c . 
-                                    . c 9 9 7 7 7 7 7 7 7 9 9 c . 
-                                    . c 6 6 9 9 9 9 9 9 9 6 6 c . 
-                                    c c 6 6 6 6 6 6 6 6 6 6 6 c c 
-                                    c d c c 6 6 6 6 6 6 6 c c d c 
-                                    c d d d c c c c c c c d d d c 
-                                    c c b d d d d d d d d d b c c 
-                                    c c c c c b b b b b c c c c c 
-                                    c c b b b b b b b b b b b c c 
-                                    . c c b b b b b b b b b c c . 
-                                    . . . c c c c c c c c c . . . 
-                                    `,img`
-                                    . . . . . . . . . . . . . . . 
-                                    . . . . . . . . . . . . . . . 
-                                    . . . . 6 6 6 6 6 6 6 . . . . 
-                                    . . 6 6 7 7 7 7 7 7 7 6 6 . . 
-                                    . 6 6 7 7 7 8 8 8 7 7 7 6 6 . 
-                                    . 6 7 7 7 8 8 7 8 8 7 7 7 6 . 
-                                    . e 7 7 8 8 8 8 8 8 8 7 7 e . 
-                                    . c 9 7 8 7 7 7 7 7 8 7 9 c . 
-                                    c c 9 9 7 7 7 7 7 7 7 9 9 c c 
-                                    c d c c 9 9 9 9 9 9 9 c c d c 
-                                    c d d d c c c c c c c d d d c 
-                                    c c b d d d d d d d d d b c c 
-                                    c c c c c b b b b b c c c c c 
-                                    c c b b b b b b b b b b b c c 
-                                    . c c b b b b b b b b b c c . 
-                                    . . . c c c c c c c c c . . . 
-                                    `],
-                                150,
-                                true
-                                )
-                                continueText = textsprite.create("BEGIN", 0, 7)
-                                continueText.setPosition(59, 108)
-                                continueText.setKind(SpriteKind.SplashText)
-                                continueText = textsprite.create("GAME", 0, 7)
-                                continueText.setPosition(105, 108)
-                                continueText.setKind(SpriteKind.SplashText)
-                            })
-                        })
-                    })
+                    introText2 = textsprite.create("are lost!!! Find your", 0, 1)
+                    introText2.setKind(SpriteKind.SplashText)
+                    introText2.setPosition(80, 30)
                 })
-            })
+                if (playing == false) {
+                    timer.after(textDelay, function () {
+                        introText3 = textsprite.create("way home to Vikingville,", 0, 1)
+                        introText3.setKind(SpriteKind.SplashText)
+                        introText3.setPosition(80, 46)
+                    })
+                    if (playing == false) {
+                        timer.after(textDelay, function () {
+                            introText4 = textsprite.create("but beware the Evil", 0, 1)
+                            introText4.setKind(SpriteKind.SplashText)
+                            introText4.setPosition(80, 60)
+                        })
+                        if (playing == false) {
+                            timer.after(textDelay, function () {
+                                introText5 = textsprite.create("Terra-Tron!!!", 0, 4)
+                                scaling.scaleToPercent(introText5, 150, ScaleDirection.Uniformly, ScaleAnchor.Middle)
+                                introText5.setKind(SpriteKind.SplashText)
+                                introText5.setPosition(80, 76)
+                                if (playing == false) {
+                                    timer.after(textDelay, function () {
+                                        introText6 = sprites.create(img`
+                                            2..2.2222....222...222...2222...22.....2..2..222..22222....2.....222..2..2..2222....2...2..222...2..2..2...2...2
+                                            2..2.2.......2..2.2...2..2.....2..2....22.2.2...2...2......2......2...2.2...2.......2...2.2...2..2..2..2...2...2
+                                            2222.222.....2..2.2...2..222....2......2.22.2...2...2......2......2...22....222......2.2..2...2..2..2..2...2...2
+                                            2..2.2.......2..2.2...2..2.......2.....2..2.2...2...2......2......2...2.2...2.........2...2...2..2..2..2...2...2
+                                            2..2.2.......2..2.2...2..2.....2..2....2..2.2...2...2......2......2...2..2..2.........2...2...2..2..2...........
+                                            2..2.2222....222...222...2222...22.....2..2..222....2......2222..222..2..2..2222......2....222....22...2...2...2
+                                            `, SpriteKind.SplashText)
+                                        animation.runImageAnimation(
+                                        introText6,
+                                        [img`
+                                            2..2.2222....222...222...2222...22.....2..2..222..22222....2.....222..2..2..2222....2...2..222...2..2..2...2...2
+                                            2..2.2.......2..2.2...2..2.....2..2....22.2.2...2...2......2......2...2.2...2.......2...2.2...2..2..2..2...2...2
+                                            2222.222.....2..2.2...2..222....2......2.22.2...2...2......2......2...22....222......2.2..2...2..2..2..2...2...2
+                                            2..2.2.......2..2.2...2..2.......2.....2..2.2...2...2......2......2...2.2...2.........2...2...2..2..2..2...2...2
+                                            2..2.2.......2..2.2...2..2.....2..2....2..2.2...2...2......2......2...2..2..2.........2...2...2..2..2...........
+                                            2..2.2222....222...222...2222...22.....2..2..222....2......2222..222..2..2..2222......2....222....22...2...2...2
+                                            `,img`
+                                            ................................................................................................................
+                                            ................................................................................................................
+                                            ................................................................................................................
+                                            ................................................................................................................
+                                            ................................................................................................................
+                                            ................................................................................................................
+                                            `],
+                                        750,
+                                        true
+                                        )
+                                        scaling.scaleToPercent(introText6, 120, ScaleDirection.Uniformly, ScaleAnchor.Middle)
+                                        introText6.setPosition(80, 92)
+                                        if (playing == false) {
+                                            timer.after(2000, function () {
+                                                aButtonSprite = sprites.create(img`
+                                                    . . . . 6 6 6 6 6 6 6 . . . . 
+                                                    . . 6 6 7 7 7 7 7 7 7 6 6 . . 
+                                                    . 6 6 7 7 7 8 8 8 7 7 7 6 6 . 
+                                                    . 6 7 7 7 8 8 7 8 8 7 7 7 6 . 
+                                                    . c 7 7 8 8 8 8 8 8 8 7 7 c . 
+                                                    . c 9 7 8 7 7 7 7 7 8 7 9 c . 
+                                                    . c 9 9 7 7 7 7 7 7 7 9 9 c . 
+                                                    . c 6 6 9 9 9 9 9 9 9 6 6 c . 
+                                                    c c 6 6 6 6 6 6 6 6 6 6 6 c c 
+                                                    c d c c 6 6 6 6 6 6 6 c c d c 
+                                                    c d d d c c c c c c c d d d c 
+                                                    c c b d d d d d d d d d b c c 
+                                                    c c c c c b b b b b c c c c c 
+                                                    c c b b b b b b b b b b b c c 
+                                                    . c c b b b b b b b b b c c . 
+                                                    . . . c c c c c c c c c . . . 
+                                                    `, SpriteKind.UI)
+                                                aButtonSprite.setPosition(84, 108)
+                                                animation.runImageAnimation(
+                                                aButtonSprite,
+                                                [img`
+                                                    . . . . 6 6 6 6 6 6 6 . . . . 
+                                                    . . 6 6 7 7 7 7 7 7 7 6 6 . . 
+                                                    . 6 6 7 7 7 8 8 8 7 7 7 6 6 . 
+                                                    . 6 7 7 7 8 8 7 8 8 7 7 7 6 . 
+                                                    . c 7 7 8 8 8 8 8 8 8 7 7 c . 
+                                                    . c 9 7 8 7 7 7 7 7 8 7 9 c . 
+                                                    . c 9 9 7 7 7 7 7 7 7 9 9 c . 
+                                                    . c 6 6 9 9 9 9 9 9 9 6 6 c . 
+                                                    c c 6 6 6 6 6 6 6 6 6 6 6 c c 
+                                                    c d c c 6 6 6 6 6 6 6 c c d c 
+                                                    c d d d c c c c c c c d d d c 
+                                                    c c b d d d d d d d d d b c c 
+                                                    c c c c c b b b b b c c c c c 
+                                                    c c b b b b b b b b b b b c c 
+                                                    . c c b b b b b b b b b c c . 
+                                                    . . . c c c c c c c c c . . . 
+                                                    `,img`
+                                                    . . . . . . . . . . . . . . . 
+                                                    . . . . . . . . . . . . . . . 
+                                                    . . . . 6 6 6 6 6 6 6 . . . . 
+                                                    . . 6 6 7 7 7 7 7 7 7 6 6 . . 
+                                                    . 6 6 7 7 7 8 8 8 7 7 7 6 6 . 
+                                                    . 6 7 7 7 8 8 7 8 8 7 7 7 6 . 
+                                                    . e 7 7 8 8 8 8 8 8 8 7 7 e . 
+                                                    . c 9 7 8 7 7 7 7 7 8 7 9 c . 
+                                                    c c 9 9 7 7 7 7 7 7 7 9 9 c c 
+                                                    c d c c 9 9 9 9 9 9 9 c c d c 
+                                                    c d d d c c c c c c c d d d c 
+                                                    c c b d d d d d d d d d b c c 
+                                                    c c c c c b b b b b c c c c c 
+                                                    c c b b b b b b b b b b b c c 
+                                                    . c c b b b b b b b b b c c . 
+                                                    . . . c c c c c c c c c . . . 
+                                                    `],
+                                                150,
+                                                true
+                                                )
+                                                continueText = textsprite.create("BEGIN", 0, 7)
+                                                continueText.setPosition(59, 108)
+                                                continueText.setKind(SpriteKind.SplashText)
+                                                continueText = textsprite.create("GAME", 0, 7)
+                                                continueText.setPosition(105, 108)
+                                                continueText.setKind(SpriteKind.SplashText)
+                                            })
+                                        }
+                                    })
+                                }
+                            })
+                        }
+                    }
+                }
+            }
         })
-    })
+    }
 }
 function createRocket2 () {
     for (let value of sprites.allOfKind(SpriteKind.Viking)) {
@@ -256,13 +270,20 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
 function initializePlayer () {
     initializePlayerAssets()
     senseiDerick = sprites.create(playerAssets[1], SpriteKind.Viking)
-    senseiDerick.setStayInScreen(true)
+    senseiDerick.setStayInScreen(false)
     senseiDerick.setPosition(80, 150)
+    senseiDerick.vy = -25
     // dev note:
     // i gave up on the pixel art purism huhu leave me alone my fingers are old
     scaling.scaleToPercent(senseiDerick, 60, ScaleDirection.Uniformly, ScaleAnchor.Middle)
     createShield(notCausedByBomb)
-    controller.moveSprite(senseiDerick, 75, 75)
+    timer.after(2000, function () {
+        senseiDerick.setStayInScreen(true)
+        senseiDerick.vy = 0
+        controller.moveSprite(senseiDerick, 75, 75)
+        sprites.destroyAllSpritesOfKind(SpriteKind.UI)
+        sprites.destroyAllSpritesOfKind(SpriteKind.SplashText)
+    })
 }
 function initializeTerranAssets () {
     terranAssets = [
@@ -1490,32 +1511,32 @@ function initializePlayerAssets () {
     img`
         ..............................
         .........555555111115.........
-        .......555..........555.......
-        ......5.55..........55.5......
-        .....5...5..........5...5.....
-        ....4....................5....
-        ...5.....5..........5.....5...
-        ..5......5..........5......4..
-        .5.......5.dd....dd.5.......4.
-        55555.....1........1.....55555
-        5....555..1........1..555....5
-        5.......11.11....11.11.......5
-        5......d..1........1..d......5
-        5............................5
-        5.......1............1.......5
-        5.......1............1.......5
-        5............................5
-        5......d..1........1..d......5
-        5.......11.11....11.11.......5
-        5....555..1........1..555....5
-        55555.....1........1.....55555
-        .1.......5.dd....dd.5.......5.
-        ..1......5..........5......d..
-        ...1.....5..........5.....d...
-        ....1....................d....
-        .....5...5..........5...5.....
-        ......5.55..........55.4......
-        .......555..........554.......
+        .......555dddddddddd555.......
+        ......5d55dddddddddd55d5......
+        .....5ddd5dddddddddd5ddd5.....
+        ....4dddddddddddddddddddd5....
+        ...5ddddd5d5555555dd5ddddd5...
+        ..5dddddd555dddddd555dddddd4..
+        .5ddddddd5dddddddddd5ddddddd4.
+        55555ddd5dddd.dd.dddd5ddd55555
+        5dddd555ddddd.dd.ddddd555dddd5
+        5ddd5dddddddd....ddddddd5dddd5
+        5ddd5dddddddd....ddddddd5dddd5
+        5dd1dddddd.dd....dd.ddddd1ddd5
+        5dd5dd..................d5ddd5
+        5dd5d....................5ddd5
+        5dd5ddd................dd5ddd5
+        5ddd5dddd............ddd5dddd5
+        5ddd5ddd1............1dd5dddd5
+        5dddd555d............d115dddd5
+        55555dd5dd..........d5ddd55555
+        .1ddddd555d........d5ddddddd5.
+        ..1dddddd5ddddddddd55ddddddd..
+        ...1ddddd555ddddd15d5dddddd...
+        ....1ddddddd55555ddddddddd....
+        .....5ddd5dddddddddd5ddd5.....
+        ......5d55dddddddddd55d4......
+        .......555dddddddddd554.......
         .........555555544445.........
         ..............................
         `,
@@ -2078,7 +2099,6 @@ let fireColor = 0
 let colorPaths: number[][] = []
 let particles2: Image[] = []
 let blastFire: Sprite = null
-let playing = false
 let backdrops: Image[] = []
 let plasma: Sprite = null
 let playerProjectileLifespan = 0
@@ -2104,6 +2124,7 @@ let introText4: TextSprite = null
 let introText3: TextSprite = null
 let introText2: TextSprite = null
 let introText1: TextSprite = null
+let playing = false
 let textDelay = 0
 initializeGame()
 forever(function () {
