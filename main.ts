@@ -2,9 +2,22 @@ namespace SpriteKind {
     export const Viking = SpriteKind.create()
     export const Shield = SpriteKind.create()
 }
+function positionShield (invulnerable: boolean) {
+    // if invulnerable true
+    // > centre resulting shield on player
+    if (invulnerable == true) {
+        for (let value of sprites.allOfKind(SpriteKind.Player)) {
+            playerX = value.x
+            playerY = value.y
+        }
+    }
+}
 function initializePlayer () {
+    initializePlayerAssets()
     getThisGuyHome = sprites.create(playerAssets[1], SpriteKind.Viking)
+    getThisGuyHome.setStayInScreen(true)
     getThisGuyHome.setPosition(80, 150)
+    controller.moveSprite(getThisGuyHome, 80, 80)
     createShield(notCausedByBomb)
 }
 function initializeTerranAssets () {
@@ -203,10 +216,15 @@ function initializeGame () {
 function initializeConsts () {
     causedByBomb = true
     notCausedByBomb = false
+    leftThrusterX = 0
+    leftThrusterY = 0
+    rightThrusterX = 0
+    rightThrusterY = 0
 }
 function createShield (cause: boolean) {
     for (let value of sprites.allOfKind(SpriteKind.Viking)) {
         shieldSprite = sprites.create(playerCombatAssets[4], SpriteKind.Shield)
+        shieldSprite.follow(value, 300)
         invulnerable = true
         if (cause == notCausedByBomb) {
             shieldSprite.lifespan = 4000
@@ -997,7 +1015,6 @@ function loadGameAssets () {
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         `]
-    initializePlayerAssets()
     initializeZergAssets()
     initializeTerranAssets()
     initializeProtossAssets()
@@ -1007,12 +1024,14 @@ let particles2: Image[] = []
 let supportAssets: Image[] = []
 let protossCombatAssets: Image[] = []
 let protossAssets: Image[] = []
-let playerY = 0
-let playerX = 0
 let zergCombatAssets: Image[] = []
 let zergAssets: Image[] = []
 let playerCombatAssets: Image[] = []
 let shieldSprite: Sprite = null
+let rightThrusterY = 0
+let rightThrusterX = 0
+let leftThrusterY = 0
+let leftThrusterX = 0
 let causedByBomb = false
 let invulnerable = false
 let terranCombatAssets: Image[] = []
@@ -1020,17 +1039,9 @@ let terranAssets: Image[] = []
 let notCausedByBomb = false
 let playerAssets: Image[] = []
 let getThisGuyHome: Sprite = null
+let playerY = 0
+let playerX = 0
 initializeGame()
 forever(function () {
-    // if invulnerable true
-    // > centre resulting shield on player
-    if (invulnerable == true) {
-        for (let value of sprites.allOfKind(SpriteKind.Player)) {
-            playerX = value.x
-            playerY = value.y
-        }
-        for (let value of sprites.allOfKind(SpriteKind.Shield)) {
-            value.setPosition(playerX, playerY)
-        }
-    }
+    positionShield(invulnerable)
 })
