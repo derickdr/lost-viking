@@ -24,10 +24,10 @@ let playerAssets = [img`
     .............7b..b7.............
     .............7bbbb7.............
     ............7bbcebb7............
-    ............7bbecbb7............
-    .......cc...7bbccbb7...cc.......
+    ............6bbecbb6............
+    .......cc...6bbccbb6...cc.......
     .......cc...cbcbbcbc...cc.......
-    .777777cc77cbbcbbcbbc77cc777777.
+    .77c776cc66cbbcbbcbbc66cc677c77.
     ddddcbbbbdcdbcbddbcbdcdbbbbcdddd
     bbbbcbbbbdcdbcbddbcbdcdbbbbcbbbb
     bbbbbcbbbdcdbcbccbcbdcdbbbcbbbbb
@@ -63,7 +63,37 @@ let playerAssets = [img`
     .........cc.........
     ....................
     `]
-let supportAssets = 0
+let supportAssets = [img`
+    . . . . b . b . . . . 
+    . . . 1 d b d 1 . . . 
+    . . . 4 1 d 1 4 . . . 
+    . . 1 4 . 4 . 4 1 . . 
+    . . 4 1 . 4 . 1 4 . . 
+    . 2 4 . . 1 . . 4 2 . 
+    1 2 2 . 2 2 2 . 2 2 1 
+    1 1 . . 1 2 1 . . 1 1 
+    . . . . 1 1 1 . . . . 
+    `, img`
+    . . . . . . . . . . . 
+    . . . . . . . . . . . 
+    . . . . . . . . . . . 
+    . . . . . . . . . . . 
+    . . . . . . . . . . . 
+    . . . . . . . . . . . 
+    . . . . . . . . . . . 
+    . . . . . . . . . . . 
+    . . . . . . . . . . . 
+    . . . . . . . . . . . 
+    . . . . . . . . . . . 
+    . . . . . . . . . . . 
+    . . . . . . . . . . . 
+    . . . . . . . . . . . 
+    . . . . . . . . . . . 
+    . . . . . . . . . . . 
+    . . . . . . . . . . . 
+    . . . . . . . . . . . 
+    . . . . . . . . . . . 
+    `]
 let combatAssets = 0
 let gameUIAssets = 0
 let protossAssets = 0

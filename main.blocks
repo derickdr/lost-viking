@@ -21,10 +21,10 @@ c b b b b b b b b b b b b b b c
 .............7b..b7.............
 .............7bbbb7.............
 ............7bbcebb7............
-............7bbecbb7............
-.......cc...7bbccbb7...cc.......
+............6bbecbb6............
+.......cc...6bbccbb6...cc.......
 .......cc...cbcbbcbc...cc.......
-.777777cc77cbbcbbcbbc77cc777777.
+.77c776cc66cbbcbbcbbc66cc677c77.
 ddddcbbbbdcdbcbddbcbdcdbbbbcdddd
 bbbbcbbbbdcdbcbddbcbdcdbbbbcbbbb
 bbbbbcbbbdcdbcbccbcbdcdbbbcbbbbb
@@ -59,4 +59,34 @@ bbbbbcbbbdcdbcbccbcbdcdbbbcbbbbb
 .......76cc67.......
 .........cc.........
 ....................
-`</field><comment pinned="false" h="80" w="160">drone v1</comment><data>{"commentRefs":[],"fieldData":{"image":"?w2Mc2w(H$dHrA6#%1kW"}}</data></block></value></block></value><next><block type="variables_set" id="xHDCDVgI]aGd6*A,O[Zw"><field name="VAR" id="1%Kk}zj]QuV+2`{Z,;qu">supportAssets</field><value name="VALUE"><shadow type="math_number" id="K+ylUxod*QRcZ%S%U:]M"><field name="NUM">0</field></shadow></value><next><block type="variables_set" id="RxN?dcW_z#Qts$4V1`D="><field name="VAR" id="%L8Zf)e[ch4gwROMZiP2">combatAssets</field><value name="VALUE"><shadow type="math_number" id="rf(:5spz*WUR`*+6_WoQ"><field name="NUM">0</field></shadow></value><next><block type="variables_set" id="jjQyZpr?`Du#e5pXPGuI"><field name="VAR" id="|q:|e+aomSHUNAgR6M!p">gameUIAssets</field><value name="VALUE"><shadow type="math_number" id="zV3}MV#2[#o7LZv4Qpih"><field name="NUM">0</field></shadow></value><next><block type="variables_set" id="Qta4n.1)6r@oX%iU,UJ]"><field name="VAR" id="n=:j~$u0T;IfWqhGt*OO">protossAssets</field><value name="VALUE"><shadow type="math_number" id="94-=h.d/-3sd!)Gci0n8"><field name="NUM">0</field></shadow></value><next><block type="variables_set" id="Kut|H@h12V[_XzFJKriQ"><field name="VAR" id="~IlCt:]zyV1NBqUFAv;9">zergAssets</field><value name="VALUE"><shadow type="math_number" id="/^9Azc+])To*aq/UcFkQ"><field name="NUM">0</field></shadow></value><next><block type="variables_set" id="2n:A(Vf6(aa/.mt=X%D)"><field name="VAR" id="TDWG-L6rQti8e2696o?L">terranAssets</field><value name="VALUE"><shadow type="math_number" id="Vi.,l@yB{=G7Zu~(Ipo`"><field name="NUM">0</field></shadow></value></block></next></block></next></block></next></block></next></block></next></block></next></block></statement></block></xml>
+`</field><comment pinned="false" h="80" w="160">drone v1</comment><data>{"commentRefs":[],"fieldData":{"image":"?w2Mc2w(H$dHrA6#%1kW"}}</data></block></value></block></value><next><block type="variables_set" id="xHDCDVgI]aGd6*A,O[Zw"><field name="VAR" id="1%Kk}zj]QuV+2`{Z,;qu">supportAssets</field><value name="VALUE"><shadow type="math_number" id="K+ylUxod*QRcZ%S%U:]M"><field name="NUM">0</field></shadow><block type="lists_create_with" id="O=OSu-5(-g@,-Z`WnzyO"><mutation items="2" horizontalafter="3"></mutation><value name="ADD0"><block type="screen_image_picker" id="lY-pq[F;$pr}TEHBFO;]"><field name="img">img`
+. . . . b . b . . . . 
+. . . 1 d b d 1 . . . 
+. . . 4 1 d 1 4 . . . 
+. . 1 4 . 4 . 4 1 . . 
+. . 4 1 . 4 . 1 4 . . 
+. 2 4 . . 1 . . 4 2 . 
+1 2 2 . 2 2 2 . 2 2 1 
+1 1 . . 1 2 1 . . 1 1 
+. . . . 1 1 1 . . . . 
+`</field><data>{"commentRefs":[],"fieldData":{"img":"lY-pq[F;$pr}TEHBFO;]"}}</data></block></value><value name="ADD1"><block type="screen_image_picker" id="Y$SSY@fN4YNc;j|Lt8+8"><field name="img">img`
+. . . . . . . . . . . 
+. . . . . . . . . . . 
+. . . . . . . . . . . 
+. . . . . . . . . . . 
+. . . . . . . . . . . 
+. . . . . . . . . . . 
+. . . . . . . . . . . 
+. . . . . . . . . . . 
+. . . . . . . . . . . 
+. . . . . . . . . . . 
+. . . . . . . . . . . 
+. . . . . . . . . . . 
+. . . . . . . . . . . 
+. . . . . . . . . . . 
+. . . . . . . . . . . 
+. . . . . . . . . . . 
+. . . . . . . . . . . 
+. . . . . . . . . . . 
+. . . . . . . . . . . 
+`</field><data>{"commentRefs":[],"fieldData":{"img":"Y$SSY@fN4YNc;j|Lt8+8"}}</data></block></value></block></value><next><block type="variables_set" id="RxN?dcW_z#Qts$4V1`D="><field name="VAR" id="%L8Zf)e[ch4gwROMZiP2">combatAssets</field><value name="VALUE"><shadow type="math_number" id="rf(:5spz*WUR`*+6_WoQ"><field name="NUM">0</field></shadow></value><next><block type="variables_set" id="jjQyZpr?`Du#e5pXPGuI"><field name="VAR" id="|q:|e+aomSHUNAgR6M!p">gameUIAssets</field><value name="VALUE"><shadow type="math_number" id="zV3}MV#2[#o7LZv4Qpih"><field name="NUM">0</field></shadow></value><next><block type="variables_set" id="Qta4n.1)6r@oX%iU,UJ]"><field name="VAR" id="n=:j~$u0T;IfWqhGt*OO">protossAssets</field><value name="VALUE"><shadow type="math_number" id="94-=h.d/-3sd!)Gci0n8"><field name="NUM">0</field></shadow></value><next><block type="variables_set" id="Kut|H@h12V[_XzFJKriQ"><field name="VAR" id="~IlCt:]zyV1NBqUFAv;9">zergAssets</field><value name="VALUE"><shadow type="math_number" id="/^9Azc+])To*aq/UcFkQ"><field name="NUM">0</field></shadow></value><next><block type="variables_set" id="2n:A(Vf6(aa/.mt=X%D)"><field name="VAR" id="TDWG-L6rQti8e2696o?L">terranAssets</field><value name="VALUE"><shadow type="math_number" id="Vi.,l@yB{=G7Zu~(Ipo`"><field name="NUM">0</field></shadow></value></block></next></block></next></block></next></block></next></block></next></block></next></block></statement></block></xml>
