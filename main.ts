@@ -76,7 +76,7 @@ function initializePlayer () {
     // i gave up on the pixel art purism huhu leave me alone my fingers are old
     scaling.scaleToPercent(getThisGuyHome, 60, ScaleDirection.Uniformly, ScaleAnchor.Middle)
     createShield(notCausedByBomb)
-    controller.moveSprite(getThisGuyHome, 10, 80)
+    controller.moveSprite(getThisGuyHome, 75, 75)
 }
 function initializeTerranAssets () {
     terranAssets = [
@@ -299,7 +299,10 @@ function initializeConsts () {
 }
 function createRocketTrails () {
     for (let value of sprites.allOfKind(SpriteKind.Rocket)) {
-    	
+        thrusterFire = sprites.create(particles2[randint(4, 5)], SpriteKind.Player)
+        thrusterFire.setVelocity(randint(-20, 20), 50)
+        thrusterFire.setPosition(value.x, value.y)
+        thrusterFire.lifespan = randint(10, 30)
     }
 }
 function createShield (cause: boolean) {
@@ -385,31 +388,31 @@ function createVikingThrusterTrail () {
             for (let index = 0; index < 2; index++) {
                 thrusterFire = sprites.create(particles2[randint(3, 5)], SpriteKind.Effect)
                 thrusterFire.setVelocity(randint(-40, 40), 75)
-                thrusterFire.lifespan = randint(100, 200)
+                thrusterFire.lifespan = randint(60, 150)
                 thrusterFire.setPosition(value.x + thrusterEffectOffset, value.y + 5)
                 thrusterEffectOffset = thrusterEffectOffset * -1
             }
         } else if (value.vx > 0) {
             thrusterFire = sprites.create(particles2[randint(4, 5)], SpriteKind.Effect)
             thrusterFire.setVelocity(randint(-40, 40), 75)
-            thrusterFire.lifespan = randint(100, 200)
+            thrusterFire.lifespan = randint(60, 150)
             thrusterFire.setPosition(value.x - thrusterEffectOffset, value.y + 5)
             for (let index = 0; index < 2; index++) {
                 thrusterFire = sprites.create(particles2[randint(3, 5)], SpriteKind.Effect)
                 thrusterFire.setVelocity(randint(-40, 40), 75)
-                thrusterFire.lifespan = randint(100, 200)
+                thrusterFire.lifespan = randint(60, 150)
                 thrusterFire.setPosition(value.x + thrusterEffectOffset, value.y + 5)
                 thrusterEffectOffset = thrusterEffectOffset * -1
             }
         } else if (value.vx < 0) {
             thrusterFire = sprites.create(particles2[randint(4, 5)], SpriteKind.Effect)
             thrusterFire.setVelocity(randint(-40, 40), 75)
-            thrusterFire.lifespan = randint(100, 200)
+            thrusterFire.lifespan = randint(60, 150)
             thrusterFire.setPosition(value.x + thrusterEffectOffset, value.y + 5)
             for (let index = 0; index < 2; index++) {
                 thrusterFire = sprites.create(particles2[randint(3, 5)], SpriteKind.Effect)
                 thrusterFire.setVelocity(randint(-40, 40), 75)
-                thrusterFire.lifespan = randint(100, 200)
+                thrusterFire.lifespan = randint(60, 150)
                 thrusterFire.setPosition(value.x + thrusterEffectOffset, value.y + 5)
                 thrusterEffectOffset = thrusterEffectOffset * -1
             }
@@ -1183,10 +1186,10 @@ let playerY = 0
 let playerX = 0
 let zergCombatAssets: Image[] = []
 let zergAssets: Image[] = []
-let particles2: Image[] = []
-let thrusterFire: Sprite = null
 let thrusterEffectOffset = 0
 let shieldSprite: Sprite = null
+let particles2: Image[] = []
+let thrusterFire: Sprite = null
 let thrusterOffset = 0
 let causedByBomb = false
 let invulnerable = false
