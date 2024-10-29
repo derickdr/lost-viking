@@ -85,14 +85,14 @@ function frontBlast (x: number, y: number) {
 }
 function initializePlayer () {
     initializePlayerAssets()
-    getThisGuyHome = sprites.create(playerAssets[1], SpriteKind.Viking)
-    getThisGuyHome.setStayInScreen(true)
-    getThisGuyHome.setPosition(80, 150)
+    senseiDerick = sprites.create(playerAssets[1], SpriteKind.Viking)
+    senseiDerick.setStayInScreen(true)
+    senseiDerick.setPosition(80, 150)
     // dev note:
     // i gave up on the pixel art purism huhu leave me alone my fingers are old
-    scaling.scaleToPercent(getThisGuyHome, 60, ScaleDirection.Uniformly, ScaleAnchor.Middle)
+    scaling.scaleToPercent(senseiDerick, 60, ScaleDirection.Uniformly, ScaleAnchor.Middle)
     createShield(notCausedByBomb)
-    controller.moveSprite(getThisGuyHome, 75, 75)
+    controller.moveSprite(senseiDerick, 75, 75)
 }
 function initializeTerranAssets () {
     terranAssets = [
@@ -333,6 +333,7 @@ function initializeConsts () {
     sideRocketVX = 50
     playerProjectileLifespan = 1500
     enemyProojectileLifespan = 2000
+    basicEnemyValue = 100
 }
 function createRocketTrails () {
     for (let value of sprites.allOfKind(SpriteKind.Rocket)) {
@@ -1444,8 +1445,11 @@ function initializeTemp () {
     playerY = 0
     weapon = 0
     spawnOffset = 0
-    dronesActive = 0
+    droneTotal = 0
     currentStage = 0
+    scoreTotal = 0
+    sessionHighScore = 0
+    bombTotal = 0
 }
 function initializeProtossAssets () {
     protossAssets = [
@@ -1693,42 +1697,94 @@ function loadGameAssets () {
         4 5 
         `
     ]
-    // 0 - red
-    // 1 - violet
+    // 0 - terran
+    // 1 - protoss
+    // 2 - zerg
+    // 3 - fire
+    // 4 - plasma
+    // 5 - missile powerup
+    // 6 - bomb powerup
+    // 7 - drone powerup
+    // 8 - drone
+    colorPaths = [
+    [3, 4, 5],
+    [
+    0,
+    5,
+    7,
+    8
+    ],
+    [0, 1, 2],
+    [
+    0,
+    1,
+    3,
+    4
+    ],
+    [0, 0],
+    [0, 0],
+    [0, 0]
+    ]
+    // 0 - white
+    // 1 - red
     // 2 - pink
-    // 3 - white
+    // 3 - orange
     // 4 - yellow
-    // 5 - orange
-    // 6 - light blue
-    // 7 - teal
-    // 8 - blue
+    // 5 - teal
+    // 6 - green
+    // 7 - blue
+    // 8 - light blue
+    // 9 - purple
+    // 10 - grey
+    // 11 - violet
+    // 12 - beige
+    // 13 - brown
+    // 14 - black
     particles2 = [
     img`
-        2 
+        1 
         `,
     img`
-        a 
+        2 
         `,
     img`
         3 
         `,
     img`
-        1 
+        4 
         `,
     img`
         5 
         `,
     img`
-        4 
+        6 
+        `,
+    img`
+        7 
+        `,
+    img`
+        8 
         `,
     img`
         9 
         `,
     img`
-        6 
+        a 
         `,
     img`
-        8 
+        b 
+        `,
+    img`
+        c 
+        `,
+    img`
+        d 
+        `,
+    img`
+        e 
+        `,
+    img`
+        f 
         `
     ]
     gameUIAssets = [img`
@@ -1782,10 +1838,14 @@ sprites.onCreated(SpriteKind.DroneRocket, function (sprite) {
 })
 let projectile: Sprite = null
 let gameUIAssets: Image[] = []
+let colorPaths: number[][] = []
 let supportAssets: Image[] = []
 let protossCombatAssets: Image[] = []
 let protossAssets: Image[] = []
-let dronesActive = 0
+let bombTotal = 0
+let sessionHighScore = 0
+let scoreTotal = 0
+let droneTotal = 0
 let playerY = 0
 let playerX = 0
 let zergCombatAssets: Image[] = []
@@ -1795,6 +1855,7 @@ let shieldSprite: Sprite = null
 let doodads: Image[] = []
 let backdrops: Image[] = []
 let thrusterFire: Sprite = null
+let basicEnemyValue = 0
 let enemyProojectileLifespan = 0
 let thrusterOffset = 0
 let causedByBomb = false
@@ -1805,7 +1866,7 @@ let terranCombatAssets: Image[] = []
 let terranAssets: Image[] = []
 let notCausedByBomb = false
 let playerAssets: Image[] = []
-let getThisGuyHome: Sprite = null
+let senseiDerick: Sprite = null
 let particles2: Image[] = []
 let blastFire: Sprite = null
 let plasma: Sprite = null
