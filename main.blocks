@@ -1,4 +1,81 @@
-<xml xmlns="https://developers.google.com/blockly/xml"><variables><variable id="i%s5;XV]n=$9v}4t`UKh">list</variable><variable id="wE2NdH_KbfJpD7{v+j?r">playerAssets</variable><variable id="1%Kk}zj]QuV+2`{Z,;qu">supportAssets</variable><variable id="%L8Zf)e[ch4gwROMZiP2">playerCombatAssets</variable><variable id="|q:|e+aomSHUNAgR6M!p">gameUIAssets</variable><variable id="n=:j~$u0T;IfWqhGt*OO">protossAssets</variable><variable id="~IlCt:]zyV1NBqUFAv;9">zergAssets</variable><variable id="TDWG-L6rQti8e2696o?L">terranAssets</variable><variable id="||[f5!%s*bX,E:f=D)i|">gameCombatAssets</variable></variables><block type="function_definition" id="V2x*lsQb{(T!TfsQS3[L" x="450" y="-270"><mutation name="initializeGame" functionid="HewW_6bXbaCZR{pw(a@T"></mutation><field name="function_name">initializeGame</field><statement name="STACK"><block type="function_call" id="rk`$V4),~Sa.IfFzRhb]"><mutation name="loadGameAssets" functionid="sbA2416-LyCLR-:(7oS?"></mutation></block></statement></block><block type="function_definition" id="y7rku|{dI?dy)5Oz(TIk" x="450" y="-90"><mutation name="loadGameAssets" functionid="sbA2416-LyCLR-:(7oS?"></mutation><field name="function_name">loadGameAssets</field><statement name="STACK"><block type="variables_set" id="*lY!$FP40Y:=U4qQ|2k:"><field name="VAR" id="wE2NdH_KbfJpD7{v+j?r">playerAssets</field><comment pinned="true" h="117.03689575195312" w="237.872802734375">0 - placeholder
+<xml xmlns="https://developers.google.com/blockly/xml"><variables><variable id="i%s5;XV]n=$9v}4t`UKh">list</variable><variable id="wE2NdH_KbfJpD7{v+j?r">playerAssets</variable><variable id="1%Kk}zj]QuV+2`{Z,;qu">supportAssets</variable><variable id="%L8Zf)e[ch4gwROMZiP2">playerCombatAssets</variable><variable id="|q:|e+aomSHUNAgR6M!p">gameUIAssets</variable><variable id="n=:j~$u0T;IfWqhGt*OO">protossAssets</variable><variable id="~IlCt:]zyV1NBqUFAv;9">zergAssets</variable><variable id="TDWG-L6rQti8e2696o?L">terranAssets</variable><variable id="||[f5!%s*bX,E:f=D)i|">gameCombatAssets</variable><variable id="TP-]kD?l#d13Z4Dz-K+Q">protossCombatAssets</variable><variable id="f6-3xpvj@0@^jcHZ:g([">zergCombatAssets</variable><variable id="].IyhCKW~ii}X01UrAfU">terranCombatAssets</variable><variable id="SXbX8g6c;cv[``_R#R{b">particles</variable></variables><block type="function_definition" id="V2x*lsQb{(T!TfsQS3[L" x="450" y="-270"><mutation name="initializeGame" functionid="HewW_6bXbaCZR{pw(a@T"></mutation><field name="function_name">initializeGame</field><statement name="STACK"><block type="function_call" id="rk`$V4),~Sa.IfFzRhb]"><mutation name="loadGameAssets" functionid="sbA2416-LyCLR-:(7oS?"></mutation></block></statement></block><block type="function_definition" id="y7rku|{dI?dy)5Oz(TIk" x="450" y="-90"><mutation name="loadGameAssets" functionid="sbA2416-LyCLR-:(7oS?"></mutation><field name="function_name">loadGameAssets</field><statement name="STACK"><block type="function_call" id="zS?Y*Y0$~oT6Kr};K:%U"><mutation name="initializePlayerAssets" functionid="Ze16uTSJa1AsxyG){=_u"></mutation><next><block type="function_call" id="|#~W^`_),3vT:3vPTzG/"><mutation name="initializeZergAssets" functionid="(w]0*Ol+ix7qP|D7e;C="></mutation><next><block type="function_call" id=":tDZVNx~-VkYA~sNh|aP"><mutation name="initializeTerranAssets" functionid="c=/gVh7:S]2us7aO-+(0"></mutation><next><block type="function_call" id="l)ORbp2]7kDRk?jfrJD3"><mutation name="initializeProtossAssets" functionid="?qRdnzV;Mx0-9Ujj1uCY"></mutation><next><block type="variables_set" id="xHDCDVgI]aGd6*A,O[Zw"><field name="VAR" id="1%Kk}zj]QuV+2`{Z,;qu">supportAssets</field><comment pinned="true" h="174.96688842773438" w="173.295166015625">0 - missile powerup
+1 - bomb powerup
+2 - plasma powerup
+3 - drone powerup
+4 - drone missile
+5 - drone missile trail</comment><value name="VALUE"><shadow type="math_number" id="K+ylUxod*QRcZ%S%U:]M"><field name="NUM">0</field></shadow><block type="lists_create_with" id="O=OSu-5(-g@,-Z`WnzyO" inline="false"><mutation items="5" horizontalafter="3"></mutation><value name="ADD0"><block type="screen_image_picker" id="lY-pq[F;$pr}TEHBFO;]"><field name="img">img`
+. . . . b . b . . . . 
+. . . 1 d b d 1 . . . 
+. . . 4 1 d 1 4 . . . 
+. . 1 4 . 4 . 4 1 . . 
+. . 4 1 . 4 . 1 4 . . 
+. 2 4 . . 1 . . 4 2 . 
+1 2 2 . 2 2 2 . 2 2 1 
+1 1 . . 1 2 1 . . 1 1 
+. . . . 1 1 1 . . . . 
+`</field><data>{"commentRefs":[],"fieldData":{"img":"lY-pq[F;$pr}TEHBFO;]"}}</data></block></value><value name="ADD1"><block type="screen_image_picker" id="lc2H*YE{7r{w9~..TmC+"><field name="img">img`
+. . b b b . . . . . . 
+. b 6 9 d b b . . . . 
+. b 8 6 9 1 6 b . . . 
+b 6 b b d 8 6 9 b . . 
+b d c 9 c c c 8 9 d . 
+. b c c b b c c c d b 
+. . b b c d d c c c b 
+. . . . . c c b c b b 
+. . . . . . . b b b . 
+`</field><data>{"commentRefs":[],"fieldData":{"img":"lc2H*YE{7r{w9~..TmC+"}}</data></block></value><value name="ADD2"><block type="screen_image_picker" id="kD=n5F4~yq5tGs:JX2Zg"><field name="img">img`
+. . . . d d d . . . . 
+. . c c 1 1 1 d d . . 
+. d d c d 1 1 d b b . 
+. . d b d 1 1 c b . . 
+. . . b d 1 1 c . . . 
+. . . b d 1 1 c . . . 
+. . . b d 1 1 c . . . 
+. . . b b 1 c c . . . 
+. . . . b . c . . . . 
+`</field><data>{"commentRefs":[],"fieldData":{"img":"kD=n5F4~yq5tGs:JX2Zg"}}</data></block></value><value name="ADD3"><block type="screen_image_picker" id="Y$SSY@fN4YNc;j|Lt8+8"><field name="img">img`
+. . . . . . . . c . . 
+. c . . e . c c . . . 
+. . c c b b c c . . . 
+. . c b 5 4 b . . . . 
+. c e c 4 5 b e . . . 
+. . e a c b c . . . . 
+. . a e e c c . . . . 
+. c . . c . . c . . . 
+. . . . . . . . . . . 
+`</field><data>{"commentRefs":[],"fieldData":{"img":"Y$SSY@fN4YNc;j|Lt8+8"}}</data></block></value><value name="ADD4"><block type="screen_image_picker" id="h]bUY+]fhOO6w0X.Y:g)"><field name="img">img`
+5 4 
+4 5 
+`</field><data>{"commentRefs":[],"fieldData":{"img":"h]bUY+]fhOO6w0X.Y:g)"}}</data></block></value></block></value><next><block type="variables_set" id="/9kaxtC??URAM^i,:SrD"><field name="VAR" id="SXbX8g6c;cv[``_R#R{b">particles</field><value name="VALUE"><shadow type="math_number"><field name="NUM">0</field></shadow><block type="lists_create_with" id="YZ]^KDE;l{y650;T15FH" inline="false"><mutation items="6" horizontalafter="3"></mutation><value name="ADD0"><block type="screen_image_picker" id="mHkJJ.E!*_:7)[.vq:Qd"><field name="img">img`
+2 
+`</field><data>{"commentRefs":[],"fieldData":{"img":"mHkJJ.E!*_:7)[.vq:Qd"}}</data></block></value><value name="ADD1"><block type="screen_image_picker" id="8~W`x30FfY)@u$EWxvdj"><field name="img">img`
+a 
+`</field><data>{"commentRefs":[],"fieldData":{"img":"8~W`x30FfY)@u$EWxvdj"}}</data></block></value><value name="ADD2"><block type="screen_image_picker" id="c(Dwc_*MfDV0kd@|D3x."><field name="img">img`
+3 
+`</field><data>{"commentRefs":[],"fieldData":{"img":"c(Dwc_*MfDV0kd@|D3x."}}</data></block></value><value name="ADD3"><block type="screen_image_picker" id="+uwbohaJ[_:^3Z[+o4mE"><field name="img">img`
+1 
+`</field><data>{"commentRefs":[],"fieldData":{"img":"+uwbohaJ[_:^3Z[+o4mE"}}</data></block></value><value name="ADD4"><block type="screen_image_picker" id=".=,3(?_]j^k8pu#:J1Hj"><field name="img">img`
+5 
+`</field><data>{"commentRefs":[],"fieldData":{"img":".=,3(?_]j^k8pu#:J1Hj"}}</data></block></value><value name="ADD5"><block type="screen_image_picker" id="`@hZAJreGTHU[!CPwKPG"><field name="img">img`
+4 
+`</field><data>{"commentRefs":[],"fieldData":{"img":"`@hZAJreGTHU[!CPwKPG"}}</data></block></value></block></value><next><block type="variables_set" id="jjQyZpr?`Du#e5pXPGuI"><field name="VAR" id="|q:|e+aomSHUNAgR6M!p">gameUIAssets</field><value name="VALUE"><shadow type="math_number" id="zV3}MV#2[#o7LZv4Qpih"><field name="NUM">0</field></shadow><block type="lists_create_with" id="ajh8:+g?gD)EP6/m=4wg"><mutation items="1" horizontalafter="3"></mutation><value name="ADD0"><block type="screen_image_picker" id="G$j?ke}A(Z9W:p.kE51y"><field name="img">img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`</field><data>{"commentRefs":[],"fieldData":{"img":"G$j?ke}A(Z9W:p.kE51y"}}</data></block></value></block></value></block></next></block></next></block></next></block></next></block></next></block></next></block></statement></block><block type="function_definition" id="@(9Ox#d{]k/2%j7C+04_" x="1130" y="-70"><mutation name="initializePlayerAssets" functionid="Ze16uTSJa1AsxyG){=_u"></mutation><field name="function_name">initializePlayerAssets</field><statement name="STACK"><block type="variables_set" id="*lY!$FP40Y:=U4qQ|2k:"><field name="VAR" id="wE2NdH_KbfJpD7{v+j?r">playerAssets</field><comment pinned="true" h="117.03689575195312" w="237.872802734375">0 - placeholder
 1 - viking player model
 2 - point defense drone model</comment><value name="VALUE"><block type="lists_create_with" id="rYT~dWbH4(^?{=E@L76w"><mutation items="3" horizontalafter="3"></mutation><value name="ADD0"><shadow type="math_number" id="#]pF6+SEQK+:K}%S}`c4"><field name="NUM">0</field></shadow><block type="image_picker" id="fL_juIejs7EQ_}W1!db-"><field name="image">img`
 . . . . . . . . . . . . . . . . 
@@ -61,55 +138,7 @@ bbbbbcbbbdcdbcbccbcbdcdbbbcbbbbb
 .......76cc67.......
 .........cc.........
 ....................
-`</field><data>{"commentRefs":[],"fieldData":{"image":"?w2Mc2w(H$dHrA6#%1kW"}}</data></block></value></block></value><next><block type="variables_set" id="xHDCDVgI]aGd6*A,O[Zw"><field name="VAR" id="1%Kk}zj]QuV+2`{Z,;qu">supportAssets</field><comment pinned="true" h="150.27554321289062" w="156.201171875">0 - missile powerup
-1 - bomb powerup
-2 - plasma powerup
-3 - drone powerup
-4 - drone missile</comment><value name="VALUE"><shadow type="math_number" id="K+ylUxod*QRcZ%S%U:]M"><field name="NUM">0</field></shadow><block type="lists_create_with" id="O=OSu-5(-g@,-Z`WnzyO" inline="false"><mutation items="5" horizontalafter="3"></mutation><value name="ADD0"><block type="screen_image_picker" id="lY-pq[F;$pr}TEHBFO;]"><field name="img">img`
-. . . . b . b . . . . 
-. . . 1 d b d 1 . . . 
-. . . 4 1 d 1 4 . . . 
-. . 1 4 . 4 . 4 1 . . 
-. . 4 1 . 4 . 1 4 . . 
-. 2 4 . . 1 . . 4 2 . 
-1 2 2 . 2 2 2 . 2 2 1 
-1 1 . . 1 2 1 . . 1 1 
-. . . . 1 1 1 . . . . 
-`</field><data>{"commentRefs":[],"fieldData":{"img":"lY-pq[F;$pr}TEHBFO;]"}}</data></block></value><value name="ADD1"><block type="screen_image_picker" id="lc2H*YE{7r{w9~..TmC+"><field name="img">img`
-. . b b b . . . . . . 
-. b 6 9 d b b . . . . 
-. b 8 6 9 1 6 b . . . 
-b 6 b b d 8 6 9 b . . 
-b d c 9 c c c 8 9 d . 
-. b c c b b c c c d b 
-. . b b c d d c c c b 
-. . . . . c c b c b b 
-. . . . . . . b b b . 
-`</field><data>{"commentRefs":[],"fieldData":{"img":"lc2H*YE{7r{w9~..TmC+"}}</data></block></value><value name="ADD2"><block type="screen_image_picker" id="kD=n5F4~yq5tGs:JX2Zg"><field name="img">img`
-. . . . d d d . . . . 
-. . c c 1 1 1 d d . . 
-. d d c d 1 1 d b b . 
-. . d b d 1 1 c b . . 
-. . . b d 1 1 c . . . 
-. . . b d 1 1 c . . . 
-. . . b d 1 1 c . . . 
-. . . b b 1 c c . . . 
-. . . . b . c . . . . 
-`</field><data>{"commentRefs":[],"fieldData":{"img":"kD=n5F4~yq5tGs:JX2Zg"}}</data></block></value><value name="ADD3"><block type="screen_image_picker" id="Y$SSY@fN4YNc;j|Lt8+8"><field name="img">img`
-. . . . . . . . c . . 
-. c . . e . c c . . . 
-. . c c b b c c . . . 
-. . c b 5 4 b . . . . 
-. c e c 4 5 b e . . . 
-. . e a c b c . . . . 
-. . a e e c c . . . . 
-. c . . c . . c . . . 
-. . . . . . . . . . . 
-`</field><data>{"commentRefs":[],"fieldData":{"img":"Y$SSY@fN4YNc;j|Lt8+8"}}</data></block></value><value name="ADD4"><block type="screen_image_picker" id="h]bUY+]fhOO6w0X.Y:g)"><field name="img">img`
-5 4 1 
-4 5 4 
-2 4 5 
-`</field><data>{"commentRefs":[],"fieldData":{"img":"h]bUY+]fhOO6w0X.Y:g)"}}</data></block></value></block></value><next><block type="variables_set" id="RxN?dcW_z#Qts$4V1`D="><field name="VAR" id="%L8Zf)e[ch4gwROMZiP2">playerCombatAssets</field><comment pinned="true" h="274.6819152832031" w="189.44003295898438">0 - forward rocket
+`</field><data>{"commentRefs":[],"fieldData":{"image":"?w2Mc2w(H$dHrA6#%1kW"}}</data></block></value></block></value><next><block type="variables_set" id="RxN?dcW_z#Qts$4V1`D="><field name="VAR" id="%L8Zf)e[ch4gwROMZiP2">playerCombatAssets</field><comment pinned="true" h="274.6819152832031" w="189.44003295898438">0 - forward rocket
 1 - left rocket
 2 - right rocket
 3 - plasma
@@ -301,177 +330,7 @@ b a c c b 3 1 9 b 3 . b b
 .......7...7777777777...7.......
 ...........7777777777...........
 ............77....77............
-`</field><data>{"commentRefs":[],"fieldData":{"image":")1KMe{O,x;eWy`(atlM6"}}</data></block></value></block></value><next><block type="variables_set" id="/9kaxtC??URAM^i,:SrD"><field name="VAR" id="||[f5!%s*bX,E:f=D)i|">gameCombatAssets</field><value name="VALUE"><shadow type="math_number"><field name="NUM">0</field></shadow><block type="lists_create_with" id="YZ]^KDE;l{y650;T15FH" inline="false"><mutation items="4" horizontalafter="3"></mutation><value name="ADD0"><block type="screen_image_picker" id="pg$b)][NuC;{cq!5,G3I"><field name="img">img`
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-`</field><data>{"commentRefs":[],"fieldData":{"img":"pg$b)][NuC;{cq!5,G3I"}}</data></block></value><value name="ADD1"><block type="screen_image_picker" id="8~W`x30FfY)@u$EWxvdj"><field name="img">img`
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-`</field><data>{"commentRefs":[],"fieldData":{"img":"8~W`x30FfY)@u$EWxvdj"}}</data></block></value><value name="ADD2"><block type="screen_image_picker" id="c(Dwc_*MfDV0kd@|D3x."><field name="img">img`
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-`</field><data>{"commentRefs":[],"fieldData":{"img":"c(Dwc_*MfDV0kd@|D3x."}}</data></block></value><value name="ADD3"><block type="screen_image_picker" id=".=,3(?_]j^k8pu#:J1Hj"><field name="img">img`
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-`</field><data>{"commentRefs":[],"fieldData":{"img":".=,3(?_]j^k8pu#:J1Hj"}}</data></block></value></block></value><next><block type="variables_set" id="jjQyZpr?`Du#e5pXPGuI"><field name="VAR" id="|q:|e+aomSHUNAgR6M!p">gameUIAssets</field><value name="VALUE"><shadow type="math_number" id="zV3}MV#2[#o7LZv4Qpih"><field name="NUM">0</field></shadow><block type="lists_create_with" id="ajh8:+g?gD)EP6/m=4wg"><mutation items="1" horizontalafter="3"></mutation><value name="ADD0"><block type="screen_image_picker" id="G$j?ke}A(Z9W:p.kE51y"><field name="img">img`
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-`</field><data>{"commentRefs":[],"fieldData":{"img":"G$j?ke}A(Z9W:p.kE51y"}}</data></block></value></block></value><next><block type="variables_set" id="Qta4n.1)6r@oX%iU,UJ]"><field name="VAR" id="n=:j~$u0T;IfWqhGt*OO">protossAssets</field><value name="VALUE"><shadow type="math_number" id="94-=h.d/-3sd!)Gci0n8"><field name="NUM">0</field></shadow><block type="lists_create_with" id="b3mJWxKOm`tF{{$l}ekR" inline="false"><mutation items="5" horizontalafter="3"></mutation><value name="ADD0"><block type="screen_image_picker" id="uu`G{nc|^K`%{n[D~+!W"><field name="img">img`
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-`</field><data>{"commentRefs":[],"fieldData":{"img":"uu`G{nc|^K`%{n[D~+!W"}}</data></block></value><value name="ADD1"><block type="screen_image_picker" id="`F+/z:fan-4hSQ:8g9^0"><field name="img">img`
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-`</field><data>{"commentRefs":[],"fieldData":{"img":"`F+/z:fan-4hSQ:8g9^0"}}</data></block></value><value name="ADD2"><block type="screen_image_picker" id="y-:V]ffH%/=cK_q=cF`F"><field name="img">img`
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-`</field><data>{"commentRefs":[],"fieldData":{"img":"y-:V]ffH%/=cK_q=cF`F"}}</data></block></value><value name="ADD3"><block type="screen_image_picker" id="]YJd!5CM@S2^vM,.gNSR"><field name="img">img`
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-`</field><data>{"commentRefs":[],"fieldData":{"img":"]YJd!5CM@S2^vM,.gNSR"}}</data></block></value><value name="ADD4"><block type="screen_image_picker" id="a:~9RwPEF8(7zzJ*Z7Nl"><field name="img">img`
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-`</field><data>{"commentRefs":[],"fieldData":{"img":"a:~9RwPEF8(7zzJ*Z7Nl"}}</data></block></value></block></value><next><block type="variables_set" id="Kut|H@h12V[_XzFJKriQ"><field name="VAR" id="~IlCt:]zyV1NBqUFAv;9">zergAssets</field><value name="VALUE"><shadow type="math_number" id="/^9Azc+])To*aq/UcFkQ"><field name="NUM">0</field></shadow><block type="lists_create_with" id="-{XIFfxInH/8_UOHLais" inline="false"><mutation items="5" horizontalafter="3"></mutation><value name="ADD0"><block type="screen_image_picker" id=")/[87Hcs@TDl6oK;6t8V"><field name="img">img`
+`</field><data>{"commentRefs":[],"fieldData":{"image":")1KMe{O,x;eWy`(atlM6"}}</data></block></value></block></value></block></next></block></statement></block><block type="pxt-on-start" id=")t)7i;+6}KTPxC0abEKj" x="-190" y="50"><statement name="HANDLER"><block type="function_call" id=")v{jdiDBq|B/h)u}:-24"><mutation name="initializeGame" functionid="HewW_6bXbaCZR{pw(a@T"></mutation></block></statement></block><block type="function_definition" id="0^S5UY73;}Ie3ZHS8dC}" x="1110" y="770"><mutation name="initializeZergAssets" functionid="(w]0*Ol+ix7qP|D7e;C="></mutation><field name="function_name">initializeZergAssets</field><statement name="STACK"><block type="variables_set" id="Kut|H@h12V[_XzFJKriQ"><field name="VAR" id="~IlCt:]zyV1NBqUFAv;9">zergAssets</field><value name="VALUE"><shadow type="math_number" id="/^9Azc+])To*aq/UcFkQ"><field name="NUM">0</field></shadow><block type="lists_create_with" id="-{XIFfxInH/8_UOHLais" inline="false"><mutation items="5" horizontalafter="3"></mutation><value name="ADD0"><block type="screen_image_picker" id=")/[87Hcs@TDl6oK;6t8V"><field name="img">img`
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
@@ -556,7 +415,92 @@ b a c c b 3 1 9 b 3 . b b
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
-`</field><data>{"commentRefs":[],"fieldData":{"img":"GF4+wWPN!9[.;Qll?D_H"}}</data></block></value></block></value><next><block type="variables_set" id="2n:A(Vf6(aa/.mt=X%D)"><field name="VAR" id="TDWG-L6rQti8e2696o?L">terranAssets</field><value name="VALUE"><shadow type="math_number" id="Vi.,l@yB{=G7Zu~(Ipo`"><field name="NUM">0</field></shadow><block type="lists_create_with" id="WsSE9E#o)r:vZPRDniS5" inline="false"><mutation items="5" horizontalafter="3"></mutation><value name="ADD0"><block type="screen_image_picker" id="Qzl7I_QwzJiOzqK-~F@!"><field name="img">img`
+`</field><data>{"commentRefs":[],"fieldData":{"img":"GF4+wWPN!9[.;Qll?D_H"}}</data></block></value></block></value><next><block type="variables_set" id="]:f*HVj4?V_Hv(J%ZTCA"><field name="VAR" id="f6-3xpvj@0@^jcHZ:g([">zergCombatAssets</field><value name="VALUE"><shadow type="math_number"><field name="NUM">0</field></shadow><block type="lists_create_with" id="Zv9%#(xDcF|-}1=l@Nf(" inline="false"><mutation items="5" horizontalafter="3"></mutation><value name="ADD0"><block type="screen_image_picker" id="YaXkn,f]*#5RcVfsj7xn"><field name="img">img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`</field><data>{"commentRefs":[],"fieldData":{"img":"YaXkn,f]*#5RcVfsj7xn"}}</data></block></value><value name="ADD1"><block type="screen_image_picker" id="AMfJ}UWH#yjE,de!(R}U"><field name="img">img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`</field><data>{"commentRefs":[],"fieldData":{"img":"AMfJ}UWH#yjE,de!(R}U"}}</data></block></value><value name="ADD2"><block type="screen_image_picker" id="{^$cgwCf-Eusy!%Nlc:2"><field name="img">img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`</field><data>{"commentRefs":[],"fieldData":{"img":"{^$cgwCf-Eusy!%Nlc:2"}}</data></block></value><value name="ADD3"><block type="screen_image_picker" id="!(Ip**$:`I(Z%#];CzpA"><field name="img">img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`</field><data>{"commentRefs":[],"fieldData":{"img":"!(Ip**$:`I(Z%#];CzpA"}}</data></block></value><value name="ADD4"><block type="screen_image_picker" id="f=Dumac-AwwrJ*+u4AvR"><field name="img">img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`</field><data>{"commentRefs":[],"fieldData":{"img":"f=Dumac-AwwrJ*+u4AvR"}}</data></block></value></block></value></block></next></block></statement></block><block type="function_definition" id="d%T[ocIvdaEI=SB0B:2!" x="1750" y="770"><mutation name="initializeTerranAssets" functionid="c=/gVh7:S]2us7aO-+(0"></mutation><field name="function_name">initializeTerranAssets</field><statement name="STACK"><block type="variables_set" id="2n:A(Vf6(aa/.mt=X%D)"><field name="VAR" id="TDWG-L6rQti8e2696o?L">terranAssets</field><value name="VALUE"><shadow type="math_number" id="Vi.,l@yB{=G7Zu~(Ipo`"><field name="NUM">0</field></shadow><block type="lists_create_with" id="WsSE9E#o)r:vZPRDniS5" inline="false"><mutation items="5" horizontalafter="3"></mutation><value name="ADD0"><block type="screen_image_picker" id="Qzl7I_QwzJiOzqK-~F@!"><field name="img">img`
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
@@ -641,4 +585,259 @@ b a c c b 3 1 9 b 3 . b b
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
-`</field><data>{"commentRefs":[],"fieldData":{"img":"$#!wzPn0~XZ3GJ+V.*w|"}}</data></block></value></block></value></block></next></block></next></block></next></block></next></block></next></block></next></block></next></block></statement></block><block type="pxt-on-start" id=")t)7i;+6}KTPxC0abEKj" x="-190" y="50"><statement name="HANDLER"><block type="function_call" id=")v{jdiDBq|B/h)u}:-24"><mutation name="initializeGame" functionid="HewW_6bXbaCZR{pw(a@T"></mutation></block></statement></block></xml>
+`</field><data>{"commentRefs":[],"fieldData":{"img":"$#!wzPn0~XZ3GJ+V.*w|"}}</data></block></value></block></value><next><block type="variables_set" id=".%@{-UfLh`l?ZKqM6uYr"><field name="VAR" id="].IyhCKW~ii}X01UrAfU">terranCombatAssets</field><value name="VALUE"><shadow type="math_number"><field name="NUM">0</field></shadow><block type="lists_create_with" id="4p2/Yg+){*YcH0E`rG;+" inline="false"><mutation items="5" horizontalafter="3"></mutation><value name="ADD0"><block type="screen_image_picker" id="MN~gi;NLfNHGIDR-2fW2"><field name="img">img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`</field><data>{"commentRefs":[],"fieldData":{"img":"MN~gi;NLfNHGIDR-2fW2"}}</data></block></value><value name="ADD1"><block type="screen_image_picker" id="5k(AHN8*Z+3fkovtTR]B"><field name="img">img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`</field><data>{"commentRefs":[],"fieldData":{"img":"5k(AHN8*Z+3fkovtTR]B"}}</data></block></value><value name="ADD2"><block type="screen_image_picker" id="ICXTg6$T~JTje9yU0eGJ"><field name="img">img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`</field><data>{"commentRefs":[],"fieldData":{"img":"ICXTg6$T~JTje9yU0eGJ"}}</data></block></value><value name="ADD3"><block type="screen_image_picker" id="wPIVw=0/W{9NI%mrkcIq"><field name="img">img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`</field><data>{"commentRefs":[],"fieldData":{"img":"wPIVw=0/W{9NI%mrkcIq"}}</data></block></value><value name="ADD4"><block type="screen_image_picker" id=":KAu+w6w{t3cb]:M`m@s"><field name="img">img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`</field><data>{"commentRefs":[],"fieldData":{"img":":KAu+w6w{t3cb]:M`m@s"}}</data></block></value></block></value></block></next></block></statement></block><block type="function_definition" id="K?2P5gpTR[@O0P9ucOor" x="2330" y="770"><mutation name="initializeProtossAssets" functionid="?qRdnzV;Mx0-9Ujj1uCY"></mutation><field name="function_name">initializeProtossAssets</field><statement name="STACK"><block type="variables_set" id="Qta4n.1)6r@oX%iU,UJ]"><field name="VAR" id="n=:j~$u0T;IfWqhGt*OO">protossAssets</field><value name="VALUE"><shadow type="math_number" id="94-=h.d/-3sd!)Gci0n8"><field name="NUM">0</field></shadow><block type="lists_create_with" id="b3mJWxKOm`tF{{$l}ekR" inline="false"><mutation items="5" horizontalafter="3"></mutation><value name="ADD0"><block type="screen_image_picker" id="uu`G{nc|^K`%{n[D~+!W"><field name="img">img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`</field><data>{"commentRefs":[],"fieldData":{"img":"uu`G{nc|^K`%{n[D~+!W"}}</data></block></value><value name="ADD1"><block type="screen_image_picker" id="`F+/z:fan-4hSQ:8g9^0"><field name="img">img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`</field><data>{"commentRefs":[],"fieldData":{"img":"`F+/z:fan-4hSQ:8g9^0"}}</data></block></value><value name="ADD2"><block type="screen_image_picker" id="y-:V]ffH%/=cK_q=cF`F"><field name="img">img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`</field><data>{"commentRefs":[],"fieldData":{"img":"y-:V]ffH%/=cK_q=cF`F"}}</data></block></value><value name="ADD3"><block type="screen_image_picker" id="]YJd!5CM@S2^vM,.gNSR"><field name="img">img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`</field><data>{"commentRefs":[],"fieldData":{"img":"]YJd!5CM@S2^vM,.gNSR"}}</data></block></value><value name="ADD4"><block type="screen_image_picker" id="a:~9RwPEF8(7zzJ*Z7Nl"><field name="img">img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`</field><data>{"commentRefs":[],"fieldData":{"img":"a:~9RwPEF8(7zzJ*Z7Nl"}}</data></block></value></block></value><next><block type="variables_set" id="#uyS=!D2_%RrUNI]U$yh"><field name="VAR" id="TP-]kD?l#d13Z4Dz-K+Q">protossCombatAssets</field><value name="VALUE"><shadow type="math_number"><field name="NUM">0</field></shadow><block type="lists_create_with" id="N^FXF}r@]Q~!#wT2)9ta" inline="false"><mutation items="5" horizontalafter="3"></mutation><value name="ADD0"><block type="screen_image_picker" id="Vm-O@*c|5[:=u#{y}uz^"><field name="img">img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`</field><data>{"commentRefs":[],"fieldData":{"img":"Vm-O@*c|5[:=u#{y}uz^"}}</data></block></value><value name="ADD1"><block type="screen_image_picker" id="emkR.FnT:#$TSR;Iaya!"><field name="img">img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`</field><data>{"commentRefs":[],"fieldData":{"img":"emkR.FnT:#$TSR;Iaya!"}}</data></block></value><value name="ADD2"><block type="screen_image_picker" id="ay2e}X,`.eX)[L4o2@K!"><field name="img">img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`</field><data>{"commentRefs":[],"fieldData":{"img":"ay2e}X,`.eX)[L4o2@K!"}}</data></block></value><value name="ADD3"><block type="screen_image_picker" id="k6ag:qq*xnNX`0AE2R}:"><field name="img">img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`</field><data>{"commentRefs":[],"fieldData":{"img":"k6ag:qq*xnNX`0AE2R}:"}}</data></block></value><value name="ADD4"><block type="screen_image_picker" id="INuW1)d;z=wEFA|?k]$z"><field name="img">img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`</field><data>{"commentRefs":[],"fieldData":{"img":"INuW1)d;z=wEFA|?k]$z"}}</data></block></value></block></value></block></next></block></statement></block></xml>
