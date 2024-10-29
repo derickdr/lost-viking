@@ -1,15 +1,25 @@
 namespace SpriteKind {
     export const Viking = SpriteKind.create()
     export const Shield = SpriteKind.create()
+    export const Plasma = SpriteKind.create()
 }
-function positionShield (invulnerable: boolean) {
-    // if invulnerable true
-    // > centre resulting shield on player
-    if (invulnerable == true) {
-        for (let value of sprites.allOfKind(SpriteKind.Player)) {
-            playerX = value.x
-            playerY = value.y
+function createProjectile (weapon: number) {
+    if (weapon == plasma2) {
+    	
+    } else if (weapon == plasma1) {
+    	
+    } else if (weapon == basic0) {
+        for (let value of sprites.allOfKind(SpriteKind.Viking)) {
+            for (let index = 0; index < 4; index++) {
+                leftPlasma = sprites.create(playerCombatAssets[3], SpriteKind.Plasma)
+                leftPlasma.setPosition(value.x + cannonOffset, value.y)
+                leftPlasma.vy = -50
+            }
         }
+    } else if (weapon == side1) {
+    	
+    } else if (weapon == side2) {
+    	
     }
 }
 function initializePlayer () {
@@ -17,6 +27,8 @@ function initializePlayer () {
     getThisGuyHome = sprites.create(playerAssets[1], SpriteKind.Viking)
     getThisGuyHome.setStayInScreen(true)
     getThisGuyHome.setPosition(80, 150)
+    // dev note:
+    // i gave up on the pixel art purism huhu leave me alone my fingers are old
     scaling.scaleToPercent(getThisGuyHome, 60, ScaleDirection.Uniformly, ScaleAnchor.Middle)
     createShield(notCausedByBomb)
     controller.moveSprite(getThisGuyHome, 80, 80)
@@ -207,10 +219,15 @@ function initializeTerranAssets () {
         `
     ]
 }
+controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+    createProjectile(weapon)
+})
 sprites.onDestroyed(SpriteKind.Shield, function (sprite) {
     invulnerable = false
 })
 function initializeGame () {
+    initializeConsts()
+    initializeTemp()
     loadGameAssets()
     initializePlayer()
 }
@@ -221,6 +238,12 @@ function initializeConsts () {
     leftThrusterY = 0
     rightThrusterX = 0
     rightThrusterY = 0
+    cannonOffset = 8
+    plasma2 = -2
+    plasma1 = -1
+    basic0 = 0
+    side1 = 1
+    side2 = 2
 }
 function createShield (cause: boolean) {
     for (let value of sprites.allOfKind(SpriteKind.Viking)) {
@@ -728,6 +751,8 @@ function initializeTemp () {
     invulnerable = false
     playerX = 0
     playerY = 0
+    weapon = 0
+    spawnOffset = 0
 }
 function initializeProtossAssets () {
     protossAssets = [
@@ -1019,9 +1044,11 @@ let particles2: Image[] = []
 let supportAssets: Image[] = []
 let protossCombatAssets: Image[] = []
 let protossAssets: Image[] = []
+let spawnOffset = 0
+let playerY = 0
+let playerX = 0
 let zergCombatAssets: Image[] = []
 let zergAssets: Image[] = []
-let playerCombatAssets: Image[] = []
 let shieldSprite: Sprite = null
 let rightThrusterY = 0
 let rightThrusterX = 0
@@ -1029,14 +1056,21 @@ let leftThrusterY = 0
 let leftThrusterX = 0
 let causedByBomb = false
 let invulnerable = false
+let weapon = 0
 let terranCombatAssets: Image[] = []
 let terranAssets: Image[] = []
 let notCausedByBomb = false
 let playerAssets: Image[] = []
 let getThisGuyHome: Sprite = null
-let playerY = 0
-let playerX = 0
+let cannonOffset = 0
+let playerCombatAssets: Image[] = []
+let leftPlasma: Sprite = null
+let side2 = 0
+let side1 = 0
+let basic0 = 0
+let plasma1 = 0
+let plasma2 = 0
 initializeGame()
 forever(function () {
-    positionShield(invulnerable)
+	
 })
