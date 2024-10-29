@@ -7,6 +7,135 @@ namespace SpriteKind {
     export const Drone = SpriteKind.create()
     export const DroneRocket = SpriteKind.create()
     export const BasicEnemy = SpriteKind.create()
+    export const SplashText = SpriteKind.create()
+    export const UI = SpriteKind.create()
+}
+function introSplashText () {
+    textDelay = 800
+    timer.after(textDelay, function () {
+        introText1 = textsprite.create("You, Mighty Viking,", 0, 1)
+        introText1.setKind(SpriteKind.SplashText)
+        introText1.setPosition(80, 14)
+        timer.after(textDelay, function () {
+            introText2 = textsprite.create("are lost!!! Find your", 0, 1)
+            introText2.setKind(SpriteKind.SplashText)
+            introText2.setPosition(80, 30)
+            timer.after(textDelay, function () {
+                introText3 = textsprite.create("way home to Vikingville,", 0, 1)
+                introText3.setKind(SpriteKind.SplashText)
+                introText3.setPosition(80, 46)
+                timer.after(textDelay, function () {
+                    introText4 = textsprite.create("but beware the Evil", 0, 1)
+                    introText4.setKind(SpriteKind.SplashText)
+                    introText4.setPosition(80, 60)
+                    timer.after(textDelay, function () {
+                        introText5 = textsprite.create("Terra-Tron!!!", 0, 4)
+                        introText5.setKind(SpriteKind.SplashText)
+                        introText5.setPosition(80, 76)
+                        timer.after(textDelay, function () {
+                            introText6 = sprites.create(img`
+                                2..2.2222....222...222...2222...22.....2..2..222..22222....2.....222..2..2..2222....2...2..222...2..2..2...2...2
+                                2..2.2.......2..2.2...2..2.....2..2....22.2.2...2...2......2......2...2.2...2.......2...2.2...2..2..2..2...2...2
+                                2222.222.....2..2.2...2..222....2......2.22.2...2...2......2......2...22....222......2.2..2...2..2..2..2...2...2
+                                2..2.2.......2..2.2...2..2.......2.....2..2.2...2...2......2......2...2.2...2.........2...2...2..2..2..2...2...2
+                                2..2.2.......2..2.2...2..2.....2..2....2..2.2...2...2......2......2...2..2..2.........2...2...2..2..2...........
+                                2..2.2222....222...222...2222...22.....2..2..222....2......2222..222..2..2..2222......2....222....22...2...2...2
+                                `, SpriteKind.SplashText)
+                            animation.runImageAnimation(
+                            introText6,
+                            [img`
+                                2..2.2222....222...222...2222...22.....2..2..222..22222....2.....222..2..2..2222....2...2..222...2..2..2...2...2
+                                2..2.2.......2..2.2...2..2.....2..2....22.2.2...2...2......2......2...2.2...2.......2...2.2...2..2..2..2...2...2
+                                2222.222.....2..2.2...2..222....2......2.22.2...2...2......2......2...22....222......2.2..2...2..2..2..2...2...2
+                                2..2.2.......2..2.2...2..2.......2.....2..2.2...2...2......2......2...2.2...2.........2...2...2..2..2..2...2...2
+                                2..2.2.......2..2.2...2..2.....2..2....2..2.2...2...2......2......2...2..2..2.........2...2...2..2..2...........
+                                2..2.2222....222...222...2222...22.....2..2..222....2......2222..222..2..2..2222......2....222....22...2...2...2
+                                `,img`
+                                ................................................................................................................
+                                ................................................................................................................
+                                ................................................................................................................
+                                ................................................................................................................
+                                ................................................................................................................
+                                ................................................................................................................
+                                `],
+                            750,
+                            true
+                            )
+                            scaling.scaleToPercent(introText6, 120, ScaleDirection.Uniformly, ScaleAnchor.Middle)
+                            introText6.setPosition(80, 92)
+                            timer.after(2000, function () {
+                                aButtonSprite = sprites.create(img`
+                                    . . . . 6 6 6 6 6 6 6 . . . . 
+                                    . . 6 6 7 7 7 7 7 7 7 6 6 . . 
+                                    . 6 6 7 7 7 8 8 8 7 7 7 6 6 . 
+                                    . 6 7 7 7 8 8 7 8 8 7 7 7 6 . 
+                                    . c 7 7 8 8 8 8 8 8 8 7 7 c . 
+                                    . c 9 7 8 7 7 7 7 7 8 7 9 c . 
+                                    . c 9 9 7 7 7 7 7 7 7 9 9 c . 
+                                    . c 6 6 9 9 9 9 9 9 9 6 6 c . 
+                                    c c 6 6 6 6 6 6 6 6 6 6 6 c c 
+                                    c d c c 6 6 6 6 6 6 6 c c d c 
+                                    c d d d c c c c c c c d d d c 
+                                    c c b d d d d d d d d d b c c 
+                                    c c c c c b b b b b c c c c c 
+                                    c c b b b b b b b b b b b c c 
+                                    . c c b b b b b b b b b c c . 
+                                    . . . c c c c c c c c c . . . 
+                                    `, SpriteKind.UI)
+                                aButtonSprite.setPosition(84, 108)
+                                animation.runImageAnimation(
+                                aButtonSprite,
+                                [img`
+                                    . . . . 6 6 6 6 6 6 6 . . . . 
+                                    . . 6 6 7 7 7 7 7 7 7 6 6 . . 
+                                    . 6 6 7 7 7 8 8 8 7 7 7 6 6 . 
+                                    . 6 7 7 7 8 8 7 8 8 7 7 7 6 . 
+                                    . c 7 7 8 8 8 8 8 8 8 7 7 c . 
+                                    . c 9 7 8 7 7 7 7 7 8 7 9 c . 
+                                    . c 9 9 7 7 7 7 7 7 7 9 9 c . 
+                                    . c 6 6 9 9 9 9 9 9 9 6 6 c . 
+                                    c c 6 6 6 6 6 6 6 6 6 6 6 c c 
+                                    c d c c 6 6 6 6 6 6 6 c c d c 
+                                    c d d d c c c c c c c d d d c 
+                                    c c b d d d d d d d d d b c c 
+                                    c c c c c b b b b b c c c c c 
+                                    c c b b b b b b b b b b b c c 
+                                    . c c b b b b b b b b b c c . 
+                                    . . . c c c c c c c c c . . . 
+                                    `,img`
+                                    . . . . . . . . . . . . . . . 
+                                    . . . . . . . . . . . . . . . 
+                                    . . . . 6 6 6 6 6 6 6 . . . . 
+                                    . . 6 6 7 7 7 7 7 7 7 6 6 . . 
+                                    . 6 6 7 7 7 8 8 8 7 7 7 6 6 . 
+                                    . 6 7 7 7 8 8 7 8 8 7 7 7 6 . 
+                                    . e 7 7 8 8 8 8 8 8 8 7 7 e . 
+                                    . c 9 7 8 7 7 7 7 7 8 7 9 c . 
+                                    c c 9 9 7 7 7 7 7 7 7 9 9 c c 
+                                    c d c c 9 9 9 9 9 9 9 c c d c 
+                                    c d d d c c c c c c c d d d c 
+                                    c c b d d d d d d d d d b c c 
+                                    c c c c c b b b b b c c c c c 
+                                    c c b b b b b b b b b b b c c 
+                                    . c c b b b b b b b b b c c . 
+                                    . . . c c c c c c c c c . . . 
+                                    `],
+                                150,
+                                true
+                                )
+                                continueText = textsprite.create("BEGIN", 0, 7)
+                                continueText.setPosition(59, 108)
+                                continueText.setKind(SpriteKind.SplashText)
+                                continueText = textsprite.create("GAME", 0, 7)
+                                continueText.setPosition(105, 108)
+                                continueText.setKind(SpriteKind.SplashText)
+                            })
+                        })
+                    })
+                })
+            })
+        })
+    })
 }
 function createRocket2 () {
     for (let value of sprites.allOfKind(SpriteKind.Viking)) {
@@ -73,11 +202,28 @@ function createPlasma2 () {
     }
 }
 function loadMap (lvl: number) {
-    scene.setBackgroundImage(backdrops._pickRandom())
+    if (lvl == 0) {
+        introSplashText()
+    } else if (lvl == 1) {
+        scene.setBackgroundImage(backdrops._pickRandom())
+        if (playing == false) {
+            initializePlayer()
+        }
+    } else if (lvl == 2) {
+        scene.setBackgroundImage(backdrops._pickRandom())
+        if (playing == false) {
+            initializePlayer()
+        }
+    } else if (lvl == 3) {
+        scene.setBackgroundImage(backdrops._pickRandom())
+        if (playing == false) {
+            initializePlayer()
+        }
+    }
 }
 function frontBlast (x: number, y: number) {
     for (let index = 0; index < 6; index++) {
-        blastFire = sprites.create(particles2[randint(4, 5)], SpriteKind.Effect)
+        blastFire = sprites.create(particles2[colorPaths[fireColor]._pickRandom()], SpriteKind.Effect)
         blastFire.setVelocity(randint(-50, 50), randint(-10, 20))
         blastFire.setPosition(x + randint(-2, 2), y + randint(-2, 2))
         blastFire.lifespan = randint(200, 300)
@@ -304,7 +450,15 @@ function initializeTerranAssets () {
     ]
 }
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-    createProjectile(weapon)
+    if (currentStage > 0) {
+        createProjectile(weapon)
+    } else {
+        sprites.destroyAllSpritesOfKind(SpriteKind.SplashText)
+        sprites.destroyAllSpritesOfKind(SpriteKind.UI)
+        currentStage = 1
+        loadMap(currentStage)
+        playing = true
+    }
 })
 sprites.onDestroyed(SpriteKind.Shield, function (sprite) {
     invulnerable = false
@@ -326,12 +480,11 @@ function backBlast (x: number, y: number) {
     })
 }
 function initializeGame () {
+    loadMap(currentStage)
     initializeConsts()
     initializeTemp()
     loadGameAssets()
-    initializePlayer()
     loadMapAssets()
-    loadMap(currentStage)
 }
 function createPlasma1 () {
     for (let value of sprites.allOfKind(SpriteKind.Viking)) {
@@ -1484,6 +1637,7 @@ function initializeTemp () {
     scoreTotal = 0
     sessionHighScore = 0
     bombTotal = 0
+    playing = false
 }
 function initializeProtossAssets () {
     protossAssets = [
@@ -1910,19 +2064,20 @@ let basicEnemyValue = 0
 let enemyProojectileLifespan = 0
 let thrusterOffset = 0
 let causedByBomb = false
-let currentStage = 0
-let fireColor = 0
-let colorPaths: number[][] = []
 let invulnerable = false
 let weapon = 0
+let currentStage = 0
 let terranCombatAssets: Image[] = []
 let terranAssets: Image[] = []
 let notCausedByBomb = false
 let playerAssets: Image[] = []
 let senseiDerick: Sprite = null
 let projectile: Sprite = null
+let fireColor = 0
+let colorPaths: number[][] = []
 let particles2: Image[] = []
 let blastFire: Sprite = null
+let playing = false
 let backdrops: Image[] = []
 let plasma: Sprite = null
 let playerProjectileLifespan = 0
@@ -1940,6 +2095,15 @@ let playerCombatAssets: Image[] = []
 let rocketSprite: Sprite = null
 let cannonOffset = 0
 let spawnOffset = 0
+let continueText: TextSprite = null
+let aButtonSprite: Sprite = null
+let introText6: Sprite = null
+let introText5: TextSprite = null
+let introText4: TextSprite = null
+let introText3: TextSprite = null
+let introText2: TextSprite = null
+let introText1: TextSprite = null
+let textDelay = 0
 initializeGame()
 forever(function () {
     createVikingThrusterTrail()
