@@ -487,6 +487,9 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         playing = true
     }
 })
+sprites.onOverlap(SpriteKind.Plasma, SpriteKind.Edge, function (sprite, otherSprite) {
+    sprites.destroy(sprite)
+})
 sprites.onDestroyed(SpriteKind.Shield, function (sprite) {
     invulnerable = false
 })
@@ -1020,6 +1023,10 @@ function loadMapAssets () {
         f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f 
         `, SpriteKind.Edge)
     edgeSprite.y = 161
+    edgeSprite = sprites.create(img`
+        f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f 
+        `, SpriteKind.Edge)
+    edgeSprite.y = -8
 }
 function createShield (cause: boolean) {
     for (let value of sprites.allOfKind(SpriteKind.Viking)) {
@@ -1100,6 +1107,9 @@ function createRocket1 () {
         }
     }
 }
+sprites.onOverlap(SpriteKind.Rocket, SpriteKind.Edge, function (sprite, otherSprite) {
+    sprites.destroy(sprite)
+})
 function sideBlast (x: number, y: number) {
     for (let index = 0; index < 4; index++) {
         blastFire = sprites.create(particles2[colorPaths[fireColor]._pickRandom()], SpriteKind.Effect)
@@ -1378,6 +1388,9 @@ function createDroneTrails () {
         thrusterFire.lifespan = randint(10, 30)
     }
 }
+sprites.onOverlap(SpriteKind.DroneRocket, SpriteKind.Edge, function (sprite, otherSprite) {
+    sprites.destroy(sprite)
+})
 function radialBlast (x: number, y: number) {
     backBlast(x, y)
     sideBlast(x, y)
