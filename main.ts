@@ -3,6 +3,7 @@ namespace SpriteKind {
     export const Shield = SpriteKind.create()
     export const Plasma = SpriteKind.create()
     export const Rocket = SpriteKind.create()
+    export const Effect = SpriteKind.create()
 }
 function createRocket2 () {
     for (let value of sprites.allOfKind(SpriteKind.Viking)) {
@@ -75,7 +76,7 @@ function initializePlayer () {
     // i gave up on the pixel art purism huhu leave me alone my fingers are old
     scaling.scaleToPercent(getThisGuyHome, 60, ScaleDirection.Uniformly, ScaleAnchor.Middle)
     createShield(notCausedByBomb)
-    controller.moveSprite(getThisGuyHome, 80, 80)
+    controller.moveSprite(getThisGuyHome, 10, 80)
 }
 function initializeTerranAssets () {
     terranAssets = [
@@ -286,10 +287,7 @@ function createPlasma1 () {
 function initializeConsts () {
     causedByBomb = true
     notCausedByBomb = false
-    leftThrusterX = 0
-    leftThrusterY = 0
-    rightThrusterX = 0
-    rightThrusterY = 0
+    thrusterOffset = 3
     cannonOffset = 4
     plasma2 = -2
     plasma1 = -1
@@ -298,6 +296,11 @@ function initializeConsts () {
     side2 = 2
     rocketVY = -100
     sideRocketVX = 50
+}
+function createRocketTrails () {
+    for (let value of sprites.allOfKind(SpriteKind.Rocket)) {
+    	
+    }
 }
 function createShield (cause: boolean) {
     for (let value of sprites.allOfKind(SpriteKind.Viking)) {
@@ -372,6 +375,44 @@ function createRocket1 () {
             spawnOffset = spawnOffset * -1
             spawnVX = spawnVX * -1
             increment1 += 1
+        }
+    }
+}
+function createVikingThrusterTrail () {
+    for (let value of sprites.allOfKind(SpriteKind.Viking)) {
+        if (value.vx == 0) {
+            thrusterEffectOffset = thrusterOffset
+            for (let index = 0; index < 2; index++) {
+                thrusterFire = sprites.create(particles2[randint(3, 5)], SpriteKind.Effect)
+                thrusterFire.setVelocity(randint(-40, 40), 75)
+                thrusterFire.lifespan = randint(100, 200)
+                thrusterFire.setPosition(value.x + thrusterEffectOffset, value.y + 5)
+                thrusterEffectOffset = thrusterEffectOffset * -1
+            }
+        } else if (value.vx > 0) {
+            thrusterFire = sprites.create(particles2[randint(4, 5)], SpriteKind.Effect)
+            thrusterFire.setVelocity(randint(-40, 40), 75)
+            thrusterFire.lifespan = randint(100, 200)
+            thrusterFire.setPosition(value.x - thrusterEffectOffset, value.y + 5)
+            for (let index = 0; index < 2; index++) {
+                thrusterFire = sprites.create(particles2[randint(3, 5)], SpriteKind.Effect)
+                thrusterFire.setVelocity(randint(-40, 40), 75)
+                thrusterFire.lifespan = randint(100, 200)
+                thrusterFire.setPosition(value.x + thrusterEffectOffset, value.y + 5)
+                thrusterEffectOffset = thrusterEffectOffset * -1
+            }
+        } else if (value.vx < 0) {
+            thrusterFire = sprites.create(particles2[randint(4, 5)], SpriteKind.Effect)
+            thrusterFire.setVelocity(randint(-40, 40), 75)
+            thrusterFire.lifespan = randint(100, 200)
+            thrusterFire.setPosition(value.x + thrusterEffectOffset, value.y + 5)
+            for (let index = 0; index < 2; index++) {
+                thrusterFire = sprites.create(particles2[randint(3, 5)], SpriteKind.Effect)
+                thrusterFire.setVelocity(randint(-40, 40), 75)
+                thrusterFire.lifespan = randint(100, 200)
+                thrusterFire.setPosition(value.x + thrusterEffectOffset, value.y + 5)
+                thrusterEffectOffset = thrusterEffectOffset * -1
+            }
         }
     }
 }
@@ -1124,14 +1165,17 @@ function createBasic () {
         spawnOffset = cannonOffset
         for (let index = 0; index < 2; index++) {
             rocketSprite = sprites.create(playerCombatAssets[0], SpriteKind.Rocket)
+            scaling.scaleToPercent(rocketSprite, 80, ScaleDirection.Uniformly, ScaleAnchor.Middle)
             rocketSprite.setPosition(value.x + spawnOffset, value.y - 4)
             rocketSprite.vy = -110
             spawnOffset = spawnOffset * -1
         }
     }
 }
+function createTrailEffects () {
+    createRocketTrails()
+}
 let gameUIAssets: Image[] = []
-let particles2: Image[] = []
 let supportAssets: Image[] = []
 let protossCombatAssets: Image[] = []
 let protossAssets: Image[] = []
@@ -1139,11 +1183,11 @@ let playerY = 0
 let playerX = 0
 let zergCombatAssets: Image[] = []
 let zergAssets: Image[] = []
+let particles2: Image[] = []
+let thrusterFire: Sprite = null
+let thrusterEffectOffset = 0
 let shieldSprite: Sprite = null
-let rightThrusterY = 0
-let rightThrusterX = 0
-let leftThrusterY = 0
-let leftThrusterX = 0
+let thrusterOffset = 0
 let causedByBomb = false
 let invulnerable = false
 let weapon = 0
@@ -1169,5 +1213,6 @@ let cannonOffset = 0
 let spawnOffset = 0
 initializeGame()
 forever(function () {
-	
+    createVikingThrusterTrail()
+    createTrailEffects()
 })
