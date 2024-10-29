@@ -1878,16 +1878,25 @@ function createSpaceDust (lvl: number) {
             stardustSprite = sprites.create(particles2[colorPaths[starColor]._pickRandom()], SpriteKind.BackgroundElement)
             stardustSprite.setPosition(randint(0, 160), 0)
             stardustSprite.vy = randint(10, 30)
+            stardustSprite.lifespan = 15000
+        }
+        if (Math.percentChance(3)) {
+            stardustSprite = sprites.create(particles2[colorPaths[starColor]._pickRandom()], SpriteKind.BackgroundElement)
+            stardustSprite.setPosition(randint(0, 160), 0)
+            stardustSprite.vy = randint(1, 10)
+            stardustSprite.lifespan = 25000
         }
         if (Math.percentChance(3)) {
             stardustSprite = sprites.create(particles2[colorPaths[starColor]._pickRandom()], SpriteKind.BackgroundElement)
             stardustSprite.setPosition(randint(0, 160), 0)
             stardustSprite.vy = randint(20, 60)
+            stardustSprite.lifespan = 5000
         }
         if (Math.percentChance(3)) {
             stardustSprite = sprites.create(particles2[colorPaths[starColor]._pickRandom()], SpriteKind.BackgroundElement)
             stardustSprite.setPosition(randint(0, 160), 0)
             stardustSprite.vy = randint(10, 15)
+            stardustSprite.lifespan = 25000
         }
     }
 }
