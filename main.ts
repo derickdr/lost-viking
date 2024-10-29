@@ -41,9 +41,9 @@ function createRocket2 () {
 }
 function createProjectile (weapon: number) {
     if (weapon == plasma2) {
-        createPlasma1()
-    } else if (weapon == plasma1) {
         createPlasma2()
+    } else if (weapon == plasma1) {
+        createPlasma1()
     } else if (weapon == basic0) {
         createBasic()
     } else if (weapon == side1) {
@@ -379,6 +379,14 @@ function createRocket1 () {
             spawnVX = spawnVX * -1
             increment1 += 1
         }
+    }
+}
+function createPlasmaTrails () {
+    for (let value of sprites.allOfKind(SpriteKind.Plasma)) {
+        thrusterFire = sprites.create(particles2[randint(0, 3)], SpriteKind.Player)
+        thrusterFire.setVelocity(randint(-20, 20), 50)
+        thrusterFire.setPosition(value.x, value.y)
+        thrusterFire.lifespan = randint(10, 30)
     }
 }
 function createVikingThrusterTrail () {
@@ -1177,6 +1185,7 @@ function createBasic () {
 }
 function createTrailEffects () {
     createRocketTrails()
+    createPlasmaTrails()
 }
 let gameUIAssets: Image[] = []
 let supportAssets: Image[] = []
