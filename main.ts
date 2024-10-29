@@ -4,9 +4,13 @@ namespace SpriteKind {
     export const Plasma = SpriteKind.create()
     export const Rocket = SpriteKind.create()
     export const Effect = SpriteKind.create()
+    export const Drone = SpriteKind.create()
+    export const DroneRocket = SpriteKind.create()
+    export const BasicEnemy = SpriteKind.create()
 }
 function createRocket2 () {
     for (let value of sprites.allOfKind(SpriteKind.Viking)) {
+        music.play(music.melodyPlayable(music.knock), music.PlaybackMode.InBackground)
         spawnOffset = cannonOffset
         for (let index = 0; index < 2; index++) {
             rocketSprite = sprites.create(playerCombatAssets[0], SpriteKind.Rocket)
@@ -57,6 +61,7 @@ sprites.onCreated(SpriteKind.Rocket, function (sprite) {
 })
 function createPlasma2 () {
     for (let value of sprites.allOfKind(SpriteKind.Viking)) {
+        music.play(music.melodyPlayable(music.pewPew), music.PlaybackMode.InBackground)
         spawnOffset = cannonOffset
         for (let index = 0; index < 2; index++) {
             plasma = sprites.create(playerCombatAssets[3], SpriteKind.Plasma)
@@ -278,6 +283,7 @@ function initializeGame () {
 }
 function createPlasma1 () {
     for (let value of sprites.allOfKind(SpriteKind.Viking)) {
+        music.play(music.melodyPlayable(music.pewPew), music.PlaybackMode.InBackground)
         plasma = sprites.create(playerCombatAssets[3], SpriteKind.Plasma)
         scaling.scaleToPercent(plasma, 50, ScaleDirection.Uniformly, ScaleAnchor.Middle)
         plasma.setPosition(value.x, value.y - 8)
@@ -308,7 +314,8 @@ function createRocketTrails () {
 function createShield (cause: boolean) {
     for (let value of sprites.allOfKind(SpriteKind.Viking)) {
         shieldSprite = sprites.create(playerCombatAssets[4], SpriteKind.Shield)
-        shieldSprite.follow(value, 300)
+        shieldSprite.setFlag(SpriteFlag.GhostThroughWalls, true)
+        shieldSprite.follow(value, 400)
         invulnerable = true
         if (cause == notCausedByBomb) {
             shieldSprite.lifespan = 4000
@@ -360,6 +367,7 @@ sprites.onCreated(SpriteKind.Plasma, function (sprite) {
 })
 function createRocket1 () {
     for (let value of sprites.allOfKind(SpriteKind.Viking)) {
+        music.play(music.melodyPlayable(music.knock), music.PlaybackMode.InBackground)
         spawnOffset = cannonOffset
         for (let index = 0; index < 2; index++) {
             rocketSprite = sprites.create(playerCombatAssets[0], SpriteKind.Rocket)
@@ -381,6 +389,10 @@ function createRocket1 () {
         }
     }
 }
+sprites.onOverlap(SpriteKind.DroneRocket, SpriteKind.BasicEnemy, function (sprite, otherSprite) {
+    sprites.destroy(sprite)
+    sprites.destroy(otherSprite, effects.fire, 100)
+})
 function createPlasmaTrails () {
     for (let value of sprites.allOfKind(SpriteKind.Plasma)) {
         thrusterFire = sprites.create(particles2[randint(0, 3)], SpriteKind.Player)
@@ -396,37 +408,41 @@ function createVikingThrusterTrail () {
             for (let index = 0; index < 2; index++) {
                 thrusterFire = sprites.create(particles2[randint(3, 5)], SpriteKind.Effect)
                 thrusterFire.setVelocity(randint(-40, 40), 75)
-                thrusterFire.lifespan = randint(60, 150)
+                thrusterFire.lifespan = randint(30, 100)
                 thrusterFire.setPosition(value.x + thrusterEffectOffset, value.y + 5)
                 thrusterEffectOffset = thrusterEffectOffset * -1
             }
         } else if (value.vx > 0) {
             thrusterFire = sprites.create(particles2[randint(4, 5)], SpriteKind.Effect)
             thrusterFire.setVelocity(randint(-40, 40), 75)
-            thrusterFire.lifespan = randint(60, 150)
+            thrusterFire.lifespan = randint(30, 100)
             thrusterFire.setPosition(value.x - thrusterEffectOffset, value.y + 5)
             for (let index = 0; index < 2; index++) {
                 thrusterFire = sprites.create(particles2[randint(3, 5)], SpriteKind.Effect)
                 thrusterFire.setVelocity(randint(-40, 40), 75)
-                thrusterFire.lifespan = randint(60, 150)
+                thrusterFire.lifespan = randint(30, 100)
                 thrusterFire.setPosition(value.x + thrusterEffectOffset, value.y + 5)
                 thrusterEffectOffset = thrusterEffectOffset * -1
             }
         } else if (value.vx < 0) {
             thrusterFire = sprites.create(particles2[randint(4, 5)], SpriteKind.Effect)
             thrusterFire.setVelocity(randint(-40, 40), 75)
-            thrusterFire.lifespan = randint(60, 150)
+            thrusterFire.lifespan = randint(30, 100)
             thrusterFire.setPosition(value.x + thrusterEffectOffset, value.y + 5)
             for (let index = 0; index < 2; index++) {
                 thrusterFire = sprites.create(particles2[randint(3, 5)], SpriteKind.Effect)
                 thrusterFire.setVelocity(randint(-40, 40), 75)
-                thrusterFire.lifespan = randint(60, 150)
+                thrusterFire.lifespan = randint(30, 100)
                 thrusterFire.setPosition(value.x + thrusterEffectOffset, value.y + 5)
                 thrusterEffectOffset = thrusterEffectOffset * -1
             }
         }
     }
 }
+sprites.onOverlap(SpriteKind.Rocket, SpriteKind.BasicEnemy, function (sprite, otherSprite) {
+    sprites.destroy(sprite)
+    sprites.destroy(otherSprite, effects.fire, 100)
+})
 function initializeZergAssets () {
     zergAssets = [
     img`
@@ -612,6 +628,22 @@ function initializeZergAssets () {
         . . . . . . . . . . . . . . . . 
         `
     ]
+}
+function createDroneTrails () {
+    for (let value of sprites.allOfKind(SpriteKind.Drone)) {
+        thrusterFire = sprites.create(particles2[0], SpriteKind.Drone)
+        thrusterFire.setVelocity(randint(-10, 10), 30)
+        thrusterFire.setPosition(value.x, value.y)
+        thrusterFire.lifespan = randint(10, 30)
+    }
+}
+function createDroneRocketTrails () {
+    for (let value of sprites.allOfKind(SpriteKind.DroneRocket)) {
+        thrusterFire = sprites.create(particles2[randint(0, 1)], SpriteKind.Effect)
+        thrusterFire.setVelocity(randint(-20, 20), 50)
+        thrusterFire.setPosition(value.x, value.y)
+        thrusterFire.lifespan = 10
+    }
 }
 function initializePlayerAssets () {
     // 0 - placeholder
@@ -885,26 +917,27 @@ function initializeTemp () {
     playerY = 0
     weapon = 0
     spawnOffset = 0
+    dronesActive = 0
 }
 function initializeProtossAssets () {
     protossAssets = [
     img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
+        . . . . . . b b b . . . . . . . 
+        . . . . . . b d b . . . . . . . 
+        . . . . . . 5 d 5 . . . . . . . 
+        . . . . . . 5 d 5 . . . . . . . 
+        . . . . 4 4 5 d 5 4 4 . . . . . 
+        . b b b b b 5 d 5 b b b b b . . 
+        . 5 5 d d d 5 d 5 d d d 5 5 . . 
+        . . . d d d 5 d 5 d d d . . . . 
+        . . . . . d d d d d . . . . . . 
+        . . . . . d 5 d 5 d . . . . . . 
+        . . . . . . 5 d 5 . . . . . . . 
+        . . . . . . 5 d 5 . . . . . . . 
+        . . . . . . 5 d 5 . . . . . . . 
+        . . . . . . 6 9 6 . . . . . . . 
+        . . . . . . 5 9 5 . . . . . . . 
+        . . . . . . . d . . . . . . . . 
         `,
     img`
         . . . . . . . . . . . . . . . . 
@@ -1171,8 +1204,13 @@ function loadGameAssets () {
     initializeTerranAssets()
     initializeProtossAssets()
 }
+sprites.onOverlap(SpriteKind.Plasma, SpriteKind.BasicEnemy, function (sprite, otherSprite) {
+    sprites.destroy(sprite)
+    sprites.destroy(otherSprite, effects.disintegrate, 100)
+})
 function createBasic () {
     for (let value of sprites.allOfKind(SpriteKind.Viking)) {
+        music.play(music.melodyPlayable(music.knock), music.PlaybackMode.InBackground)
         spawnOffset = cannonOffset
         for (let index = 0; index < 2; index++) {
             rocketSprite = sprites.create(playerCombatAssets[0], SpriteKind.Rocket)
@@ -1185,12 +1223,16 @@ function createBasic () {
 }
 function createTrailEffects () {
     createRocketTrails()
+    createDroneTrails()
     createPlasmaTrails()
+    createDroneRocketTrails()
 }
+let projectile: Sprite = null
 let gameUIAssets: Image[] = []
 let supportAssets: Image[] = []
 let protossCombatAssets: Image[] = []
 let protossAssets: Image[] = []
+let dronesActive = 0
 let playerY = 0
 let playerX = 0
 let zergCombatAssets: Image[] = []
@@ -1224,6 +1266,29 @@ let rocketSprite: Sprite = null
 let cannonOffset = 0
 let spawnOffset = 0
 initializeGame()
+game.onUpdateInterval(1000, function () {
+    projectile = sprites.createProjectileFromSide(img`
+        . . . . . . b b b . . . . . . . 
+        . . . . . . b d b . . . . . . . 
+        . . . . . . 5 d 5 . . . . . . . 
+        . . . . . . 5 d 5 . . . . . . . 
+        . . . . 4 4 5 d 5 4 4 . . . . . 
+        . b b b b b 5 d 5 b b b b b . . 
+        . 5 5 d d d 5 d 5 d d d 5 5 . . 
+        . . . d d d 5 d 5 d d d . . . . 
+        . . . . . d d d d d . . . . . . 
+        . . . . . d 5 d 5 d . . . . . . 
+        . . . . . . 5 d 5 . . . . . . . 
+        . . . . . . 5 d 5 . . . . . . . 
+        . . . . . . 5 d 5 . . . . . . . 
+        . . . . . . 6 9 6 . . . . . . . 
+        . . . . . . 5 9 5 . . . . . . . 
+        . . . . . . . d . . . . . . . . 
+        `, 50, 0)
+    projectile.y = 35
+    projectile.lifespan = 3000
+    projectile.setKind(SpriteKind.BasicEnemy)
+})
 forever(function () {
     createVikingThrusterTrail()
     createTrailEffects()
