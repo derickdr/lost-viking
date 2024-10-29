@@ -808,6 +808,7 @@ function createShield (cause: boolean) {
     for (let value of sprites.allOfKind(SpriteKind.Viking)) {
         shieldSprite = sprites.create(playerCombatAssets[4], SpriteKind.Shield)
         shieldSprite.setFlag(SpriteFlag.GhostThroughWalls, true)
+        shieldSprite.setPosition(value.x, value.y)
         shieldSprite.follow(value, 400)
         invulnerable = true
         if (cause == notCausedByBomb) {
@@ -1721,9 +1722,18 @@ function loadGameAssets () {
     3,
     4
     ],
-    [0, 0],
-    [0, 0],
-    [0, 0]
+    [
+    0,
+    2,
+    7,
+    9,
+    10,
+    11
+    ],
+    [3],
+    [7, 8],
+    [1],
+    [0, 1]
     ]
     // 0 - white
     // 1 - red
@@ -1828,10 +1838,15 @@ function createBasic () {
     }
 }
 function createTrailEffects () {
-    createRocketTrails()
-    createDroneTrails()
-    createPlasmaTrails()
-    createDroneRocketTrails()
+    if (weapon >= 0) {
+        createRocketTrails()
+    } else {
+        createPlasmaTrails()
+    }
+    if (droneTotal > 0) {
+        createDroneTrails()
+        createDroneRocketTrails()
+    }
 }
 sprites.onCreated(SpriteKind.DroneRocket, function (sprite) {
     sprite.lifespan = playerProjectileLifespan
