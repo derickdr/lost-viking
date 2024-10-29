@@ -83,6 +83,29 @@ function frontBlast (x: number, y: number) {
         blastFire.lifespan = randint(200, 300)
     }
 }
+controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
+    projectile = sprites.createProjectileFromSide(img`
+        . . . . . . b b b . . . . . . . 
+        . . . . . . b d b . . . . . . . 
+        . . . . . . 5 d 5 . . . . . . . 
+        . . . . . . 5 d 5 . . . . . . . 
+        . . . . 4 4 5 d 5 4 4 . . . . . 
+        . b b b b b 5 d 5 b b b b b . . 
+        . 5 5 d d d 5 d 5 d d d 5 5 . . 
+        . . . d d d 5 d 5 d d d . . . . 
+        . . . . . d d d d d . . . . . . 
+        . . . . . d 5 d 5 d . . . . . . 
+        . . . . . . 5 d 5 . . . . . . . 
+        . . . . . . 5 d 5 . . . . . . . 
+        . . . . . . 5 d 5 . . . . . . . 
+        . . . . . . 6 9 6 . . . . . . . 
+        . . . . . . 5 9 5 . . . . . . . 
+        . . . . . . . d . . . . . . . . 
+        `, 50, 0)
+    projectile.y = 35
+    projectile.lifespan = 3000
+    projectile.setKind(SpriteKind.BasicEnemy)
+})
 function initializePlayer () {
     initializePlayerAssets()
     senseiDerick = sprites.create(playerAssets[1], SpriteKind.Viking)
@@ -334,6 +357,16 @@ function initializeConsts () {
     playerProjectileLifespan = 1500
     enemyProojectileLifespan = 2000
     basicEnemyValue = 100
+    terranColor = 0
+    protossColor = 1
+    zergColor = 2
+    fireColor = 3
+    plasmaColor = 4
+    missileColor = 5
+    bombColor = 6
+    droneColor = 7
+    droneMissileColor = 8
+    starColor = 9
 }
 function createRocketTrails () {
     for (let value of sprites.allOfKind(SpriteKind.Rocket)) {
@@ -1161,6 +1194,10 @@ function createDroneTrails () {
         thrusterFire.lifespan = randint(10, 30)
     }
 }
+function pickColor (index: number, colorMap: any[]) {
+    end = colorMap.length
+    return randint(0, end - 1)
+}
 function radialBlast (x: number, y: number) {
     backBlast(x, y)
     sideBlast(x, y)
@@ -1707,6 +1744,7 @@ function loadGameAssets () {
     // 6 - bomb powerup
     // 7 - drone powerup
     // 8 - drone
+    // 9 - stars
     colorPaths = [
     [3, 4, 5],
     [
@@ -1733,7 +1771,8 @@ function loadGameAssets () {
     [3],
     [7, 8],
     [1],
-    [0, 1]
+    [0, 1],
+    [0, 8, 9]
     ]
     // 0 - white
     // 1 - red
@@ -1851,7 +1890,6 @@ function createTrailEffects () {
 sprites.onCreated(SpriteKind.DroneRocket, function (sprite) {
     sprite.lifespan = playerProjectileLifespan
 })
-let projectile: Sprite = null
 let gameUIAssets: Image[] = []
 let colorPaths: number[][] = []
 let supportAssets: Image[] = []
@@ -1863,6 +1901,7 @@ let scoreTotal = 0
 let droneTotal = 0
 let playerY = 0
 let playerX = 0
+let end = 0
 let zergCombatAssets: Image[] = []
 let zergAssets: Image[] = []
 let thrusterEffectOffset = 0
@@ -1870,6 +1909,16 @@ let shieldSprite: Sprite = null
 let doodads: Image[] = []
 let backdrops: Image[] = []
 let thrusterFire: Sprite = null
+let starColor = 0
+let droneMissileColor = 0
+let droneColor = 0
+let bombColor = 0
+let missileColor = 0
+let plasmaColor = 0
+let fireColor = 0
+let zergColor = 0
+let protossColor = 0
+let terranColor = 0
 let basicEnemyValue = 0
 let enemyProojectileLifespan = 0
 let thrusterOffset = 0
@@ -1882,6 +1931,7 @@ let terranAssets: Image[] = []
 let notCausedByBomb = false
 let playerAssets: Image[] = []
 let senseiDerick: Sprite = null
+let projectile: Sprite = null
 let particles2: Image[] = []
 let blastFire: Sprite = null
 let plasma: Sprite = null
@@ -1901,29 +1951,6 @@ let rocketSprite: Sprite = null
 let cannonOffset = 0
 let spawnOffset = 0
 initializeGame()
-game.onUpdateInterval(1000, function () {
-    projectile = sprites.createProjectileFromSide(img`
-        . . . . . . b b b . . . . . . . 
-        . . . . . . b d b . . . . . . . 
-        . . . . . . 5 d 5 . . . . . . . 
-        . . . . . . 5 d 5 . . . . . . . 
-        . . . . 4 4 5 d 5 4 4 . . . . . 
-        . b b b b b 5 d 5 b b b b b . . 
-        . 5 5 d d d 5 d 5 d d d 5 5 . . 
-        . . . d d d 5 d 5 d d d . . . . 
-        . . . . . d d d d d . . . . . . 
-        . . . . . d 5 d 5 d . . . . . . 
-        . . . . . . 5 d 5 . . . . . . . 
-        . . . . . . 5 d 5 . . . . . . . 
-        . . . . . . 5 d 5 . . . . . . . 
-        . . . . . . 6 9 6 . . . . . . . 
-        . . . . . . 5 9 5 . . . . . . . 
-        . . . . . . . d . . . . . . . . 
-        `, 50, 0)
-    projectile.y = 35
-    projectile.lifespan = 3000
-    projectile.setKind(SpriteKind.BasicEnemy)
-})
 forever(function () {
     createVikingThrusterTrail()
     createTrailEffects()
