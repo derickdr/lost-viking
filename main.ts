@@ -593,11 +593,13 @@ function createElseMax () {
     textSprite.setPosition(145, 63)
     textSprite.lifespan = 1000
     textSprite = textsprite.create("Else", 0, 9)
+    textSprite.setKind(SpriteKind.MenuUI)
     scaling.scaleToPercent(textSprite, 110, ScaleDirection.Uniformly, ScaleAnchor.Middle)
     textSprite.setPosition(145, 74)
     textSprite.setFlag(SpriteFlag.GhostThroughWalls, true)
     textSprite.lifespan = 1000
     textSprite = textsprite.create("2", 0, 7)
+    textSprite.setKind(SpriteKind.MenuUI)
     scaling.scaleToPercent(textSprite, 200, ScaleDirection.Uniformly, ScaleAnchor.Middle)
     textSprite.setPosition(145, 86)
     textSprite.setFlag(SpriteFlag.GhostThroughWalls, true)
