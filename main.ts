@@ -546,17 +546,23 @@ function backBlast (x: number, y: number, lvl: number) {
     })
 }
 function createMenuContent () {
-    menuArray = supportAssets
-    UIPlacementArray = UIElementCoordinates
-    menuElementX = 0
-    menuElementY = 1
-    iterator = 2
-    for (let value of menuArray) {
-        demoAsset = sprites.create(menuArray.shift(), SpriteKind.UI)
-        demoAsset.lifespan = 10
-        demoAsset.setPosition(0, 0)
-        iterator += 1
-    }
+    demoAsset = sprites.create(supportAssets[0], SpriteKind.UI)
+    demoAsset.setPosition(15, 20)
+    demoAsset.setFlag(SpriteFlag.GhostThroughWalls, true)
+    demoAsset.lifespan = 1000
+    textSprite = textsprite.create("SIDE", 0, 1)
+    textSprite.setPosition(15, 28)
+    demoAsset = sprites.create(supportAssets[1], SpriteKind.UI)
+    demoAsset.setPosition(15, 40)
+    demoAsset.setFlag(SpriteFlag.GhostThroughWalls, true)
+    demoAsset.lifespan = 1000
+    textSprite = textsprite.create("BOMB", 0, 1)
+    textSprite.setPosition(15, 48)
+    textSprite.lifespan = 1000
+    demoAsset = sprites.create(supportAssets[2], SpriteKind.UI)
+    demoAsset.setPosition(145, 20)
+    demoAsset.setFlag(SpriteFlag.GhostThroughWalls, true)
+    demoAsset.lifespan = 1000
     game.setDialogCursor(img`
         . 6 7 7 7 7 . . 6 7 . . 6 7 . 6 7 7 6 7 7 6 7 7 
         6 7 6 6 6 6 7 . 6 7 . . 6 7 . 6 7 7 6 7 7 6 7 7 
@@ -613,27 +619,6 @@ function initializeConsts () {
     droneColor = 7
     droneMissileColor = 8
     starColor = 9
-    // 0 - missile
-    // 1 - missile text
-    //      -----
-    // 2 - bomb
-    // 3 - bomb text
-    //      -----
-    // 4 - plasma
-    // 5 - plasma text
-    //      -----
-    // 6 - drone
-    // 7 - drone text
-    UIElementCoordinates = [
-    [15, 20],
-    [15, 31],
-    [15, 50],
-    [15, 61],
-    [145, 20],
-    [145, 21],
-    [145, 50],
-    [145, 61]
-    ]
 }
 function enteringAirspaceSplash (lvl: number) {
     if (lvl == 1) {
@@ -2253,14 +2238,9 @@ let basicEnemyValue = 0
 let enemyProjectileLifespan = 0
 let thrusterOffset = 0
 let causedByBomb = false
-let demoAsset: Sprite = null
-let iterator = 0
-let menuElementY = 0
-let menuElementX = 0
-let UIElementCoordinates: number[][] = []
-let UIPlacementArray: number[][] = []
+let textSprite: TextSprite = null
 let supportAssets: Image[] = []
-let menuArray: Image[] = []
+let demoAsset: Sprite = null
 let invulnerable = false
 let weapon = 0
 let currentStage = 0
