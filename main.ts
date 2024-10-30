@@ -12,6 +12,15 @@ namespace SpriteKind {
     export const BackgroundElement = SpriteKind.create()
     export const Edge = SpriteKind.create()
 }
+function createPlasmaHelp () {
+    demoAsset = sprites.create(supportAssets[2], SpriteKind.UI)
+    demoAsset.setPosition(145, 20)
+    demoAsset.setFlag(SpriteFlag.GhostThroughWalls, true)
+    demoAsset.lifespan = 1000
+    textSprite = textsprite.create("PLASMA", 0, 1)
+    textSprite.setPosition(145, 28)
+    textSprite.lifespan = 1000
+}
 sprites.onOverlap(SpriteKind.BackgroundElement, SpriteKind.Edge, function (sprite, otherSprite) {
     sprites.destroy(sprite)
 })
@@ -522,6 +531,15 @@ sprites.onOverlap(SpriteKind.Plasma, SpriteKind.Edge, function (sprite, otherSpr
 sprites.onDestroyed(SpriteKind.Shield, function (sprite) {
     invulnerable = false
 })
+function createSideHelp () {
+    demoAsset = sprites.create(supportAssets[0], SpriteKind.UI)
+    demoAsset.setPosition(15, 20)
+    demoAsset.setFlag(SpriteFlag.GhostThroughWalls, true)
+    demoAsset.lifespan = 1000
+    textSprite = textsprite.create("SIDE", 0, 1)
+    textSprite.setPosition(15, 28)
+    textSprite.lifespan = 1000
+}
 function backBlast (x: number, y: number, lvl: number) {
     if (lvl == 1) {
         effectColorSelector = 1
@@ -546,23 +564,10 @@ function backBlast (x: number, y: number, lvl: number) {
     })
 }
 function createMenuContent () {
-    demoAsset = sprites.create(supportAssets[0], SpriteKind.UI)
-    demoAsset.setPosition(15, 20)
-    demoAsset.setFlag(SpriteFlag.GhostThroughWalls, true)
-    demoAsset.lifespan = 1000
-    textSprite = textsprite.create("SIDE", 0, 1)
-    textSprite.setPosition(15, 28)
-    demoAsset = sprites.create(supportAssets[1], SpriteKind.UI)
-    demoAsset.setPosition(15, 40)
-    demoAsset.setFlag(SpriteFlag.GhostThroughWalls, true)
-    demoAsset.lifespan = 1000
-    textSprite = textsprite.create("BOMB", 0, 1)
-    textSprite.setPosition(15, 48)
-    textSprite.lifespan = 1000
-    demoAsset = sprites.create(supportAssets[2], SpriteKind.UI)
-    demoAsset.setPosition(145, 20)
-    demoAsset.setFlag(SpriteFlag.GhostThroughWalls, true)
-    demoAsset.lifespan = 1000
+    createSideHelp()
+    createBombHelp()
+    createPlasmaHelp()
+    createDroneHelp()
     game.setDialogCursor(img`
         . 6 7 7 7 7 . . 6 7 . . 6 7 . 6 7 7 6 7 7 6 7 7 
         6 7 6 6 6 6 7 . 6 7 . . 6 7 . 6 7 7 6 7 7 6 7 7 
@@ -1975,6 +1980,15 @@ function initializeProtossAssets () {
 sprites.onCreated(SpriteKind.Projectile, function (sprite) {
     sprite.lifespan = enemyProjectileLifespan
 })
+function createBombHelp () {
+    demoAsset = sprites.create(supportAssets[1], SpriteKind.UI)
+    demoAsset.setPosition(15, 40)
+    demoAsset.setFlag(SpriteFlag.GhostThroughWalls, true)
+    demoAsset.lifespan = 1000
+    textSprite = textsprite.create("BOMB", 0, 1)
+    textSprite.setPosition(15, 48)
+    textSprite.lifespan = 1000
+}
 function createSpaceDust (lvl: number) {
     if (currentStage > 0) {
         if (Math.percentChance(1)) {
@@ -2002,6 +2016,15 @@ function createSpaceDust (lvl: number) {
             stardustSprite.lifespan = 25000
         }
     }
+}
+function createDroneHelp () {
+    demoAsset = sprites.create(supportAssets[3], SpriteKind.UI)
+    demoAsset.setPosition(145, 40)
+    demoAsset.setFlag(SpriteFlag.GhostThroughWalls, true)
+    demoAsset.lifespan = 1000
+    textSprite = textsprite.create("DRONE", 0, 1)
+    textSprite.setPosition(145, 48)
+    textSprite.lifespan = 1000
 }
 function loadGameAssets () {
     // 0 - missile powerup
@@ -2238,9 +2261,6 @@ let basicEnemyValue = 0
 let enemyProjectileLifespan = 0
 let thrusterOffset = 0
 let causedByBomb = false
-let textSprite: TextSprite = null
-let supportAssets: Image[] = []
-let demoAsset: Sprite = null
 let invulnerable = false
 let weapon = 0
 let currentStage = 0
@@ -2281,6 +2301,9 @@ let introText2: TextSprite = null
 let introText1: TextSprite = null
 let playing = false
 let textDelay = 0
+let textSprite: TextSprite = null
+let supportAssets: Image[] = []
+let demoAsset: Sprite = null
 initializeGame()
 forever(function () {
     createVikingThrusterTrail()
