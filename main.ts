@@ -8,18 +8,19 @@ namespace SpriteKind {
     export const DroneRocket = SpriteKind.create()
     export const BasicEnemy = SpriteKind.create()
     export const SplashText = SpriteKind.create()
-    export const UI = SpriteKind.create()
+    export const MenuUI = SpriteKind.create()
     export const BackgroundElement = SpriteKind.create()
     export const Edge = SpriteKind.create()
 }
 function createPlasmaHelp () {
-    demoAsset = sprites.create(supportAssets[2], SpriteKind.UI)
+    demoAsset = sprites.create(supportAssets[2], SpriteKind.MenuUI)
     demoAsset.setPosition(145, 20)
     demoAsset.setFlag(SpriteFlag.GhostThroughWalls, true)
     demoAsset.lifespan = 1000
-    textSprite = textsprite.create("PLASMA", 0, 1)
+    textSprite = textsprite.create("LAZR", 0, 1)
     textSprite.setPosition(145, 28)
     textSprite.lifespan = 1000
+    textSprite.setKind(SpriteKind.MenuUI)
 }
 sprites.onOverlap(SpriteKind.BackgroundElement, SpriteKind.Edge, function (sprite, otherSprite) {
     sprites.destroy(sprite)
@@ -124,7 +125,7 @@ function introSplashText () {
                                                                 c c b b b b b b b b b b b c c 
                                                                 . c c b b b b b b b b b c c . 
                                                                 . . . c c c c c c c c c . . . 
-                                                                `, SpriteKind.UI)
+                                                                `, SpriteKind.MenuUI)
                                                             aButtonSprite.setPosition(84, 108)
                                                             animation.runImageAnimation(
                                                             aButtonSprite,
@@ -322,7 +323,7 @@ function initializePlayer () {
     // i gave up on the pixel art purism huhu leave me alone my fingers are old
     scaling.scaleToPercent(senseiDerick, 60, ScaleDirection.Uniformly, ScaleAnchor.Middle)
     sprites.destroyAllSpritesOfKind(SpriteKind.SplashText)
-    sprites.destroyAllSpritesOfKind(SpriteKind.UI)
+    sprites.destroyAllSpritesOfKind(SpriteKind.MenuUI)
     createShield(notCausedByBomb)
     timer.after(2000, function () {
         senseiDerick.setStayInScreen(true)
@@ -532,12 +533,13 @@ sprites.onDestroyed(SpriteKind.Shield, function (sprite) {
     invulnerable = false
 })
 function createSideHelp () {
-    demoAsset = sprites.create(supportAssets[0], SpriteKind.UI)
+    demoAsset = sprites.create(supportAssets[0], SpriteKind.MenuUI)
     demoAsset.setPosition(15, 20)
     demoAsset.setFlag(SpriteFlag.GhostThroughWalls, true)
     demoAsset.lifespan = 1000
     textSprite = textsprite.create("SIDE", 0, 1)
     textSprite.setPosition(15, 28)
+    textSprite.setKind(SpriteKind.MenuUI)
     textSprite.lifespan = 1000
 }
 function backBlast (x: number, y: number, lvl: number) {
@@ -568,6 +570,7 @@ function createMenuContent () {
     createBombHelp()
     createPlasmaHelp()
     createDroneHelp()
+    createBombMax()
     game.setDialogCursor(img`
         . 6 7 7 7 7 . . 6 7 . . 6 7 . 6 7 7 6 7 7 6 7 7 
         6 7 6 6 6 6 7 . 6 7 . . 6 7 . 6 7 7 6 7 7 6 7 7 
@@ -581,7 +584,7 @@ function createMenuContent () {
         . 6 7 7 7 7 6 . 6 7 . . 6 7 . 6 7 7 6 7 7 6 7 7 
         . . 6 6 6 6 . . . 6 . . . 6 . . 6 6 . 6 6 . 6 6 
         `)
-    game.showLongText("---CONTROLS---             Move:            WASD|Arrows                     Bomb:            B|Space", DialogLayout.Center)
+    game.showLongText("---CONTROLS---  Shoot:            A / Space            Move:        D-PAD or WASD                    Bomb:            B or X", DialogLayout.Center)
 }
 function initializeGame () {
     loadMap(currentStage)
@@ -1246,6 +1249,22 @@ sprites.onOverlap(SpriteKind.DroneRocket, SpriteKind.BasicEnemy, function (sprit
     radialBlast(otherSprite.x, otherSprite.y, currentStage)
     sprites.destroy(otherSprite)
 })
+function createBombMax () {
+    textSprite = textsprite.create("MAX:", 0, 1)
+    textSprite.setKind(SpriteKind.MenuUI)
+    textSprite.setPosition(15, 63)
+    textSprite.lifespan = 1000
+    demoAsset = sprites.create(supportAssets[1], SpriteKind.MenuUI)
+    scaling.scaleToPercent(demoAsset, 150, ScaleDirection.Uniformly, ScaleAnchor.Middle)
+    demoAsset.setPosition(15, 76)
+    demoAsset.setFlag(SpriteFlag.GhostThroughWalls, true)
+    demoAsset.lifespan = 1000
+    demoAsset = sprites.create(gameUIAssets[0], SpriteKind.MenuUI)
+    scaling.scaleToPercent(demoAsset, 60, ScaleDirection.Uniformly, ScaleAnchor.Middle)
+    demoAsset.setPosition(15, 88)
+    demoAsset.setFlag(SpriteFlag.GhostThroughWalls, true)
+    demoAsset.lifespan = 1000
+}
 function createPlasmaTrails () {
     for (let value of sprites.allOfKind(SpriteKind.Plasma)) {
         thrusterFire = sprites.create(particles2[colorPaths[plasmaColor]._pickRandom()], SpriteKind.Effect)
@@ -1981,11 +2000,12 @@ sprites.onCreated(SpriteKind.Projectile, function (sprite) {
     sprite.lifespan = enemyProjectileLifespan
 })
 function createBombHelp () {
-    demoAsset = sprites.create(supportAssets[1], SpriteKind.UI)
+    demoAsset = sprites.create(supportAssets[1], SpriteKind.MenuUI)
     demoAsset.setPosition(15, 40)
     demoAsset.setFlag(SpriteFlag.GhostThroughWalls, true)
     demoAsset.lifespan = 1000
     textSprite = textsprite.create("BOMB", 0, 1)
+    textSprite.setKind(SpriteKind.MenuUI)
     textSprite.setPosition(15, 48)
     textSprite.lifespan = 1000
 }
@@ -2018,11 +2038,12 @@ function createSpaceDust (lvl: number) {
     }
 }
 function createDroneHelp () {
-    demoAsset = sprites.create(supportAssets[3], SpriteKind.UI)
+    demoAsset = sprites.create(supportAssets[3], SpriteKind.MenuUI)
     demoAsset.setPosition(145, 40)
     demoAsset.setFlag(SpriteFlag.GhostThroughWalls, true)
     demoAsset.lifespan = 1000
-    textSprite = textsprite.create("DRONE", 0, 1)
+    textSprite = textsprite.create("FREN", 0, 1)
+    textSprite.setKind(SpriteKind.MenuUI)
     textSprite.setPosition(145, 48)
     textSprite.lifespan = 1000
 }
@@ -2181,22 +2202,19 @@ function loadGameAssets () {
         `
     ]
     gameUIAssets = [img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
+        ....555........555555...
+        ..5577755.....557777755.
+        .577777775...57777777775
+        .57777777755577775555775
+        67766666677777766...6676
+        676.....66777766.....676
+        878......877788......876
+        878.....88777788....8876
+        877888888777777788888776
+        .87777777778877777777776
+        .88777777788.67777777788
+        ..888777888...667777888.
+        ....8888........88888...
         `]
     initializeZergAssets()
     initializeTerranAssets()
@@ -2229,7 +2247,6 @@ function createTrailEffects () {
 sprites.onCreated(SpriteKind.DroneRocket, function (sprite) {
     sprite.lifespan = playerProjectileLifespan
 })
-let gameUIAssets: Image[] = []
 let stardustSprite: Sprite = null
 let protossCombatAssets: Image[] = []
 let protossAssets: Image[] = []
@@ -2242,6 +2259,7 @@ let playerX = 0
 let zergCombatAssets: Image[] = []
 let zergAssets: Image[] = []
 let thrusterEffectOffset = 0
+let gameUIAssets: Image[] = []
 let shieldSprite: Sprite = null
 let edgeSprite: Sprite = null
 let doodads: Image[] = []
@@ -2311,6 +2329,6 @@ forever(function () {
     createSpaceDust(currentStage)
     if (playing) {
         sprites.destroyAllSpritesOfKind(SpriteKind.SplashText)
-        sprites.destroyAllSpritesOfKind(SpriteKind.UI)
+        sprites.destroyAllSpritesOfKind(SpriteKind.MenuUI)
     }
 })
