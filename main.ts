@@ -11,6 +11,12 @@ namespace SpriteKind {
     export const MenuUI = SpriteKind.create()
     export const BackgroundElement = SpriteKind.create()
     export const Edge = SpriteKind.create()
+    export const Miniboss = SpriteKind.create()
+    export const Boss = SpriteKind.create()
+    export const DronePickup = SpriteKind.create()
+    export const MissilePickup = SpriteKind.create()
+    export const PlasmaPickup = SpriteKind.create()
+    export const EnemyProjectile = SpriteKind.create()
 }
 function createPlasmaHelp () {
     demoAsset = sprites.create(supportAssets[2], SpriteKind.MenuUI)
@@ -1791,6 +1797,7 @@ function createRocket1 () {
 }
 sprites.onOverlap(SpriteKind.Rocket, SpriteKind.Edge, function (sprite, otherSprite) {
     blastSequence(sprite, otherSprite, currentStage)
+    addPoints(otherSprite)
 })
 function sideBlast (x: number, y: number, lvl: number) {
     if (lvl == 1) {
@@ -1828,9 +1835,8 @@ function sideBlast (x: number, y: number, lvl: number) {
     })
 }
 sprites.onOverlap(SpriteKind.DroneRocket, SpriteKind.BasicEnemy, function (sprite, otherSprite) {
-    sprites.destroy(sprite)
-    radialBlast(otherSprite.x, otherSprite.y, currentStage)
-    sprites.destroy(otherSprite)
+    blastSequence(sprite, otherSprite, currentStage)
+    addPoints(otherSprite)
 })
 function createBombMax () {
     textSprite = textsprite.create("MAX:", 0, 1)
@@ -1896,6 +1902,7 @@ function createVikingThrusterTrail () {
 }
 sprites.onOverlap(SpriteKind.Rocket, SpriteKind.BasicEnemy, function (sprite, otherSprite) {
     blastSequence(sprite, otherSprite, currentStage)
+    addPoints(otherSprite)
 })
 function initializeZergAssets () {
     zergAssets = [
@@ -2385,6 +2392,34 @@ function initializePlayerAssets () {
         `
     ]
 }
+function addPoints (bounty: Sprite) {
+    if (bounty.kind() == SpriteKind.BasicEnemy) {
+        currentScore += pointValues[1]
+    } else if (bounty.kind() == SpriteKind.Miniboss) {
+        currentScore += pointValues[2]
+    } else if (bounty.kind() == SpriteKind.Boss) {
+        currentScore += pointValues[3]
+    } else if (bounty.kind() == SpriteKind.DronePickup) {
+        currentScore += pointValues[0]
+        if (droneTotal < 2) {
+            droneTotal += 1
+        }
+    } else if (bounty.kind() == SpriteKind.MissilePickup) {
+        currentScore += pointValues[0]
+        if (weapon <= 0) {
+            weapon = 1
+        } else if (weapon > 0) {
+            weapon = 2
+        }
+    } else if (bounty.kind() == SpriteKind.PlasmaPickup) {
+        currentScore += pointValues[0]
+        if (weapon >= 0) {
+            weapon = -1
+        } else if (weapon < 0) {
+            weapon = -2
+        }
+    }
+}
 function initializeTemp () {
     invulnerable = false
     playerX = 0
@@ -2812,6 +2847,7 @@ function loadGameAssets () {
 }
 sprites.onOverlap(SpriteKind.Plasma, SpriteKind.BasicEnemy, function (sprite, otherSprite) {
     blastSequence(sprite, otherSprite, currentStage)
+    addPoints(otherSprite)
 })
 function createBasic () {
     for (let value of sprites.allOfKind(SpriteKind.Viking)) {
@@ -2851,9 +2887,10 @@ let protossAssets: Image[] = []
 let bombTotal = 0
 let sessionHighScore = 0
 let scoreTotal = 0
-let droneTotal = 0
 let playerY = 0
 let playerX = 0
+let droneTotal = 0
+let currentScore = 0
 let zergCombatAssets: Image[] = []
 let zergAssets: Image[] = []
 let thrusterEffectOffset = 0
