@@ -132,7 +132,7 @@ function introSplashText () {
                                                                 . c c b b b b b b b b b c c . 
                                                                 . . . c c c c c c c c c . . . 
                                                                 `, SpriteKind.MenuUI)
-                                                            aButtonSprite.setPosition(80, 97)
+                                                            aButtonSprite.setPosition(80, 96)
                                                             animation.runImageAnimation(
                                                             aButtonSprite,
                                                             [img`
@@ -176,7 +176,6 @@ function introSplashText () {
                                                             continueText = textsprite.create("START GAME", 0, 7)
                                                             scaling.scaleToPercent(continueText, 120, ScaleDirection.Uniformly, ScaleAnchor.Middle)
                                                             continueText.setPosition(80, 110)
-                                                            continueText.setKind(SpriteKind.SplashText)
                                                             continueText.setKind(SpriteKind.SplashText)
                                                         })
                                                     }
@@ -317,27 +316,7 @@ function frontBlast (x: number, y: number, lvl: number) {
     }
 }
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
-    projectile = sprites.createProjectileFromSide(img`
-        . . . . . . b b b . . . . . . . 
-        . . . . . . b d b . . . . . . . 
-        . . . . . . 5 d 5 . . . . . . . 
-        . . . . . . 5 d 5 . . . . . . . 
-        . . . . 4 4 5 d 5 4 4 . . . . . 
-        . b b b b b 5 d 5 b b b b b . . 
-        . 5 5 d d d 5 d 5 d d d 5 5 . . 
-        . . . d d d 5 d 5 d d d . . . . 
-        . . . . . d d d d d . . . . . . 
-        . . . . . d 5 d 5 d . . . . . . 
-        . . . . . . 5 d 5 . . . . . . . 
-        . . . . . . 5 d 5 . . . . . . . 
-        . . . . . . 5 d 5 . . . . . . . 
-        . . . . . . 6 9 6 . . . . . . . 
-        . . . . . . 5 9 5 . . . . . . . 
-        . . . . . . . d . . . . . . . . 
-        `, 50, 0)
-    projectile.y = 35
-    projectile.lifespan = 3000
-    projectile.setKind(SpriteKind.BasicEnemy)
+	
 })
 function initializePlayer () {
     initializePlayerAssets()
@@ -2881,6 +2860,7 @@ function cycleStages (currentLvl: number) {
 sprites.onCreated(SpriteKind.DroneRocket, function (sprite) {
     sprite.lifespan = playerProjectileLifespan
 })
+let projectile: Sprite = null
 let stardustSprite: Sprite = null
 let protossCombatAssets: Image[] = []
 let protossAssets: Image[] = []
@@ -2922,7 +2902,6 @@ let terranAssets: Image[] = []
 let notCausedByBomb = false
 let playerAssets: Image[] = []
 let senseiDerick: Sprite = null
-let projectile: Sprite = null
 let colorPaths: number[][] = []
 let particles2: Image[] = []
 let blastFire: Sprite = null
@@ -2963,6 +2942,34 @@ let textSprite: TextSprite = null
 let supportAssets: Image[] = []
 let demoAsset: Sprite = null
 initializeGame()
+game.onUpdateInterval(randint(1000, 1500), function () {
+    if (playing) {
+        projectile = sprites.createProjectileFromSide(img`
+            . . . . . . b b b . . . . . . . 
+            . . . . . . b d b . . . . . . . 
+            . . . . . . 5 d 5 . . . . . . . 
+            . . . . . . 5 d 5 . . . . . . . 
+            . . . . 4 4 5 d 5 4 4 . . . . . 
+            . b b b b b 5 d 5 b b b b b . . 
+            . 5 5 d d d 5 d 5 d d d 5 5 . . 
+            . . . d d d 5 d 5 d d d . . . . 
+            . . . . . d d d d d . . . . . . 
+            . . . . . d 5 d 5 d . . . . . . 
+            . . . . . . 5 d 5 . . . . . . . 
+            . . . . . . 5 d 5 . . . . . . . 
+            . . . . . . 5 d 5 . . . . . . . 
+            . . . . . . 6 9 6 . . . . . . . 
+            . . . . . . 5 9 5 . . . . . . . 
+            . . . . . . . d . . . . . . . . 
+            `, randint(-50, 50), 0)
+        if (projectile.vx < 5 && projectile.vx < -5) {
+            projectile.vx += 10
+        }
+        projectile.y = randint(12, 45)
+        projectile.lifespan = 10000
+        projectile.setKind(SpriteKind.BasicEnemy)
+    }
+})
 forever(function () {
     createVikingThrusterTrail()
     createTrailEffects()
