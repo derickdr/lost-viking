@@ -251,9 +251,34 @@ function createPlasma2 () {
         }
     }
 }
+function levelAnnouncer (currentLvl: number) {
+    levelTextSprite = textsprite.create("LEVEL", 0, 1)
+    levelTextSprite.setPosition(120, 140)
+    if (currentStage == 1) {
+        levelNumberSprite = textsprite.create(convertToText(currentLevel), 0, 9)
+    } else if (currentStage == 2) {
+        levelNumberSprite = textsprite.create(convertToText(currentLevel), 0, 10)
+    } else if (currentStage == 3) {
+        levelNumberSprite = textsprite.create(convertToText(currentLevel), 0, 2)
+    }
+    levelNumberSprite.setPosition(120, 152)
+    scaling.scaleToPercent(levelNumberSprite, 250, ScaleDirection.Uniformly, ScaleAnchor.Middle)
+    levelTextSprite.lifespan = 4000
+    levelNumberSprite.lifespan = 4000
+    levelTextSprite.ay = 40
+    levelNumberSprite.ay = 40
+    levelTextSprite.vy = -75
+    levelNumberSprite.vy = -75
+}
 function loadMap (lvl: number) {
-    if (lvl == 0) {
+    if (lvl == 0 && currentLevel == 0) {
         introSplashText()
+    } else if (lvl == 0 && currentLevel > 0) {
+        scene.setBackgroundImage(backdrops._pickRandom())
+        if (playing == false) {
+            initializePlayer()
+            enteringAirspaceSplash(lvl)
+        }
     } else if (lvl == 1) {
         scene.setBackgroundImage(backdrops._pickRandom())
         if (playing == false) {
@@ -273,6 +298,7 @@ function loadMap (lvl: number) {
             enteringAirspaceSplash(lvl)
         }
     }
+    playing = true
 }
 function frontBlast (x: number, y: number, lvl: number) {
     if (lvl == 1) {
@@ -517,12 +543,14 @@ function initializeTerranAssets () {
     ]
 }
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (currentStage > 0) {
+    if (currentStage != 0) {
         createProjectile(weapon)
     } else {
-        currentStage = 1
+        currentStage = previousStage + 1
+        currentLevel += 1
+        cycleStages(currentStage)
         loadMap(currentStage)
-        playing = true
+        levelAnnouncer(currentLevel)
     }
 })
 sprites.onOverlap(SpriteKind.Plasma, SpriteKind.Edge, function (sprite, otherSprite) {
@@ -654,6 +682,18 @@ function initializeConsts () {
     droneColor = 7
     droneMissileColor = 8
     starColor = 9
+    // 0 - power ups
+    // 1 - basic enemies
+    // 2 - minibosses
+    // 3 - bosses
+    // 4 - leftover life
+    pointValues = [
+    500,
+    100,
+    1000,
+    10000,
+    1000
+    ]
 }
 function enteringAirspaceSplash (lvl: number) {
     if (lvl == 1) {
@@ -2364,9 +2404,11 @@ function initializeTemp () {
     spawnOffset = 0
     droneTotal = 0
     currentStage = 0
+    currentLevel = 0
     scoreTotal = 0
     sessionHighScore = 0
     bombTotal = 0
+    previousStage = 0
     playing = false
 }
 function initializeProtossAssets () {
@@ -2803,6 +2845,11 @@ function createTrailEffects () {
     createDroneTrails()
     createDroneRocketTrails()
 }
+function cycleStages (currentLvl: number) {
+    if (currentLvl == 4) {
+        currentStage = 1
+    }
+}
 sprites.onCreated(SpriteKind.DroneRocket, function (sprite) {
     sprite.lifespan = playerProjectileLifespan
 })
@@ -2824,6 +2871,7 @@ let edgeSprite: Sprite = null
 let doodads: Image[] = []
 let thrusterFire: Sprite = null
 let openingSplash: TextSprite = null
+let pointValues: number[] = []
 let starColor = 0
 let droneMissileColor = 0
 let droneColor = 0
@@ -2839,8 +2887,8 @@ let enemyProjectileLifespan = 0
 let thrusterOffset = 0
 let causedByBomb = false
 let invulnerable = false
+let previousStage = 0
 let weapon = 0
-let currentStage = 0
 let terranCombatAssets: Image[] = []
 let terranAssets: Image[] = []
 let notCausedByBomb = false
@@ -2852,6 +2900,10 @@ let particles2: Image[] = []
 let blastFire: Sprite = null
 let effectColorSelector = 0
 let backdrops: Image[] = []
+let currentLevel = 0
+let levelNumberSprite: TextSprite = null
+let currentStage = 0
+let levelTextSprite: TextSprite = null
 let plasma: Sprite = null
 let playerProjectileLifespan = 0
 let side2 = 0
