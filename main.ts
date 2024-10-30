@@ -31,7 +31,7 @@ function introSplashText () {
         timer.after(textDelay, function () {
             introText1 = textsprite.create("You, Mighty Viking,", 0, 1)
             introText1.setKind(SpriteKind.SplashText)
-            introText1.setPosition(80, 14)
+            introText1.setPosition(80, 18)
             if (playing == false) {
                 timer.after(textDelay, function () {
                     introText2 = textsprite.create("are lost!!! Find your", 0, 1)
@@ -41,18 +41,18 @@ function introSplashText () {
                         timer.after(textDelay, function () {
                             introText3 = textsprite.create("way home to Vikingville,", 0, 1)
                             introText3.setKind(SpriteKind.SplashText)
-                            introText3.setPosition(80, 42)
+                            introText3.setPosition(80, 38)
                             if (playing == false) {
                                 timer.after(textDelay, function () {
                                     introText4 = textsprite.create("but beware the Evil", 0, 1)
                                     introText4.setKind(SpriteKind.SplashText)
-                                    introText4.setPosition(80, 56)
+                                    introText4.setPosition(80, 48)
                                     if (playing == false) {
                                         timer.after(textDelay, function () {
                                             introText5 = textsprite.create("Terra-Tron!!!", 0, 4)
-                                            scaling.scaleToPercent(introText5, 175, ScaleDirection.Uniformly, ScaleAnchor.Middle)
+                                            scaling.scaleToPercent(introText5, 180, ScaleDirection.Uniformly, ScaleAnchor.Middle)
                                             introText5.setKind(SpriteKind.SplashText)
-                                            introText5.setPosition(80, 72)
+                                            introText5.setPosition(80, 62)
                                             if (playing == false) {
                                                 timer.after(textDelay, function () {
                                                     introText6 = sprites.create(img`
@@ -105,7 +105,7 @@ function introSplashText () {
                                                     true
                                                     )
                                                     scaling.scaleToPercent(introText6, 120, ScaleDirection.Uniformly, ScaleAnchor.Middle)
-                                                    introText6.setPosition(80, 92)
+                                                    introText6.setPosition(80, 80)
                                                     if (playing == false) {
                                                         timer.after(2000, function () {
                                                             aButtonSprite = sprites.create(img`
@@ -126,7 +126,7 @@ function introSplashText () {
                                                                 . c c b b b b b b b b b c c . 
                                                                 . . . c c c c c c c c c . . . 
                                                                 `, SpriteKind.MenuUI)
-                                                            aButtonSprite.setPosition(84, 108)
+                                                            aButtonSprite.setPosition(80, 97)
                                                             animation.runImageAnimation(
                                                             aButtonSprite,
                                                             [img`
@@ -167,11 +167,10 @@ function introSplashText () {
                                                             150,
                                                             true
                                                             )
-                                                            continueText = textsprite.create("BEGIN", 0, 7)
-                                                            continueText.setPosition(59, 108)
+                                                            continueText = textsprite.create("START GAME", 0, 7)
+                                                            scaling.scaleToPercent(continueText, 120, ScaleDirection.Uniformly, ScaleAnchor.Middle)
+                                                            continueText.setPosition(80, 110)
                                                             continueText.setKind(SpriteKind.SplashText)
-                                                            continueText = textsprite.create("GAME", 0, 7)
-                                                            continueText.setPosition(105, 108)
                                                             continueText.setKind(SpriteKind.SplashText)
                                                         })
                                                     }
