@@ -27,132 +27,132 @@ function introSplashText () {
                     introText2 = textsprite.create("are lost!!! Find your", 0, 1)
                     introText2.setKind(SpriteKind.SplashText)
                     introText2.setPosition(80, 28)
-                })
-                if (playing == false) {
-                    timer.after(textDelay, function () {
-                        introText3 = textsprite.create("way home to Vikingville,", 0, 1)
-                        introText3.setKind(SpriteKind.SplashText)
-                        introText3.setPosition(80, 42)
-                    })
                     if (playing == false) {
                         timer.after(textDelay, function () {
-                            introText4 = textsprite.create("but beware the Evil", 0, 1)
-                            introText4.setKind(SpriteKind.SplashText)
-                            introText4.setPosition(80, 56)
+                            introText3 = textsprite.create("way home to Vikingville,", 0, 1)
+                            introText3.setKind(SpriteKind.SplashText)
+                            introText3.setPosition(80, 42)
+                            if (playing == false) {
+                                timer.after(textDelay, function () {
+                                    introText4 = textsprite.create("but beware the Evil", 0, 1)
+                                    introText4.setKind(SpriteKind.SplashText)
+                                    introText4.setPosition(80, 56)
+                                    if (playing == false) {
+                                        timer.after(textDelay, function () {
+                                            introText5 = textsprite.create("Terra-Tron!!!", 0, 4)
+                                            scaling.scaleToPercent(introText5, 175, ScaleDirection.Uniformly, ScaleAnchor.Middle)
+                                            introText5.setKind(SpriteKind.SplashText)
+                                            introText5.setPosition(80, 72)
+                                            if (playing == false) {
+                                                timer.after(textDelay, function () {
+                                                    introText6 = sprites.create(img`
+                                                        2..2.2222....222...222...2222...22.....2..2..222..22222....2.....222..2..2..2222....2...2..222...2..2..2...2...2
+                                                        2..2.2.......2..2.2...2..2.....2..2....22.2.2...2...2......2......2...2.2...2.......2...2.2...2..2..2..2...2...2
+                                                        2222.222.....2..2.2...2..222....2......2.22.2...2...2......2......2...22....222......2.2..2...2..2..2..2...2...2
+                                                        2..2.2.......2..2.2...2..2.......2.....2..2.2...2...2......2......2...2.2...2.........2...2...2..2..2..2...2...2
+                                                        2..2.2.......2..2.2...2..2.....2..2....2..2.2...2...2......2......2...2..2..2.........2...2...2..2..2...........
+                                                        2..2.2222....222...222...2222...22.....2..2..222....2......2222..222..2..2..2222......2....222....22...2...2...2
+                                                        `, SpriteKind.SplashText)
+                                                    animation.runImageAnimation(
+                                                    introText6,
+                                                    [img`
+                                                        2..2.2222....222...222...2222...22.....2..2..222..22222....2.....222..2..2..2222....2...2..222...2..2..2...2...2
+                                                        2..2.2.......2..2.2...2..2.....2..2....22.2.2...2...2......2......2...2.2...2.......2...2.2...2..2..2..2...2...2
+                                                        2222.222.....2..2.2...2..222....2......2.22.2...2...2......2......2...22....222......2.2..2...2..2..2..2...2...2
+                                                        2..2.2.......2..2.2...2..2.......2.....2..2.2...2...2......2......2...2.2...2.........2...2...2..2..2..2...2...2
+                                                        2..2.2.......2..2.2...2..2.....2..2....2..2.2...2...2......2......2...2..2..2.........2...2...2..2..2...........
+                                                        2..2.2222....222...222...2222...22.....2..2..222....2......2222..222..2..2..2222......2....222....22...2...2...2
+                                                        `,img`
+                                                        ................................................................................................................
+                                                        ................................................................................................................
+                                                        ................................................................................................................
+                                                        ................................................................................................................
+                                                        ................................................................................................................
+                                                        ................................................................................................................
+                                                        `],
+                                                    750,
+                                                    true
+                                                    )
+                                                    scaling.scaleToPercent(introText6, 120, ScaleDirection.Uniformly, ScaleAnchor.Middle)
+                                                    introText6.setPosition(80, 92)
+                                                    if (playing == false) {
+                                                        timer.after(2000, function () {
+                                                            aButtonSprite = sprites.create(img`
+                                                                . . . . 6 6 6 6 6 6 6 . . . . 
+                                                                . . 6 6 7 7 7 7 7 7 7 6 6 . . 
+                                                                . 6 6 7 7 7 8 8 8 7 7 7 6 6 . 
+                                                                . 6 7 7 7 8 8 7 8 8 7 7 7 6 . 
+                                                                . c 7 7 8 8 8 8 8 8 8 7 7 c . 
+                                                                . c 9 7 8 7 7 7 7 7 8 7 9 c . 
+                                                                . c 9 9 7 7 7 7 7 7 7 9 9 c . 
+                                                                . c 6 6 9 9 9 9 9 9 9 6 6 c . 
+                                                                c c 6 6 6 6 6 6 6 6 6 6 6 c c 
+                                                                c d c c 6 6 6 6 6 6 6 c c d c 
+                                                                c d d d c c c c c c c d d d c 
+                                                                c c b d d d d d d d d d b c c 
+                                                                c c c c c b b b b b c c c c c 
+                                                                c c b b b b b b b b b b b c c 
+                                                                . c c b b b b b b b b b c c . 
+                                                                . . . c c c c c c c c c . . . 
+                                                                `, SpriteKind.UI)
+                                                            aButtonSprite.setPosition(84, 108)
+                                                            animation.runImageAnimation(
+                                                            aButtonSprite,
+                                                            [img`
+                                                                . . . . 6 6 6 6 6 6 6 . . . . 
+                                                                . . 6 6 7 7 7 7 7 7 7 6 6 . . 
+                                                                . 6 6 7 7 7 8 8 8 7 7 7 6 6 . 
+                                                                . 6 7 7 7 8 8 7 8 8 7 7 7 6 . 
+                                                                . c 7 7 8 8 8 8 8 8 8 7 7 c . 
+                                                                . c 9 7 8 7 7 7 7 7 8 7 9 c . 
+                                                                . c 9 9 7 7 7 7 7 7 7 9 9 c . 
+                                                                . c 6 6 9 9 9 9 9 9 9 6 6 c . 
+                                                                c c 6 6 6 6 6 6 6 6 6 6 6 c c 
+                                                                c d c c 6 6 6 6 6 6 6 c c d c 
+                                                                c d d d c c c c c c c d d d c 
+                                                                c c b d d d d d d d d d b c c 
+                                                                c c c c c b b b b b c c c c c 
+                                                                c c b b b b b b b b b b b c c 
+                                                                . c c b b b b b b b b b c c . 
+                                                                . . . c c c c c c c c c . . . 
+                                                                `,img`
+                                                                . . . . . . . . . . . . . . . 
+                                                                . . . . . . . . . . . . . . . 
+                                                                . . . . 6 6 6 6 6 6 6 . . . . 
+                                                                . . 6 6 7 7 7 7 7 7 7 6 6 . . 
+                                                                . 6 6 7 7 7 8 8 8 7 7 7 6 6 . 
+                                                                . 6 7 7 7 8 8 7 8 8 7 7 7 6 . 
+                                                                . e 7 7 8 8 8 8 8 8 8 7 7 e . 
+                                                                . c 9 7 8 7 7 7 7 7 8 7 9 c . 
+                                                                c c 9 9 7 7 7 7 7 7 7 9 9 c c 
+                                                                c d c c 9 9 9 9 9 9 9 c c d c 
+                                                                c d d d c c c c c c c d d d c 
+                                                                c c b d d d d d d d d d b c c 
+                                                                c c c c c b b b b b c c c c c 
+                                                                c c b b b b b b b b b b b c c 
+                                                                . c c b b b b b b b b b c c . 
+                                                                . . . c c c c c c c c c . . . 
+                                                                `],
+                                                            150,
+                                                            true
+                                                            )
+                                                            continueText = textsprite.create("BEGIN", 0, 7)
+                                                            continueText.setPosition(59, 108)
+                                                            continueText.setKind(SpriteKind.SplashText)
+                                                            continueText = textsprite.create("GAME", 0, 7)
+                                                            continueText.setPosition(105, 108)
+                                                            continueText.setKind(SpriteKind.SplashText)
+                                                        })
+                                                    }
+                                                })
+                                            }
+                                        })
+                                    }
+                                })
+                            }
                         })
-                        if (playing == false) {
-                            timer.after(textDelay, function () {
-                                introText5 = textsprite.create("Terra-Tron!!!", 0, 4)
-                                scaling.scaleToPercent(introText5, 175, ScaleDirection.Uniformly, ScaleAnchor.Middle)
-                                introText5.setKind(SpriteKind.SplashText)
-                                introText5.setPosition(80, 72)
-                                if (playing == false) {
-                                    timer.after(textDelay, function () {
-                                        introText6 = sprites.create(img`
-                                            2..2.2222....222...222...2222...22.....2..2..222..22222....2.....222..2..2..2222....2...2..222...2..2..2...2...2
-                                            2..2.2.......2..2.2...2..2.....2..2....22.2.2...2...2......2......2...2.2...2.......2...2.2...2..2..2..2...2...2
-                                            2222.222.....2..2.2...2..222....2......2.22.2...2...2......2......2...22....222......2.2..2...2..2..2..2...2...2
-                                            2..2.2.......2..2.2...2..2.......2.....2..2.2...2...2......2......2...2.2...2.........2...2...2..2..2..2...2...2
-                                            2..2.2.......2..2.2...2..2.....2..2....2..2.2...2...2......2......2...2..2..2.........2...2...2..2..2...........
-                                            2..2.2222....222...222...2222...22.....2..2..222....2......2222..222..2..2..2222......2....222....22...2...2...2
-                                            `, SpriteKind.SplashText)
-                                        animation.runImageAnimation(
-                                        introText6,
-                                        [img`
-                                            2..2.2222....222...222...2222...22.....2..2..222..22222....2.....222..2..2..2222....2...2..222...2..2..2...2...2
-                                            2..2.2.......2..2.2...2..2.....2..2....22.2.2...2...2......2......2...2.2...2.......2...2.2...2..2..2..2...2...2
-                                            2222.222.....2..2.2...2..222....2......2.22.2...2...2......2......2...22....222......2.2..2...2..2..2..2...2...2
-                                            2..2.2.......2..2.2...2..2.......2.....2..2.2...2...2......2......2...2.2...2.........2...2...2..2..2..2...2...2
-                                            2..2.2.......2..2.2...2..2.....2..2....2..2.2...2...2......2......2...2..2..2.........2...2...2..2..2...........
-                                            2..2.2222....222...222...2222...22.....2..2..222....2......2222..222..2..2..2222......2....222....22...2...2...2
-                                            `,img`
-                                            ................................................................................................................
-                                            ................................................................................................................
-                                            ................................................................................................................
-                                            ................................................................................................................
-                                            ................................................................................................................
-                                            ................................................................................................................
-                                            `],
-                                        750,
-                                        true
-                                        )
-                                        scaling.scaleToPercent(introText6, 120, ScaleDirection.Uniformly, ScaleAnchor.Middle)
-                                        introText6.setPosition(80, 92)
-                                        if (playing == false) {
-                                            timer.after(2000, function () {
-                                                aButtonSprite = sprites.create(img`
-                                                    . . . . 6 6 6 6 6 6 6 . . . . 
-                                                    . . 6 6 7 7 7 7 7 7 7 6 6 . . 
-                                                    . 6 6 7 7 7 8 8 8 7 7 7 6 6 . 
-                                                    . 6 7 7 7 8 8 7 8 8 7 7 7 6 . 
-                                                    . c 7 7 8 8 8 8 8 8 8 7 7 c . 
-                                                    . c 9 7 8 7 7 7 7 7 8 7 9 c . 
-                                                    . c 9 9 7 7 7 7 7 7 7 9 9 c . 
-                                                    . c 6 6 9 9 9 9 9 9 9 6 6 c . 
-                                                    c c 6 6 6 6 6 6 6 6 6 6 6 c c 
-                                                    c d c c 6 6 6 6 6 6 6 c c d c 
-                                                    c d d d c c c c c c c d d d c 
-                                                    c c b d d d d d d d d d b c c 
-                                                    c c c c c b b b b b c c c c c 
-                                                    c c b b b b b b b b b b b c c 
-                                                    . c c b b b b b b b b b c c . 
-                                                    . . . c c c c c c c c c . . . 
-                                                    `, SpriteKind.UI)
-                                                aButtonSprite.setPosition(84, 108)
-                                                animation.runImageAnimation(
-                                                aButtonSprite,
-                                                [img`
-                                                    . . . . 6 6 6 6 6 6 6 . . . . 
-                                                    . . 6 6 7 7 7 7 7 7 7 6 6 . . 
-                                                    . 6 6 7 7 7 8 8 8 7 7 7 6 6 . 
-                                                    . 6 7 7 7 8 8 7 8 8 7 7 7 6 . 
-                                                    . c 7 7 8 8 8 8 8 8 8 7 7 c . 
-                                                    . c 9 7 8 7 7 7 7 7 8 7 9 c . 
-                                                    . c 9 9 7 7 7 7 7 7 7 9 9 c . 
-                                                    . c 6 6 9 9 9 9 9 9 9 6 6 c . 
-                                                    c c 6 6 6 6 6 6 6 6 6 6 6 c c 
-                                                    c d c c 6 6 6 6 6 6 6 c c d c 
-                                                    c d d d c c c c c c c d d d c 
-                                                    c c b d d d d d d d d d b c c 
-                                                    c c c c c b b b b b c c c c c 
-                                                    c c b b b b b b b b b b b c c 
-                                                    . c c b b b b b b b b b c c . 
-                                                    . . . c c c c c c c c c . . . 
-                                                    `,img`
-                                                    . . . . . . . . . . . . . . . 
-                                                    . . . . . . . . . . . . . . . 
-                                                    . . . . 6 6 6 6 6 6 6 . . . . 
-                                                    . . 6 6 7 7 7 7 7 7 7 6 6 . . 
-                                                    . 6 6 7 7 7 8 8 8 7 7 7 6 6 . 
-                                                    . 6 7 7 7 8 8 7 8 8 7 7 7 6 . 
-                                                    . e 7 7 8 8 8 8 8 8 8 7 7 e . 
-                                                    . c 9 7 8 7 7 7 7 7 8 7 9 c . 
-                                                    c c 9 9 7 7 7 7 7 7 7 9 9 c c 
-                                                    c d c c 9 9 9 9 9 9 9 c c d c 
-                                                    c d d d c c c c c c c d d d c 
-                                                    c c b d d d d d d d d d b c c 
-                                                    c c c c c b b b b b c c c c c 
-                                                    c c b b b b b b b b b b b c c 
-                                                    . c c b b b b b b b b b c c . 
-                                                    . . . c c c c c c c c c . . . 
-                                                    `],
-                                                150,
-                                                true
-                                                )
-                                                continueText = textsprite.create("BEGIN", 0, 7)
-                                                continueText.setPosition(59, 108)
-                                                continueText.setKind(SpriteKind.SplashText)
-                                                continueText = textsprite.create("GAME", 0, 7)
-                                                continueText.setPosition(105, 108)
-                                                continueText.setKind(SpriteKind.SplashText)
-                                            })
-                                        }
-                                    })
-                                }
-                            })
-                        }
                     }
-                }
+                })
             }
         })
     }
@@ -252,11 +252,11 @@ function frontBlast (x: number, y: number, lvl: number) {
     } else if (lvl == 3) {
         effectColorSelector = 0
     }
-    for (let index = 0; index < 6; index++) {
+    for (let index = 0; index < 4; index++) {
         blastFire = sprites.create(particles2[colorPaths[effectColorSelector]._pickRandom()], SpriteKind.Effect)
         blastFire.setVelocity(randint(-50, 50), randint(-10, 20))
         blastFire.setPosition(x + randint(-2, 2), y + randint(-2, 2))
-        blastFire.lifespan = randint(200, 300)
+        blastFire.lifespan = randint(120, 240)
     }
 }
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
@@ -490,7 +490,7 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (currentStage > 0) {
         createProjectile(weapon)
     } else {
-        currentStage = 1
+        currentStage = 2
         loadMap(currentStage)
         playing = true
     }
@@ -513,7 +513,7 @@ function backBlast (x: number, y: number, lvl: number) {
         blastFire = sprites.create(particles2[colorPaths[effectColorSelector]._pickRandom()], SpriteKind.Effect)
         blastFire.setVelocity(randint(-40, 40), -50)
         blastFire.setPosition(x + randint(-2, 2), y + randint(-2, 2))
-        blastFire.lifespan = randint(200, 300)
+        blastFire.lifespan = randint(120, 240)
     }
     timer.after(50, function () {
         for (let index = 0; index < 4; index++) {
@@ -1155,26 +1155,26 @@ function sideBlast (x: number, y: number, lvl: number) {
     } else if (lvl == 3) {
         effectColorSelector = 0
     }
-    for (let index = 0; index < 4; index++) {
+    for (let index = 0; index < 3; index++) {
         blastFire = sprites.create(particles2[colorPaths[effectColorSelector]._pickRandom()], SpriteKind.Effect)
         blastFire.setVelocity(randint(-10, -40), randint(-10, -40))
         blastFire.setPosition(x + randint(-2, 2), y + randint(-2, 2))
-        blastFire.lifespan = randint(200, 300)
+        blastFire.lifespan = randint(120, 240)
     }
-    for (let index = 0; index < 4; index++) {
+    for (let index = 0; index < 3; index++) {
         blastFire = sprites.create(particles2[colorPaths[effectColorSelector]._pickRandom()], SpriteKind.Effect)
         blastFire.setVelocity(randint(10, 40), randint(-10, -40))
         blastFire.setPosition(x + randint(-2, 2), y + randint(-2, 2))
-        blastFire.lifespan = randint(200, 300)
+        blastFire.lifespan = randint(120, 240)
     }
     timer.after(50, function () {
-        for (let index = 0; index < 4; index++) {
+        for (let index = 0; index < 3; index++) {
             blastFire = sprites.create(particles2[colorPaths[effectColorSelector]._pickRandom()], SpriteKind.Effect)
             blastFire.setVelocity(randint(-10, -40), randint(-10, -40))
             blastFire.setPosition(x + randint(-2, 2), y + randint(-2, 2))
             blastFire.lifespan = randint(80, 150)
         }
-        for (let index = 0; index < 4; index++) {
+        for (let index = 0; index < 3; index++) {
             blastFire = sprites.create(particles2[colorPaths[effectColorSelector]._pickRandom()], SpriteKind.Effect)
             blastFire.setVelocity(randint(10, 40), randint(-10, -40))
             blastFire.setPosition(x + randint(-2, 2), y + randint(-2, 2))
@@ -2037,7 +2037,7 @@ function loadGameAssets () {
     7,
     8
     ],
-    [0, 1, 2],
+    [5, 6],
     [
     0,
     1,
