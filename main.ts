@@ -187,6 +187,17 @@ function introSplashText () {
         })
     }
 }
+controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (currentStage != 0) {
+        createProjectile(weapon)
+    } else {
+        currentStage = previousStage + 1
+        currentLevel += 1
+        cycleStages(currentStage)
+        loadMap(currentStage)
+        levelAnnouncer(currentLevel)
+    }
+})
 function createRocket2 () {
     for (let value of sprites.allOfKind(SpriteKind.Viking)) {
         music.play(music.melodyPlayable(music.knock), music.PlaybackMode.InBackground)
@@ -274,29 +285,13 @@ function loadMap (lvl: number) {
     if (lvl == 0 && currentLevel == 0) {
         introSplashText()
     } else if (lvl == 0 && currentLevel > 0) {
-        scene.setBackgroundImage(backdrops._pickRandom())
-        if (playing == false) {
-            initializePlayer()
-            enteringAirspaceSplash(lvl)
-        }
+        mapSequence(lvl)
     } else if (lvl == 1) {
-        scene.setBackgroundImage(backdrops._pickRandom())
-        if (playing == false) {
-            initializePlayer()
-            enteringAirspaceSplash(lvl)
-        }
+        mapSequence(lvl)
     } else if (lvl == 2) {
-        scene.setBackgroundImage(backdrops._pickRandom())
-        if (playing == false) {
-            initializePlayer()
-            enteringAirspaceSplash(lvl)
-        }
+        mapSequence(lvl)
     } else if (lvl == 3) {
-        scene.setBackgroundImage(backdrops._pickRandom())
-        if (playing == false) {
-            initializePlayer()
-            enteringAirspaceSplash(lvl)
-        }
+        mapSequence(lvl)
     }
     playing = true
 }
@@ -542,17 +537,6 @@ function initializeTerranAssets () {
         `
     ]
 }
-controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (currentStage != 0) {
-        createProjectile(weapon)
-    } else {
-        currentStage = previousStage + 1
-        currentLevel += 1
-        cycleStages(currentStage)
-        loadMap(currentStage)
-        levelAnnouncer(currentLevel)
-    }
-})
 sprites.onOverlap(SpriteKind.Plasma, SpriteKind.Edge, function (sprite, otherSprite) {
     sprites.destroy(sprite)
 })
@@ -1806,7 +1790,7 @@ function createRocket1 () {
     }
 }
 sprites.onOverlap(SpriteKind.Rocket, SpriteKind.Edge, function (sprite, otherSprite) {
-    sprites.destroy(sprite)
+    blastSequence(sprite, otherSprite, currentStage)
 })
 function sideBlast (x: number, y: number, lvl: number) {
     if (lvl == 1) {
@@ -1911,9 +1895,7 @@ function createVikingThrusterTrail () {
     }
 }
 sprites.onOverlap(SpriteKind.Rocket, SpriteKind.BasicEnemy, function (sprite, otherSprite) {
-    sprites.destroy(sprite)
-    radialBlast(otherSprite.x, otherSprite.y, currentStage)
-    sprites.destroy(otherSprite)
+    blastSequence(sprite, otherSprite, currentStage)
 })
 function initializeZergAssets () {
     zergAssets = [
@@ -2112,6 +2094,13 @@ function createDroneTrails () {
 sprites.onOverlap(SpriteKind.DroneRocket, SpriteKind.Edge, function (sprite, otherSprite) {
     sprites.destroy(sprite)
 })
+function mapSequence (lvl: number) {
+    scene.setBackgroundImage(backdrops._pickRandom())
+    if (playing == false) {
+        initializePlayer()
+        enteringAirspaceSplash(lvl)
+    }
+}
 function radialBlast (x: number, y: number, lvl: number) {
     frontBlast(x, y, lvl)
     sideBlast(x, y, lvl)
@@ -2822,9 +2811,7 @@ function loadGameAssets () {
     initializeProtossAssets()
 }
 sprites.onOverlap(SpriteKind.Plasma, SpriteKind.BasicEnemy, function (sprite, otherSprite) {
-    sprites.destroy(sprite)
-    radialBlast(otherSprite.x, otherSprite.y, currentStage)
-    sprites.destroy(otherSprite)
+    blastSequence(sprite, otherSprite, currentStage)
 })
 function createBasic () {
     for (let value of sprites.allOfKind(SpriteKind.Viking)) {
@@ -2844,6 +2831,11 @@ function createTrailEffects () {
     createPlasmaTrails()
     createDroneTrails()
     createDroneRocketTrails()
+}
+function blastSequence (projectile: Sprite, target: Sprite, currentStage: number) {
+    sprites.destroy(projectile)
+    radialBlast(target.x, target.y, currentStage)
+    sprites.destroy(target)
 }
 function cycleStages (currentLvl: number) {
     if (currentLvl == 4) {
@@ -2869,6 +2861,7 @@ let gameUIAssets: Image[] = []
 let shieldSprite: Sprite = null
 let edgeSprite: Sprite = null
 let doodads: Image[] = []
+let backdrops: Image[] = []
 let thrusterFire: Sprite = null
 let openingSplash: TextSprite = null
 let pointValues: number[] = []
@@ -2887,8 +2880,6 @@ let enemyProjectileLifespan = 0
 let thrusterOffset = 0
 let causedByBomb = false
 let invulnerable = false
-let previousStage = 0
-let weapon = 0
 let terranCombatAssets: Image[] = []
 let terranAssets: Image[] = []
 let notCausedByBomb = false
@@ -2899,10 +2890,7 @@ let colorPaths: number[][] = []
 let particles2: Image[] = []
 let blastFire: Sprite = null
 let effectColorSelector = 0
-let backdrops: Image[] = []
-let currentLevel = 0
 let levelNumberSprite: TextSprite = null
-let currentStage = 0
 let levelTextSprite: TextSprite = null
 let plasma: Sprite = null
 let playerProjectileLifespan = 0
@@ -2920,6 +2908,10 @@ let playerCombatAssets: Image[] = []
 let rocketSprite: Sprite = null
 let cannonOffset = 0
 let spawnOffset = 0
+let currentLevel = 0
+let previousStage = 0
+let weapon = 0
+let currentStage = 0
 let continueText: TextSprite = null
 let aButtonSprite: Sprite = null
 let introText6: Sprite = null
