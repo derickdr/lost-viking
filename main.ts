@@ -17,6 +17,7 @@ namespace SpriteKind {
     export const MissilePickup = SpriteKind.create()
     export const PlasmaPickup = SpriteKind.create()
     export const EnemyProjectile = SpriteKind.create()
+    export const BombPickup = SpriteKind.create()
 }
 function createPlasmaHelp () {
     demoAsset = sprites.create(supportAssets[2], SpriteKind.MenuUI)
@@ -279,12 +280,12 @@ function levelAnnouncer (currentLvl: number) {
     }
     levelNumberSprite.setPosition(120, 152)
     scaling.scaleToPercent(levelNumberSprite, 250, ScaleDirection.Uniformly, ScaleAnchor.Middle)
-    levelTextSprite.lifespan = 4000
-    levelNumberSprite.lifespan = 4000
-    levelTextSprite.ay = 40
-    levelNumberSprite.ay = 40
-    levelTextSprite.vy = -75
-    levelNumberSprite.vy = -75
+    levelTextSprite.lifespan = 6000
+    levelNumberSprite.lifespan = 6000
+    levelTextSprite.ay = 20
+    levelNumberSprite.ay = 20
+    levelTextSprite.vy = -50
+    levelNumberSprite.vy = -50
 }
 function loadMap (lvl: number) {
     if (lvl == 0 && currentLevel == 0) {
@@ -521,6 +522,15 @@ function initializeTerranAssets () {
         . . . . . . . . . . . . . . . . 
         `
     ]
+}
+function spawnLoot (x: Sprite, y: Sprite, remaining: number) {
+    if (remaining > 0) {
+        if (Math.percentChance(5)) {
+            powerupSprite = Powerups._pickRandom()
+            powerupSprite.setPosition(0, 0)
+            powerupsRemaining += -1
+        }
+    }
 }
 sprites.onOverlap(SpriteKind.Plasma, SpriteKind.Edge, function (sprite, otherSprite) {
     sprites.destroy(sprite)
@@ -1815,6 +1825,7 @@ function sideBlast (x: number, y: number, lvl: number) {
 }
 sprites.onOverlap(SpriteKind.DroneRocket, SpriteKind.BasicEnemy, function (sprite, otherSprite) {
     blastSequence(sprite, otherSprite, currentStage)
+    spawnLoot(otherSprite, otherSprite, powerupsRemaining)
     addPoints(otherSprite)
 })
 function createBombMax () {
@@ -1881,6 +1892,7 @@ function createVikingThrusterTrail () {
 }
 sprites.onOverlap(SpriteKind.Rocket, SpriteKind.BasicEnemy, function (sprite, otherSprite) {
     blastSequence(sprite, otherSprite, currentStage)
+    spawnLoot(otherSprite, otherSprite, powerupsRemaining)
     addPoints(otherSprite)
 })
 function initializeZergAssets () {
@@ -2085,6 +2097,15 @@ function mapSequence (lvl: number) {
     if (playing == false) {
         initializePlayer()
         enteringAirspaceSplash(lvl)
+        if (difficulty == 0) {
+            powerupsRemaining = 12
+        } else if (difficulty == 1) {
+            powerupsRemaining = 9
+        } else if (difficulty == 2) {
+            powerupsRemaining = 6
+        } else if (difficulty == 3) {
+            powerupsRemaining = 3
+        }
     }
 }
 function radialBlast (x: number, y: number, lvl: number) {
@@ -2413,6 +2434,8 @@ function initializeTemp () {
     bombTotal = 0
     previousStage = 0
     playing = false
+    difficulty = 0
+    powerupsRemaining = 0
 }
 function initializeProtossAssets () {
     protossAssets = [
@@ -2820,12 +2843,59 @@ function loadGameAssets () {
         ..888777888...667777888.
         ....8888........88888...
         `]
+    Powerups = [
+    sprites.create(img`
+        . . . . . . . . c . . 
+        . c . . e . c c . . . 
+        . . c c b b c c . . . 
+        . . c b 5 4 b . . . . 
+        . c e c 4 5 b e . . . 
+        . . e a c b c . . . . 
+        . . a e e c c . . . . 
+        . c . . c . . c . . . 
+        . . . . . . . . . . . 
+        `, SpriteKind.DronePickup),
+    sprites.create(img`
+        . . b b b . . . . . . 
+        . b 6 9 d b b . . . . 
+        . b 8 6 9 1 6 b . . . 
+        b 6 b b d 8 6 9 b . . 
+        b d c 9 c c c 8 9 d . 
+        . b c c b b c c c d b 
+        . . b b c d d c c c b 
+        . . . . . c c b c b b 
+        . . . . . . . b b b . 
+        `, SpriteKind.BombPickup),
+    sprites.create(img`
+        . . . . d d d . . . . 
+        . . c c 1 1 1 d d . . 
+        . d d c d 1 1 d b b . 
+        . . d b d 1 1 c b . . 
+        . . . b d 1 1 c . . . 
+        . . . b d 1 1 c . . . 
+        . . . b d 1 1 c . . . 
+        . . . b b 1 c c . . . 
+        . . . . b . c . . . . 
+        `, SpriteKind.PlasmaPickup),
+    sprites.create(img`
+        . . . . b . b . . . . 
+        . . . 1 d b d 1 . . . 
+        . . . 4 1 d 1 4 . . . 
+        . . 1 4 . 4 . 4 1 . . 
+        . . 4 1 . 4 . 1 4 . . 
+        . 2 4 . . 1 . . 4 2 . 
+        1 2 2 . 2 2 2 . 2 2 1 
+        1 1 . . 1 2 1 . . 1 1 
+        . . . . 1 1 1 . . . . 
+        `, SpriteKind.MissilePickup)
+    ]
     initializeZergAssets()
     initializeTerranAssets()
     initializeProtossAssets()
 }
 sprites.onOverlap(SpriteKind.Plasma, SpriteKind.BasicEnemy, function (sprite, otherSprite) {
     blastSequence(sprite, otherSprite, currentStage)
+    spawnLoot(otherSprite, otherSprite, powerupsRemaining)
     addPoints(otherSprite)
 })
 function createBasic () {
@@ -2871,6 +2941,7 @@ let playerY = 0
 let playerX = 0
 let droneTotal = 0
 let currentScore = 0
+let difficulty = 0
 let zergCombatAssets: Image[] = []
 let zergAssets: Image[] = []
 let thrusterEffectOffset = 0
@@ -2897,6 +2968,9 @@ let enemyProjectileLifespan = 0
 let thrusterOffset = 0
 let causedByBomb = false
 let invulnerable = false
+let powerupsRemaining = 0
+let Powerups: Sprite[] = []
+let powerupSprite: Sprite = null
 let terranCombatAssets: Image[] = []
 let terranAssets: Image[] = []
 let notCausedByBomb = false
