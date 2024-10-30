@@ -19,6 +19,7 @@ namespace SpriteKind {
     export const EnemyProjectile = SpriteKind.create()
     export const BombPickup = SpriteKind.create()
     export const UI = SpriteKind.create()
+    export const PowerEffect = SpriteKind.create()
 }
 function createPlasmaHelp () {
     demoAsset = sprites.create(supportAssets[2], SpriteKind.MenuUI)
@@ -327,6 +328,14 @@ function frontBlast (x: number, y: number, lvl: number) {
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
 	
 })
+spriteutils.onSpriteKindUpdateInterval(SpriteKind.PowerEffect, 500, function (sprite) {
+    timer.after(250, function () {
+        sprite.setFlag(SpriteFlag.Invisible, true)
+        timer.after(250, function () {
+            sprite.setFlag(SpriteFlag.Invisible, false)
+        })
+    })
+})
 function initializePlayer () {
     initializePlayerAssets()
     senseiDerick = sprites.create(playerAssets[1], SpriteKind.Viking)
@@ -532,6 +541,7 @@ function initializeTerranAssets () {
     ]
 }
 sprites.onOverlap(SpriteKind.Viking, SpriteKind.PlasmaPickup, function (sprite, otherSprite) {
+    powerUpAnimation(sprite, otherSprite)
     addPoints(otherSprite)
 })
 function spawnLoot (x: Sprite, y: Sprite, remaining: number) {
@@ -671,9 +681,11 @@ function createBottomTooltip () {
     textSprite.setKind(SpriteKind.MenuUI)
 }
 sprites.onOverlap(SpriteKind.Viking, SpriteKind.BombPickup, function (sprite, otherSprite) {
+    powerUpAnimation(sprite, otherSprite)
     addPoints(otherSprite)
 })
 sprites.onOverlap(SpriteKind.Viking, SpriteKind.DronePickup, function (sprite, otherSprite) {
+    powerUpAnimation(sprite, otherSprite)
     addPoints(otherSprite)
 })
 function initializeConsts () {
@@ -718,6 +730,151 @@ sprites.onCreated(SpriteKind.MissilePickup, function (sprite) {
     spriteutils.moveToAtSpeed(sprite, spriteutils.pos(randint(5, 155), randint(5, 115)), randint(2, 8))
     sprite.lifespan = randint(5000, 7000)
 })
+function powerUpAnimation (viking: Sprite, powerUp: Sprite) {
+    if (powerUp.image.equals(img`
+        . . . . b . b . . . . 
+        . . . 1 d b d 1 . . . 
+        . . . 4 1 d 1 4 . . . 
+        . . 1 4 . 4 . 4 1 . . 
+        . . 4 1 . 4 . 1 4 . . 
+        . 2 4 . . 1 . . 4 2 . 
+        1 2 2 . 2 2 2 . 2 2 1 
+        1 1 . . 1 2 1 . . 1 1 
+        . . . . 1 1 1 . . . . 
+        `)) {
+        powerUpEffect = sprites.create(img`
+            .............7....7.............
+            .............77..77.............
+            .............77..77.............
+            .............777777.............
+            ............77777777............
+            ............777..777............
+            .......77...777..777...77.......
+            .......77...77....77...77.......
+            .7777777777777....7777777777777.
+            7777777777777......7777777777777
+            777...........4444............77
+            777...444444444ee444444444...777
+            .777..444444eeeeeeee444444..777.
+            ..777...444444eeee444444...777..
+            ...777....44444ee44444....777...
+            ....777.....44444444.....777....
+            .....777777...4444...777777.....
+            ......777777........777777......
+            .......77.777.7777.777.77.......
+            .......7...7777777777...7.......
+            ...........7777777777...........
+            ............77....77............
+            `, SpriteKind.PowerEffect)
+    } else if (powerUp.image.equals(img`
+        . . . . d d d . . . . 
+        . . c c 1 1 1 d d . . 
+        . d d c d 1 1 d b b . 
+        . . d b d 1 1 c b . . 
+        . . . b d 1 1 c . . . 
+        . . . b d 1 1 c . . . 
+        . . . b d 1 1 c . . . 
+        . . . b b 1 c c . . . 
+        . . . . b . c . . . . 
+        `)) {
+        powerUpEffect = sprites.create(img`
+            .............7....7.............
+            .............77..77.............
+            .............77..77.............
+            .............777777.............
+            ............77777777............
+            ............777..777............
+            .......77...777..777...77.......
+            .......77...77....77...77.......
+            .7777777777777....7777777777777.
+            7777777777777......7777777777777
+            777...........aaaa............77
+            777...aaaaaaaaaaaaaaaaaaaa...777
+            .777..aaaaaaccccccccaaaaaa..777.
+            ..777...aaaaaaccccaaaaaa...777..
+            ...777....aaaaaccaaaaa....777...
+            ....777.....aaaaaaaa.....777....
+            .....777777...aaaa...777777.....
+            ......777777........777777......
+            .......77.777.7777.777.77.......
+            .......7...7777777777...7.......
+            ...........7777777777...........
+            ............77....77............
+            `, SpriteKind.PowerEffect)
+    } else if (powerUp.image.equals(img`
+        . . b b b . . . . . . 
+        . b 6 9 d b b . . . . 
+        . b 8 6 9 1 6 b . . . 
+        b 6 b b d 8 6 9 b . . 
+        b d c 9 c c c 8 9 d . 
+        . b c c b b c c c d b 
+        . . b b c d d c c c b 
+        . . . . . c c b c b b 
+        . . . . . . . b b b . 
+        `)) {
+        powerUpEffect = sprites.create(img`
+            .............7....7.............
+            .............77..77.............
+            .............77..77.............
+            .............777777.............
+            ............77777777............
+            ............777..777............
+            .......77...777..777...77.......
+            .......77...77....77...77.......
+            .7777777777777....7777777777777.
+            7777777777777......7777777777777
+            777...........9999............77
+            777...99999999966999999999...777
+            .777..99966666666666666699..777.
+            ..777...9999666666669999...777..
+            ...777....999996699999....777...
+            ....777.....99999999.....777....
+            .....777777...9999...777777.....
+            ......777777........777777......
+            .......77.777.7777.777.77.......
+            .......7...7777777777...7.......
+            ...........7777777777...........
+            ............77....77............
+            `, SpriteKind.PowerEffect)
+    } else if (powerUp.image.equals(img`
+        . . . . . . . . c . . 
+        . c . . e . c c . . . 
+        . . c c b b c c . . . 
+        . . c b 5 4 b . . . . 
+        . c e c 4 5 b e . . . 
+        . . e a c b c . . . . 
+        . . a e e c c . . . . 
+        . c . . c . . c . . . 
+        . . . . . . . . . . . 
+        `)) {
+        powerUpEffect = sprites.create(img`
+            .............7....7.............
+            .............77..77.............
+            .............77..77.............
+            .............777777.............
+            ............77777777............
+            ............777..777............
+            .......77...777..777...77.......
+            .......77...77....77...77.......
+            .7777777777777....7777777777777.
+            7777777777777......7777777777777
+            777...........2222............77
+            777...222222222ee222222222...777
+            .777..222222eeeeeeee222222..777.
+            ..777...222222eeee222222...777..
+            ...777....22222ee22222....777...
+            ....777.....22222222.....777....
+            .....777777...2222...777777.....
+            ......777777........777777......
+            .......77.777.7777.777.77.......
+            .......7...7777777777...7.......
+            ...........7777777777...........
+            ............77....77............
+            `, SpriteKind.PowerEffect)
+    }
+    powerUpEffect.setPosition(viking.x, viking.y)
+    powerUpEffect.follow(viking, 500)
+}
 function enteringAirspaceSplash (lvl: number) {
     if (lvl == 1) {
         openingSplash = textsprite.create("WARNING!!!", 0, 5)
@@ -2170,57 +2327,19 @@ function radialBlast (x: number, y: number, lvl: number) {
 controller.menu.onEvent(ControllerButtonEvent.Pressed, function () {
     if (playing) {
         createMenuContent()
+    } else if (!(playing)) {
+    	
     }
 })
 function spawnPowerUp (params: Sprite) {
     powerupSprite = sprites.create(supportAssets._pickRandom(), SpriteKind.Effect)
-    if (powerupSprite.image.equals(img`
-        . . . . b . b . . . . 
-        . . . 1 d b d 1 . . . 
-        . . . 4 1 d 1 4 . . . 
-        . . 1 4 . 4 . 4 1 . . 
-        . . 4 1 . 4 . 1 4 . . 
-        . 2 4 . . 1 . . 4 2 . 
-        1 2 2 . 2 2 2 . 2 2 1 
-        1 1 . . 1 2 1 . . 1 1 
-        . . . . 1 1 1 . . . . 
-        `)) {
+    if (powerupSprite.image.equals(supportAssets[0])) {
         powerupSprite.setKind(SpriteKind.MissilePickup)
-    } else if (powerupSprite.image.equals(img`
-        . . . . d d d . . . . 
-        . . c c 1 1 1 d d . . 
-        . d d c d 1 1 d b b . 
-        . . d b d 1 1 c b . . 
-        . . . b d 1 1 c . . . 
-        . . . b d 1 1 c . . . 
-        . . . b d 1 1 c . . . 
-        . . . b b 1 c c . . . 
-        . . . . b . c . . . . 
-        `)) {
+    } else if (powerupSprite.image.equals(supportAssets[2])) {
         powerupSprite.setKind(SpriteKind.PlasmaPickup)
-    } else if (powerupSprite.image.equals(img`
-        . . b b b . . . . . . 
-        . b 6 9 d b b . . . . 
-        . b 8 6 9 1 6 b . . . 
-        b 6 b b d 8 6 9 b . . 
-        b d c 9 c c c 8 9 d . 
-        . b c c b b c c c d b 
-        . . b b c d d c c c b 
-        . . . . . c c b c b b 
-        . . . . . . . b b b . 
-        `)) {
+    } else if (powerupSprite.image.equals(supportAssets[1])) {
         powerupSprite.setKind(SpriteKind.BombPickup)
-    } else if (powerupSprite.image.equals(img`
-        . . . . . . . . c . . 
-        . c . . e . c c . . . 
-        . . c c b b c c . . . 
-        . . c b 5 4 b . . . . 
-        . c e c 4 5 b e . . . 
-        . . e a c b c . . . . 
-        . . a e e c c . . . . 
-        . c . . c . . c . . . 
-        . . . . . . . . . . . 
-        `)) {
+    } else if (powerupSprite.image.equals(supportAssets[3])) {
         powerupSprite.setKind(SpriteKind.DronePickup)
     }
     powerupSprite.setPosition(params.x, params.y)
@@ -2233,6 +2352,9 @@ function createDroneRocketTrails () {
         thrusterFire.lifespan = 10
     }
 }
+sprites.onCreated(SpriteKind.PowerEffect, function (sprite) {
+    sprite.lifespan = 3000
+})
 function initializePlayerAssets () {
     // 0 - placeholder
     // 1 - viking player model
@@ -2791,8 +2913,6 @@ function loadGameAssets () {
     // 1 - bomb powerup
     // 2 - plasma powerup
     // 3 - drone powerup
-    // 4 - drone missile
-    // 5 - drone missile trail
     supportAssets = [
     img`
         . . . . b . b . . . . 
@@ -2984,6 +3104,7 @@ function createBasic () {
     }
 }
 sprites.onOverlap(SpriteKind.Viking, SpriteKind.MissilePickup, function (sprite, otherSprite) {
+    powerUpAnimation(sprite, otherSprite)
     addPoints(otherSprite)
 })
 function createTrailEffects () {
@@ -3027,6 +3148,7 @@ let doodads: Image[] = []
 let backdrops: Image[] = []
 let thrusterFire: Sprite = null
 let openingSplash: TextSprite = null
+let powerUpEffect: Sprite = null
 let pointValues: number[] = []
 let starColor = 0
 let droneMissileColor = 0
