@@ -228,16 +228,19 @@ function loadMap (lvl: number) {
         scene.setBackgroundImage(backdrops._pickRandom())
         if (playing == false) {
             initializePlayer()
+            enteringAirspaceSplash(lvl)
         }
     } else if (lvl == 2) {
         scene.setBackgroundImage(backdrops._pickRandom())
         if (playing == false) {
             initializePlayer()
+            enteringAirspaceSplash(lvl)
         }
     } else if (lvl == 3) {
         scene.setBackgroundImage(backdrops._pickRandom())
         if (playing == false) {
             initializePlayer()
+            enteringAirspaceSplash(lvl)
         }
     }
 }
@@ -281,13 +284,13 @@ function initializePlayer () {
     // dev note:
     // i gave up on the pixel art purism huhu leave me alone my fingers are old
     scaling.scaleToPercent(senseiDerick, 60, ScaleDirection.Uniformly, ScaleAnchor.Middle)
+    sprites.destroyAllSpritesOfKind(SpriteKind.SplashText)
+    sprites.destroyAllSpritesOfKind(SpriteKind.UI)
     createShield(notCausedByBomb)
     timer.after(2000, function () {
         senseiDerick.setStayInScreen(true)
         senseiDerick.vy = 0
         controller.moveSprite(senseiDerick, 75, 75)
-        sprites.destroyAllSpritesOfKind(SpriteKind.UI)
-        sprites.destroyAllSpritesOfKind(SpriteKind.SplashText)
     })
 }
 function initializeTerranAssets () {
@@ -480,8 +483,6 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (currentStage > 0) {
         createProjectile(weapon)
     } else {
-        sprites.destroyAllSpritesOfKind(SpriteKind.SplashText)
-        sprites.destroyAllSpritesOfKind(SpriteKind.UI)
         currentStage = 1
         loadMap(currentStage)
         playing = true
@@ -550,6 +551,32 @@ function initializeConsts () {
     droneColor = 7
     droneMissileColor = 8
     starColor = 9
+}
+function enteringAirspaceSplash (lvl: number) {
+    if (lvl == 1) {
+        openingSplash = textsprite.create("WARNING!!!", 0, 5)
+        openingSplash.lifespan = 5000
+        openingSplash.setPosition(80, 16)
+        scaling.scaleToPercent(openingSplash, 200, ScaleDirection.Uniformly, ScaleAnchor.Middle)
+        openingSplash = textsprite.create("ENTERING", 0, 1)
+        openingSplash.lifespan = 5000
+        openingSplash.setPosition(80, 30)
+        openingSplash = textsprite.create("PROTOSS", 0, 9)
+        openingSplash.lifespan = 5000
+        openingSplash.setPosition(80, 44)
+        scaling.scaleToPercent(openingSplash, 150, ScaleDirection.Uniformly, ScaleAnchor.Middle)
+        openingSplash = textsprite.create("AIRSPACE", 0, 1)
+        openingSplash.lifespan = 5000
+        openingSplash.setPosition(80, 58)
+        openingSplash = textsprite.create("DANGER!!!", 0, 2)
+        scaling.scaleToPercent(openingSplash, 250, ScaleDirection.Uniformly, ScaleAnchor.Middle)
+        openingSplash.lifespan = 5000
+        openingSplash.setPosition(80, 76)
+    } else if (lvl == 2) {
+    	
+    } else if (lvl == 3) {
+    	
+    }
 }
 function createRocketTrails () {
     for (let value of sprites.allOfKind(SpriteKind.Rocket)) {
@@ -1396,6 +1423,24 @@ function radialBlast (x: number, y: number) {
     sideBlast(x, y)
     frontBlast(x, y)
 }
+controller.menu.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (playing) {
+        game.setDialogCursor(img`
+            . 6 7 7 7 7 . . 6 7 . . 6 7 . 6 7 7 6 7 7 6 7 7 
+            6 7 6 6 6 6 7 . 6 7 . . 6 7 . 6 7 7 6 7 7 6 7 7 
+            6 7 . . . 6 7 . 6 7 . . 6 7 . 6 7 7 6 7 7 6 7 7 
+            6 7 . . . 6 7 . 6 7 6 6 7 6 . 6 7 7 6 7 7 6 7 7 
+            6 7 . . . 6 7 . 6 7 7 7 6 . . 6 7 7 6 7 7 6 7 7 
+            6 7 . . . 6 7 . 6 7 6 6 7 . . 6 7 7 6 7 7 6 7 7 
+            6 7 . . . 6 7 . 6 7 . . 6 7 . 6 7 7 6 7 7 6 7 7 
+            6 7 . . . 6 7 . 6 7 . . 6 7 . . . . . . . . . . 
+            6 7 . . . 6 7 . 6 7 . . 6 7 . 6 7 7 6 7 7 6 7 7 
+            . 6 7 7 7 7 6 . 6 7 . . 6 7 . 6 7 7 6 7 7 6 7 7 
+            . . 6 6 6 6 . . . 6 . . . 6 . . 6 6 . 6 6 . 6 6 
+            `)
+        game.showLongText("---CONTROLS---             Move: WASD / Arrows                     Bomb: B / X / Space", DialogLayout.Center)
+    }
+})
 function createDroneRocketTrails () {
     for (let value of sprites.allOfKind(SpriteKind.DroneRocket)) {
         thrusterFire = sprites.create(particles2[colorPaths[droneMissileColor]._pickRandom()], SpriteKind.Effect)
@@ -2125,6 +2170,7 @@ let shieldSprite: Sprite = null
 let edgeSprite: Sprite = null
 let doodads: Image[] = []
 let thrusterFire: Sprite = null
+let openingSplash: TextSprite = null
 let starColor = 0
 let droneMissileColor = 0
 let droneColor = 0
@@ -2183,4 +2229,8 @@ forever(function () {
     createVikingThrusterTrail()
     createTrailEffects()
     createSpaceDust(currentStage)
+    if (playing) {
+        sprites.destroyAllSpritesOfKind(SpriteKind.SplashText)
+        sprites.destroyAllSpritesOfKind(SpriteKind.UI)
+    }
 })
