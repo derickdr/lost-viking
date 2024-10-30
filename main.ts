@@ -18,19 +18,24 @@ namespace SpriteKind {
     export const PlasmaPickup = SpriteKind.create()
     export const EnemyProjectile = SpriteKind.create()
     export const BombPickup = SpriteKind.create()
+    export const UI = SpriteKind.create()
 }
 function createPlasmaHelp () {
     demoAsset = sprites.create(supportAssets[2], SpriteKind.MenuUI)
-    demoAsset.setPosition(145, 20)
+    demoAsset.setPosition(145, 28)
     demoAsset.setFlag(SpriteFlag.GhostThroughWalls, true)
     demoAsset.lifespan = 1000
     textSprite = textsprite.create("LAZR", 0, 1)
-    textSprite.setPosition(145, 28)
+    textSprite.setPosition(145, 36)
     textSprite.lifespan = 1000
     textSprite.setKind(SpriteKind.MenuUI)
 }
 sprites.onOverlap(SpriteKind.BackgroundElement, SpriteKind.Edge, function (sprite, otherSprite) {
     sprites.destroy(sprite)
+})
+sprites.onCreated(SpriteKind.BombPickup, function (sprite) {
+    spriteutils.moveToAtSpeed(sprite, spriteutils.pos(randint(5, 155), randint(5, 115)), randint(2, 8))
+    sprite.lifespan = randint(5000, 7000)
 })
 function introSplashText () {
     textDelay = 1000
@@ -287,6 +292,9 @@ function levelAnnouncer (currentLvl: number) {
     levelTextSprite.vy = -50
     levelNumberSprite.vy = -50
 }
+spriteutils.onSpriteKindUpdateInterval(SpriteKind.PlasmaPickup, randint(3000, 7000), function (sprite) {
+    spriteutils.moveToAtSpeed(sprite, spriteutils.pos(randint(5, 155), randint(5, 115)), randint(3, 6))
+})
 function loadMap (lvl: number) {
     if (lvl == 0 && currentLevel == 0) {
         introSplashText()
@@ -528,7 +536,7 @@ sprites.onOverlap(SpriteKind.Viking, SpriteKind.PlasmaPickup, function (sprite, 
 })
 function spawnLoot (x: Sprite, y: Sprite, remaining: number) {
     if (remaining > 0) {
-        if (Math.percentChance(10)) {
+        if (Math.percentChance(80)) {
             spawnPowerUp(x)
             powerupsRemaining += -1
         }
@@ -537,16 +545,39 @@ function spawnLoot (x: Sprite, y: Sprite, remaining: number) {
 sprites.onOverlap(SpriteKind.Plasma, SpriteKind.Edge, function (sprite, otherSprite) {
     sprites.destroy(sprite)
 })
+sprites.onDestroyed(SpriteKind.DronePickup, function (sprite) {
+    spawnPowerUp(sprite)
+    radialBlast(sprite.x, sprite.x, 2)
+})
+function loadUI () {
+    scoreHeaderSprite = sprites.create(gameUIAssets[1], SpriteKind.UI)
+    scoreHeaderSprite.setPosition(15, 4)
+}
+sprites.onDestroyed(SpriteKind.MissilePickup, function (sprite) {
+    spawnPowerUp(sprite)
+    radialBlast(sprite.x, sprite.x, 2)
+})
 sprites.onDestroyed(SpriteKind.Shield, function (sprite) {
     invulnerable = false
 })
+sprites.onCreated(SpriteKind.PlasmaPickup, function (sprite) {
+    spriteutils.moveToAtSpeed(sprite, spriteutils.pos(randint(5, 155), randint(5, 115)), randint(2, 8))
+    sprite.lifespan = randint(5000, 7000)
+})
+spriteutils.onSpriteKindUpdateInterval(SpriteKind.BombPickup, randint(3000, 7000), function (sprite) {
+    spriteutils.moveToAtSpeed(sprite, spriteutils.pos(randint(5, 155), randint(5, 115)), randint(3, 6))
+})
+sprites.onDestroyed(SpriteKind.PlasmaPickup, function (sprite) {
+    spawnPowerUp(sprite)
+    radialBlast(sprite.x, sprite.x, 2)
+})
 function createSideHelp () {
     demoAsset = sprites.create(supportAssets[0], SpriteKind.MenuUI)
-    demoAsset.setPosition(15, 20)
+    demoAsset.setPosition(15, 28)
     demoAsset.setFlag(SpriteFlag.GhostThroughWalls, true)
     demoAsset.lifespan = 1000
     textSprite = textsprite.create("SIDE", 0, 1)
-    textSprite.setPosition(15, 28)
+    textSprite.setPosition(15, 36)
     textSprite.setKind(SpriteKind.MenuUI)
     textSprite.lifespan = 1000
 }
@@ -620,6 +651,7 @@ function initializeGame () {
     initializeTemp()
     loadGameAssets()
     loadMapAssets()
+    loadUI()
 }
 function createPlasma1 () {
     for (let value of sprites.allOfKind(SpriteKind.Viking)) {
@@ -684,10 +716,7 @@ function initializeConsts () {
 }
 sprites.onCreated(SpriteKind.MissilePickup, function (sprite) {
     spriteutils.moveToAtSpeed(sprite, spriteutils.pos(randint(5, 155), randint(5, 115)), randint(2, 8))
-    timer.after(5000, function () {
-        spawnPowerUp(sprite)
-        sprites.destroy(sprite)
-    })
+    sprite.lifespan = randint(5000, 7000)
 })
 function enteringAirspaceSplash (lvl: number) {
     if (lvl == 1) {
@@ -723,16 +752,16 @@ function loadMapAssets () {
     backdrops = [img`
         ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
         ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
-        fffff1ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
-        ffffffffff1ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff1ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff1fffffffffff
-        fffffffffeffffffffffffffffffffffffffffff1fffffffffffffffffffffffffeffffffffffffffffffffffff1ffffffffffffffffffffffffffffffffffff5ffffffffffff9fffefffffffff1ffff
-        ffffffffffffffffff1ffffffeffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffbfffffffffffffffffffffffff
+        ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+        fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff1ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff1fffffffffff
+        ffffffffffffffffffffffffffffffffffffffff1fffffffffffffffffffffffffeffffffffffffffffffffffff1ffffffffffffffffffffffffffffffffffff5ffffffffffff9fffefffffffff1ffff
+        ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffbfffffffffffffffffffffffff
         fffffffffffffffffffffffffffffffffffafffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff1fffffffffffffffffffffffffffffffffffffffffffffffff1ffffffffffff
-        ffffff1fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+        ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
         ffffffffffffffffffffffffffffffffffffffffffffffffbfffffffffffffffffffffffffffffff1ffffffffffffffffffffffffffffffff1ffffffffffffffffffffffffffffffffffffffbfffffff
         ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff1ffffffffffffffffffffffffffffffffffffffffffffffbffffffffffffffff1fffffffffffffffffffffffff
         ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff9fffffffffffffffffffffffffffffffffffffff
-        ffffffffffffffffffffff1fffffffffffffffff1fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff6fffffffffffffffffffffffffff1fff
+        ffffffffffffffffffffffffffffffffffffffff1fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff6fffffffffffffffffffffffffff1fff
         ffffffffbfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffffffffffffffffffff1fffffffffffff
         ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
         ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff1fffffffffffffffffffff1fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
@@ -845,12 +874,12 @@ function loadMapAssets () {
         ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
         ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
         ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff1fffff
-        fffffffffff1ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff1ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff1ffffffffff
-        ffff1fffffffffefff9ffffffffffff5ffffffffffffffffffffffffffffffffffff1ffffffffffffffffffffffffeffffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffffff
+        ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff1ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff1ffffffffff
+        fffffffffffffffffffffffffffffff5ffffffffffffffffffffffffffffffffffff1ffffffffffffffffffffffffeffffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffffff
         ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff5fffffffffffffffffffffffffffffffffffffffffffffffffffffff
-        ffffffffffff1fffffffffffffffffffffffffffffffffffffffffffffffff1fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffafffffffffffffffffffffffffffffffffff
+        ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff1fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffafffffffffffffffffffffffffffffffffff
         fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff1ffffff
-        fffffffbffffffffffffffffffffffffffffffffffffff1ffffffffffffffffffffffffffffffff1fffffffffffffff9fffffffffffffffbffffffffffffffffffffffffffffffffffffffffffffffff
+        ffffffffffffffffffffffffffffffffffffffffffffff1ffffffffffffffffffffffffffffffff1fffffffffffffff9fffffffffffffffbffffffffffffffffffffffffffffffffffffffffffffffff
         ffffffffffffffffffffffffffffffffffffffffffbffffffffffffffffffffffffffffffffffffffffffffff1ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
         fffffffffffffffffffffffffffffffffffffff9ffffffffffffffff6ffffffffffffff1fff5ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
         fff1ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
@@ -1773,7 +1802,7 @@ function createShield (cause: boolean) {
     }
 }
 spriteutils.onSpriteKindUpdateInterval(SpriteKind.MissilePickup, randint(3000, 7000), function (sprite) {
-    spriteutils.moveToAtSpeed(sprite, spriteutils.pos(randint(5, 155), randint(5, 115)), randint(5, 12))
+    spriteutils.moveToAtSpeed(sprite, spriteutils.pos(randint(5, 155), randint(5, 115)), randint(3, 6))
 })
 sprites.onCreated(SpriteKind.Plasma, function (sprite) {
     sprite.lifespan = playerProjectileLifespan
@@ -1908,6 +1937,9 @@ function createVikingThrusterTrail () {
         }
     }
 }
+spriteutils.onSpriteKindUpdateInterval(SpriteKind.DronePickup, randint(3000, 7000), function (sprite) {
+    spriteutils.moveToAtSpeed(sprite, spriteutils.pos(randint(5, 155), randint(5, 115)), randint(3, 6))
+})
 sprites.onOverlap(SpriteKind.Rocket, SpriteKind.BasicEnemy, function (sprite, otherSprite) {
     blastSequence(sprite, otherSprite, currentStage)
     spawnLoot(otherSprite, otherSprite, powerupsRemaining)
@@ -2109,6 +2141,10 @@ function createDroneTrails () {
 }
 sprites.onOverlap(SpriteKind.DroneRocket, SpriteKind.Edge, function (sprite, otherSprite) {
     sprites.destroy(sprite)
+})
+sprites.onDestroyed(SpriteKind.BombPickup, function (sprite) {
+    spawnPowerUp(sprite)
+    radialBlast(sprite.x, sprite.x, 2)
 })
 function mapSequence (lvl: number) {
     scene.setBackgroundImage(backdrops._pickRandom())
@@ -2463,6 +2499,9 @@ function initializePlayerAssets () {
         `
     ]
 }
+sprites.onCreated(SpriteKind.DronePickup, function (sprite) {
+    spriteutils.moveToAtSpeed(sprite, spriteutils.pos(randint(5, 155), randint(5, 115)), randint(2, 8))
+})
 function addPoints (bounty: Sprite) {
     if (bounty.kind() == SpriteKind.BasicEnemy) {
         currentScore += pointValues[1]
@@ -2490,6 +2529,7 @@ function addPoints (bounty: Sprite) {
             weapon = -2
         }
     }
+    bounty.setKind(SpriteKind.Effect)
     sprites.destroy(bounty)
 }
 function initializeTemp () {
@@ -2700,12 +2740,12 @@ sprites.onCreated(SpriteKind.Projectile, function (sprite) {
 })
 function createBombHelp () {
     demoAsset = sprites.create(supportAssets[1], SpriteKind.MenuUI)
-    demoAsset.setPosition(15, 40)
+    demoAsset.setPosition(15, 48)
     demoAsset.setFlag(SpriteFlag.GhostThroughWalls, true)
     demoAsset.lifespan = 1000
     textSprite = textsprite.create("BOMB", 0, 1)
     textSprite.setKind(SpriteKind.MenuUI)
-    textSprite.setPosition(15, 48)
+    textSprite.setPosition(15, 56)
     textSprite.lifespan = 1000
 }
 function createSpaceDust (lvl: number) {
@@ -2738,12 +2778,12 @@ function createSpaceDust (lvl: number) {
 }
 function createDroneHelp () {
     demoAsset = sprites.create(supportAssets[3], SpriteKind.MenuUI)
-    demoAsset.setPosition(145, 40)
+    demoAsset.setPosition(145, 48)
     demoAsset.setFlag(SpriteFlag.GhostThroughWalls, true)
     demoAsset.lifespan = 1000
     textSprite = textsprite.create("FREN", 0, 1)
     textSprite.setKind(SpriteKind.MenuUI)
-    textSprite.setPosition(145, 48)
+    textSprite.setPosition(145, 56)
     textSprite.lifespan = 1000
 }
 function loadGameAssets () {
@@ -2914,6 +2954,12 @@ function loadGameAssets () {
         .88777777788.67777777788
         ..888777888...667777888.
         ....8888........88888...
+        `, img`
+        5 5 5 . 5 5 5 . 5 5 5 . 5 5 5 . 5 5 5 
+        5 . . . 5 . . . 5 . 5 . 5 . 5 . 5 . . 
+        5 5 5 . 5 . . . 5 . 5 . 5 5 . . 5 5 . 
+        . . 5 . 5 . . . 5 . 5 . 5 . 5 . 5 . . 
+        5 5 5 . 5 5 5 . 5 5 5 . 5 . 5 . 5 5 5 
         `]
     initializeZergAssets()
     initializeTerranAssets()
@@ -2975,7 +3021,6 @@ let difficulty = 0
 let zergCombatAssets: Image[] = []
 let zergAssets: Image[] = []
 let thrusterEffectOffset = 0
-let gameUIAssets: Image[] = []
 let shieldSprite: Sprite = null
 let edgeSprite: Sprite = null
 let doodads: Image[] = []
@@ -2998,6 +3043,8 @@ let enemyProjectileLifespan = 0
 let thrusterOffset = 0
 let causedByBomb = false
 let invulnerable = false
+let gameUIAssets: Image[] = []
+let scoreHeaderSprite: Sprite = null
 let powerupsRemaining = 0
 let terranCombatAssets: Image[] = []
 let terranAssets: Image[] = []
@@ -3044,6 +3091,22 @@ let textSprite: TextSprite = null
 let supportAssets: Image[] = []
 let demoAsset: Sprite = null
 initializeGame()
+forever(function () {
+    createVikingThrusterTrail()
+    createTrailEffects()
+    createSpaceDust(currentStage)
+    if (playing) {
+        sprites.destroyAllSpritesOfKind(SpriteKind.SplashText)
+        sprites.destroyAllSpritesOfKind(SpriteKind.MenuUI)
+        for (let value of sprites.allOfKind(SpriteKind.UI)) {
+            value.setFlag(SpriteFlag.Invisible, false)
+        }
+    } else {
+        for (let value of sprites.allOfKind(SpriteKind.UI)) {
+            value.setFlag(SpriteFlag.Invisible, true)
+        }
+    }
+})
 game.onUpdateInterval(randint(1000, 1500), function () {
     if (playing) {
         projectile = sprites.createProjectileFromSide(img`
@@ -3070,14 +3133,5 @@ game.onUpdateInterval(randint(1000, 1500), function () {
         projectile.y = randint(12, 45)
         projectile.lifespan = 10000
         projectile.setKind(SpriteKind.BasicEnemy)
-    }
-})
-forever(function () {
-    createVikingThrusterTrail()
-    createTrailEffects()
-    createSpaceDust(currentStage)
-    if (playing) {
-        sprites.destroyAllSpritesOfKind(SpriteKind.SplashText)
-        sprites.destroyAllSpritesOfKind(SpriteKind.MenuUI)
     }
 })
