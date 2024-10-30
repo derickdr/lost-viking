@@ -523,6 +523,9 @@ function initializeTerranAssets () {
         `
     ]
 }
+sprites.onOverlap(SpriteKind.Viking, SpriteKind.PlasmaPickup, function (sprite, otherSprite) {
+    addPoints(otherSprite)
+})
 function spawnLoot (x: Sprite, y: Sprite, remaining: number) {
     if (remaining > 0) {
         if (Math.percentChance(5)) {
@@ -636,6 +639,12 @@ function createBottomTooltip () {
     textSprite.lifespan = 1000
     textSprite.setKind(SpriteKind.MenuUI)
 }
+sprites.onOverlap(SpriteKind.Viking, SpriteKind.BombPickup, function (sprite, otherSprite) {
+    addPoints(otherSprite)
+})
+sprites.onOverlap(SpriteKind.Viking, SpriteKind.DronePickup, function (sprite, otherSprite) {
+    addPoints(otherSprite)
+})
 function initializeConsts () {
     causedByBomb = true
     notCausedByBomb = false
@@ -2419,6 +2428,7 @@ function addPoints (bounty: Sprite) {
             weapon = -2
         }
     }
+    sprites.destroy(bounty)
 }
 function initializeTemp () {
     invulnerable = false
@@ -2911,6 +2921,9 @@ function createBasic () {
         }
     }
 }
+sprites.onOverlap(SpriteKind.Viking, SpriteKind.MissilePickup, function (sprite, otherSprite) {
+    addPoints(otherSprite)
+})
 function createTrailEffects () {
     createRocketTrails()
     createPlasmaTrails()
