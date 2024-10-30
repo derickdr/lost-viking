@@ -244,9 +244,16 @@ function loadMap (lvl: number) {
         }
     }
 }
-function frontBlast (x: number, y: number) {
+function frontBlast (x: number, y: number, lvl: number) {
+    if (lvl == 1) {
+        effectColorSelector = 1
+    } else if (lvl == 2) {
+        effectColorSelector = 2
+    } else if (lvl == 3) {
+        effectColorSelector = 0
+    }
     for (let index = 0; index < 6; index++) {
-        blastFire = sprites.create(particles2[colorPaths[fireColor]._pickRandom()], SpriteKind.Effect)
+        blastFire = sprites.create(particles2[colorPaths[effectColorSelector]._pickRandom()], SpriteKind.Effect)
         blastFire.setVelocity(randint(-50, 50), randint(-10, 20))
         blastFire.setPosition(x + randint(-2, 2), y + randint(-2, 2))
         blastFire.lifespan = randint(200, 300)
@@ -494,16 +501,23 @@ sprites.onOverlap(SpriteKind.Plasma, SpriteKind.Edge, function (sprite, otherSpr
 sprites.onDestroyed(SpriteKind.Shield, function (sprite) {
     invulnerable = false
 })
-function backBlast (x: number, y: number) {
+function backBlast (x: number, y: number, lvl: number) {
+    if (lvl == 1) {
+        effectColorSelector = 1
+    } else if (lvl == 2) {
+        effectColorSelector = 2
+    } else if (lvl == 3) {
+        effectColorSelector = 0
+    }
     for (let index = 0; index < 4; index++) {
-        blastFire = sprites.create(particles2[colorPaths[fireColor]._pickRandom()], SpriteKind.Effect)
+        blastFire = sprites.create(particles2[colorPaths[effectColorSelector]._pickRandom()], SpriteKind.Effect)
         blastFire.setVelocity(randint(-40, 40), -50)
         blastFire.setPosition(x + randint(-2, 2), y + randint(-2, 2))
         blastFire.lifespan = randint(200, 300)
     }
     timer.after(50, function () {
         for (let index = 0; index < 4; index++) {
-            blastFire = sprites.create(particles2[colorPaths[fireColor]._pickRandom()], SpriteKind.Effect)
+            blastFire = sprites.create(particles2[colorPaths[effectColorSelector]._pickRandom()], SpriteKind.Effect)
             blastFire.setVelocity(randint(-40, 40), -50)
             blastFire.setPosition(x + randint(-2, 2), y + randint(-2, 2))
             blastFire.lifespan = randint(80, 150)
@@ -539,7 +553,7 @@ function initializeConsts () {
     rocketVY = -100
     sideRocketVX = 50
     playerProjectileLifespan = 1500
-    enemyProojectileLifespan = 2000
+    enemyProjectileLifespan = 2000
     basicEnemyValue = 100
     terranColor = 0
     protossColor = 1
@@ -568,10 +582,6 @@ function enteringAirspaceSplash (lvl: number) {
         openingSplash = textsprite.create("AIRSPACE", 0, 1)
         openingSplash.lifespan = 5000
         openingSplash.setPosition(80, 58)
-        openingSplash = textsprite.create("DANGER!!!", 0, 2)
-        scaling.scaleToPercent(openingSplash, 250, ScaleDirection.Uniformly, ScaleAnchor.Middle)
-        openingSplash.lifespan = 5000
-        openingSplash.setPosition(80, 76)
     } else if (lvl == 2) {
     	
     } else if (lvl == 3) {
@@ -1137,28 +1147,35 @@ function createRocket1 () {
 sprites.onOverlap(SpriteKind.Rocket, SpriteKind.Edge, function (sprite, otherSprite) {
     sprites.destroy(sprite)
 })
-function sideBlast (x: number, y: number) {
+function sideBlast (x: number, y: number, lvl: number) {
+    if (lvl == 1) {
+        effectColorSelector = 1
+    } else if (lvl == 2) {
+        effectColorSelector = 2
+    } else if (lvl == 3) {
+        effectColorSelector = 0
+    }
     for (let index = 0; index < 4; index++) {
-        blastFire = sprites.create(particles2[colorPaths[fireColor]._pickRandom()], SpriteKind.Effect)
+        blastFire = sprites.create(particles2[colorPaths[effectColorSelector]._pickRandom()], SpriteKind.Effect)
         blastFire.setVelocity(randint(-10, -40), randint(-10, -40))
         blastFire.setPosition(x + randint(-2, 2), y + randint(-2, 2))
         blastFire.lifespan = randint(200, 300)
     }
     for (let index = 0; index < 4; index++) {
-        blastFire = sprites.create(particles2[colorPaths[fireColor]._pickRandom()], SpriteKind.Effect)
+        blastFire = sprites.create(particles2[colorPaths[effectColorSelector]._pickRandom()], SpriteKind.Effect)
         blastFire.setVelocity(randint(10, 40), randint(-10, -40))
         blastFire.setPosition(x + randint(-2, 2), y + randint(-2, 2))
         blastFire.lifespan = randint(200, 300)
     }
     timer.after(50, function () {
         for (let index = 0; index < 4; index++) {
-            blastFire = sprites.create(particles2[colorPaths[fireColor]._pickRandom()], SpriteKind.Effect)
+            blastFire = sprites.create(particles2[colorPaths[effectColorSelector]._pickRandom()], SpriteKind.Effect)
             blastFire.setVelocity(randint(-10, -40), randint(-10, -40))
             blastFire.setPosition(x + randint(-2, 2), y + randint(-2, 2))
             blastFire.lifespan = randint(80, 150)
         }
         for (let index = 0; index < 4; index++) {
-            blastFire = sprites.create(particles2[colorPaths[fireColor]._pickRandom()], SpriteKind.Effect)
+            blastFire = sprites.create(particles2[colorPaths[effectColorSelector]._pickRandom()], SpriteKind.Effect)
             blastFire.setVelocity(randint(10, 40), randint(-10, -40))
             blastFire.setPosition(x + randint(-2, 2), y + randint(-2, 2))
             blastFire.lifespan = randint(80, 150)
@@ -1167,15 +1184,15 @@ function sideBlast (x: number, y: number) {
 }
 sprites.onOverlap(SpriteKind.DroneRocket, SpriteKind.BasicEnemy, function (sprite, otherSprite) {
     sprites.destroy(sprite)
-    radialBlast(otherSprite.x, otherSprite.y)
+    radialBlast(otherSprite.x, otherSprite.y, currentStage)
     sprites.destroy(otherSprite)
 })
 function createPlasmaTrails () {
     for (let value of sprites.allOfKind(SpriteKind.Plasma)) {
         thrusterFire = sprites.create(particles2[colorPaths[plasmaColor]._pickRandom()], SpriteKind.Effect)
-        thrusterFire.setVelocity(randint(-20, 20), 50)
+        thrusterFire.setVelocity(randint(-10, 10), 20)
         thrusterFire.setPosition(value.x, value.y)
-        thrusterFire.lifespan = randint(10, 30)
+        thrusterFire.lifespan = randint(200, 300)
     }
 }
 function createVikingThrusterTrail () {
@@ -1218,7 +1235,7 @@ function createVikingThrusterTrail () {
 }
 sprites.onOverlap(SpriteKind.Rocket, SpriteKind.BasicEnemy, function (sprite, otherSprite) {
     sprites.destroy(sprite)
-    radialBlast(otherSprite.x, otherSprite.y)
+    radialBlast(otherSprite.x, otherSprite.y, currentStage)
     sprites.destroy(otherSprite)
 })
 function initializeZergAssets () {
@@ -1418,10 +1435,10 @@ function createDroneTrails () {
 sprites.onOverlap(SpriteKind.DroneRocket, SpriteKind.Edge, function (sprite, otherSprite) {
     sprites.destroy(sprite)
 })
-function radialBlast (x: number, y: number) {
-    backBlast(x, y)
-    sideBlast(x, y)
-    frontBlast(x, y)
+function radialBlast (x: number, y: number, lvl: number) {
+    frontBlast(x, y, lvl)
+    sideBlast(x, y, lvl)
+    backBlast(x, y, lvl)
 }
 controller.menu.onEvent(ControllerButtonEvent.Pressed, function () {
     if (playing) {
@@ -1438,7 +1455,7 @@ controller.menu.onEvent(ControllerButtonEvent.Pressed, function () {
             . 6 7 7 7 7 6 . 6 7 . . 6 7 . 6 7 7 6 7 7 6 7 7 
             . . 6 6 6 6 . . . 6 . . . 6 . . 6 6 . 6 6 . 6 6 
             `)
-        game.showLongText("---CONTROLS---             Move: WASD / Arrows                     Bomb: B / X / Space", DialogLayout.Center)
+        game.showLongText("---CONTROLS---             Move:            WASD|Arrows                     Bomb:            B|Space", DialogLayout.Center)
     }
 })
 function createDroneRocketTrails () {
@@ -1915,7 +1932,7 @@ function initializeProtossAssets () {
     ]
 }
 sprites.onCreated(SpriteKind.Projectile, function (sprite) {
-    sprite.lifespan = enemyProojectileLifespan
+    sprite.lifespan = enemyProjectileLifespan
 })
 function createSpaceDust (lvl: number) {
     if (currentStage > 0) {
@@ -2127,7 +2144,7 @@ function loadGameAssets () {
 }
 sprites.onOverlap(SpriteKind.Plasma, SpriteKind.BasicEnemy, function (sprite, otherSprite) {
     sprites.destroy(sprite)
-    radialBlast(otherSprite.x, otherSprite.y)
+    radialBlast(otherSprite.x, otherSprite.y, currentStage)
     sprites.destroy(otherSprite)
 })
 function createBasic () {
@@ -2177,11 +2194,12 @@ let droneColor = 0
 let bombColor = 0
 let missileColor = 0
 let plasmaColor = 0
+let fireColor = 0
 let zergColor = 0
 let protossColor = 0
 let terranColor = 0
 let basicEnemyValue = 0
-let enemyProojectileLifespan = 0
+let enemyProjectileLifespan = 0
 let thrusterOffset = 0
 let causedByBomb = false
 let invulnerable = false
@@ -2193,10 +2211,10 @@ let notCausedByBomb = false
 let playerAssets: Image[] = []
 let senseiDerick: Sprite = null
 let projectile: Sprite = null
-let fireColor = 0
 let colorPaths: number[][] = []
 let particles2: Image[] = []
 let blastFire: Sprite = null
+let effectColorSelector = 0
 let backdrops: Image[] = []
 let plasma: Sprite = null
 let playerProjectileLifespan = 0
