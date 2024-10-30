@@ -571,6 +571,8 @@ function createMenuContent () {
     createPlasmaHelp()
     createDroneHelp()
     createBombMax()
+    createElseMax()
+    createBottomTooltip()
     game.setDialogCursor(img`
         . 6 7 7 7 7 . . 6 7 . . 6 7 . 6 7 7 6 7 7 6 7 7 
         6 7 6 6 6 6 7 . 6 7 . . 6 7 . 6 7 7 6 7 7 6 7 7 
@@ -585,6 +587,22 @@ function createMenuContent () {
         . . 6 6 6 6 . . . 6 . . . 6 . . 6 6 . 6 6 . 6 6 
         `)
     game.showLongText("---CONTROLS---  Shoot:            A / Space            Move:        D-PAD or WASD                    Bomb:            B or X", DialogLayout.Center)
+}
+function createElseMax () {
+    textSprite = textsprite.create("MAX:", 0, 1)
+    textSprite.setKind(SpriteKind.MenuUI)
+    textSprite.setPosition(145, 63)
+    textSprite.lifespan = 1000
+    textSprite = textsprite.create("Else", 0, 9)
+    scaling.scaleToPercent(textSprite, 110, ScaleDirection.Uniformly, ScaleAnchor.Middle)
+    textSprite.setPosition(145, 74)
+    textSprite.setFlag(SpriteFlag.GhostThroughWalls, true)
+    textSprite.lifespan = 1000
+    textSprite = textsprite.create("2", 0, 7)
+    scaling.scaleToPercent(textSprite, 200, ScaleDirection.Uniformly, ScaleAnchor.Middle)
+    textSprite.setPosition(145, 86)
+    textSprite.setFlag(SpriteFlag.GhostThroughWalls, true)
+    textSprite.lifespan = 1000
 }
 function initializeGame () {
     loadMap(currentStage)
@@ -601,6 +619,14 @@ function createPlasma1 () {
         plasma.setPosition(value.x, value.y - 8)
         plasma.vy = -110
     }
+}
+function createBottomTooltip () {
+    textSprite = textsprite.create("Bomb groups of enemies.", 0, 1)
+    textSprite.setPosition(80, 115)
+    scaling.scaleToPercent(textSprite, 100, ScaleDirection.Uniformly, ScaleAnchor.Middle)
+    textSprite.setFlag(SpriteFlag.GhostThroughWalls, true)
+    textSprite.lifespan = 1000
+    textSprite.setKind(SpriteKind.MenuUI)
 }
 function initializeConsts () {
     causedByBomb = true
