@@ -248,6 +248,15 @@ function introSplashText () {
         })
     }
 }
+function endCameraMovement (previousCoordinates: any[], targetCoordinates: any[]) {
+    for (let value of sprites.allOfKind(SpriteKind.Camera)) {
+        if (value.x == menuCoordinateX[0] && value.y == menuCoordinateY[0]) {
+            timer.after(100, function () {
+                sprites.destroy(value)
+            })
+        }
+    }
+}
 function createRocket2 () {
     for (let value of sprites.allOfKind(SpriteKind.Viking)) {
         music.play(music.melodyPlayable(music.knock), music.PlaybackMode.InBackground)
@@ -713,6 +722,7 @@ function createElseMax () {
     textSprite.lifespan = 1000
 }
 function initializeGame () {
+    tiles.setCurrentTilemap(tilemap`level2`)
     loadMap(currentStage)
     initializeConsts()
     initializeTemp()
@@ -3735,6 +3745,68 @@ function loadGameAssets () {
         ....11111111111111111111111111....
         `
     ]
+    // 0 - easy
+    // 1 - medium
+    // 2 - hard
+    // 3 - insane
+    // 
+    difficultyAssets = [
+    img`
+        ....555........555555...
+        ..5577755.....557777755.
+        .577777775...57777777775
+        .57777777755577775555775
+        67766666677777766...6676
+        676.....66777766.....676
+        878......877788......876
+        878.....88777788....8876
+        877888888777777788888776
+        .87777777778877777777776
+        .88777777788.67777777788
+        ..888777888...667777888.
+        ....8888........88888...
+        `,
+    img`
+        5 5 5 . 5 5 5 . 5 5 5 . 5 5 5 . 5 5 5 
+        5 . . . 5 . . . 5 . 5 . 5 . 5 . 5 . . 
+        5 5 5 . 5 . . . 5 . 5 . 5 5 . . 5 5 . 
+        . . 5 . 5 . . . 5 . 5 . 5 . 5 . 5 . . 
+        5 5 5 . 5 5 5 . 5 5 5 . 5 . 5 . 5 5 5 
+        `,
+    img`
+        b b b b . . . . . . . . . . 
+        b 1 1 b b b b b . . . . . . 
+        b 1 1 1 1 1 1 b b b b b . . 
+        c b 1 1 1 1 1 1 1 1 1 b b b 
+        . b 1 1 1 1 1 1 1 1 1 1 b c 
+        . b 1 1 1 1 1 1 1 1 1 b c . 
+        . c b 1 1 1 1 1 1 1 b c . . 
+        . . b 1 1 1 1 1 1 b b . . . 
+        . . b 1 1 1 1 1 1 1 b b . . 
+        . . b b 1 1 1 b 1 1 1 b b . 
+        . . c b 1 1 b b b 1 1 1 b b 
+        . . . b 1 b c . c b 1 1 1 b 
+        . . . b b c . . . c b 1 b c 
+        . . . c c . . . . . c b c . 
+        . . . . . . . . . . . c . . 
+        `,
+    img`
+        ....cccccccccccccccccccccccc....
+        ..cc777777ee6666666666666666cc..
+        .c7775555777e77777777777776666c.
+        .c7557777557ee7777777777777776c.
+        c777777777577677777777777777766c
+        c777777777777677777777777777776c
+        c777777777777677777777777777776c
+        c777777777757677777777777777776c
+        c757777777757677777777777777776c
+        c757777777757677777777777777766c
+        .c7577777757887777777777777776c.
+        .c7755775577877777777777777666c.
+        ..cc777777886666666666666666cc..
+        ....cccccccccccccccccccccccc....
+        `
+    ]
     initializeZergAssets()
     initializeTerranAssets()
     initializeProtossAssets()
@@ -3771,9 +3843,10 @@ function moveCamera (previousCoordinates: number[], targetCoordinates: number[])
     if (previousCoordinates != targetCoordinates && !(isCameraMoving)) {
         isCameraMoving = true
         cameraSprite = sprites.create(img`
-            . . 
-            . . 
+            f f 
+            f f 
             `, SpriteKind.Camera)
+        cameraSprite.setFlag(SpriteFlag.Invisible, true)
         scene.cameraFollowSprite(cameraSprite)
         cameraSprite.setPosition(cameraOrigin[0], cameraOrigin[1])
         cameraOrigin = [cameraSprite.x, cameraSprite.y]
@@ -3796,6 +3869,7 @@ sprites.onCreated(SpriteKind.DroneRocket, function (sprite) {
 })
 let projectile: Sprite = null
 let cameraSprite: Sprite = null
+let difficultyAssets: Image[] = []
 let stardustSprite: Sprite = null
 let protossCombatAssets: Image[] = []
 let protossAssets: Image[] = []
@@ -3825,8 +3899,6 @@ let thrusterFire: Sprite = null
 let openingSplash: TextSprite = null
 let powerUpEffect: Sprite = null
 let leaderboard: number[] = []
-let menuCoordinateY: number[] = []
-let menuCoordinateX: number[] = []
 let pointValues: number[] = []
 let starColor = 0
 let droneMissileColor = 0
@@ -3884,6 +3956,8 @@ let playerCombatAssets: Image[] = []
 let rocketSprite: Sprite = null
 let cannonOffset = 0
 let spawnOffset = 0
+let menuCoordinateY: number[] = []
+let menuCoordinateX: number[] = []
 let settingsText: TextSprite = null
 let settingsSprite: Sprite = null
 let difficultySkullSprite: Sprite = null
@@ -3901,22 +3975,6 @@ let textSprite: TextSprite = null
 let supportAssets: Image[] = []
 let demoAsset: Sprite = null
 initializeGame()
-forever(function () {
-    createVikingThrusterTrail()
-    createTrailEffects()
-    createSpaceDust(currentStage)
-    if (playing) {
-        sprites.destroyAllSpritesOfKind(SpriteKind.SplashText)
-        sprites.destroyAllSpritesOfKind(SpriteKind.MenuUI)
-        for (let value of sprites.allOfKind(SpriteKind.UI)) {
-            value.setFlag(SpriteFlag.Invisible, false)
-        }
-    } else {
-        for (let value of sprites.allOfKind(SpriteKind.UI)) {
-            value.setFlag(SpriteFlag.Invisible, true)
-        }
-    }
-})
 game.onUpdateInterval(randint(1000, 1500), function () {
     if (playing) {
         projectile = sprites.createProjectileFromSide(img`
@@ -3943,5 +4001,25 @@ game.onUpdateInterval(randint(1000, 1500), function () {
         projectile.y = randint(12, 45)
         projectile.lifespan = 10000
         projectile.setKind(SpriteKind.BasicEnemy)
+    }
+})
+forever(function () {
+    createVikingThrusterTrail()
+    createTrailEffects()
+    createSpaceDust(currentStage)
+    if (playing) {
+        sprites.destroyAllSpritesOfKind(SpriteKind.SplashText)
+        sprites.destroyAllSpritesOfKind(SpriteKind.MenuUI)
+        for (let value of sprites.allOfKind(SpriteKind.UI)) {
+            value.setFlag(SpriteFlag.Invisible, false)
+        }
+    } else {
+        for (let value of sprites.allOfKind(SpriteKind.UI)) {
+            value.setFlag(SpriteFlag.Invisible, true)
+        }
+    }
+    if (isCameraMoving) {
+        let list: number[] = []
+        endCameraMovement(list, list)
     }
 })
