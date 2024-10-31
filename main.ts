@@ -20,6 +20,7 @@ namespace SpriteKind {
     export const BombPickup = SpriteKind.create()
     export const UI = SpriteKind.create()
     export const PowerEffect = SpriteKind.create()
+    export const Camera = SpriteKind.create()
 }
 function createPlasmaHelp () {
     demoAsset = sprites.create(supportAssets[2], SpriteKind.MenuUI)
@@ -247,17 +248,6 @@ function introSplashText () {
         })
     }
 }
-controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (currentStage != 0) {
-        createProjectile(weapon)
-    } else {
-        currentStage = previousStage + 1
-        currentLevel += 1
-        cycleStages(currentStage)
-        loadMap(currentStage)
-        levelAnnouncer(currentLevel)
-    }
-})
 function createRocket2 () {
     for (let value of sprites.allOfKind(SpriteKind.Viking)) {
         music.play(music.melodyPlayable(music.knock), music.PlaybackMode.InBackground)
@@ -344,6 +334,10 @@ function levelAnnouncer (currentLvl: number) {
 spriteutils.onSpriteKindUpdateInterval(SpriteKind.PlasmaPickup, randint(3000, 7000), function (sprite) {
     spriteutils.moveToAtSpeed(sprite, spriteutils.pos(randint(5, 155), randint(5, 115)), randint(3, 6))
 })
+function enterSettings (currentSettings: any[], entries: any[]) {
+    viewingSettings = true
+    moveCamera(cameraOrigin, settings2)
+}
 function loadMap (lvl: number) {
     if (lvl == 0 && currentLevel == 0) {
         introSplashText()
@@ -374,7 +368,15 @@ function frontBlast (x: number, y: number, lvl: number) {
     }
 }
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
-	
+    if (!(playing) && !(viewingSettings)) {
+        moveCamera(cameraOrigin, easterEgg)
+        viewingEasterEgg = true
+    } else if (viewingEasterEgg) {
+        moveCamera(cameraOrigin, home)
+        viewingEasterEgg = false
+    } else {
+    	
+    }
 })
 function initializePlayer () {
     initializePlayerAssets()
@@ -592,6 +594,21 @@ function spawnLoot (x: Sprite, y: Sprite, remaining: number) {
         }
     }
 }
+controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (currentStage != 0) {
+        createProjectile(weapon)
+    } else if (currentStage == 0 && !(viewingSettings)) {
+        currentStage = previousStage + 1
+        currentLevel += 1
+        cycleStages(currentStage)
+        loadMap(currentStage)
+        levelAnnouncer(currentLevel)
+    } else if (viewingSettings && !(overlappingExit)) {
+    	
+    } else if (viewingSettings && overlappingExit) {
+    	
+    }
+})
 sprites.onOverlap(SpriteKind.Plasma, SpriteKind.Edge, function (sprite, otherSprite) {
     sprites.destroy(sprite)
 })
@@ -765,6 +782,27 @@ function initializeConsts () {
     10000,
     1000
     ]
+    // for both x & y arrays
+    // 0 - home
+    // 1 - settings
+    // 2 - leaderboard
+    // 3 - hi camryn
+    menuCoordinateX = [
+    80,
+    -80,
+    80,
+    240
+    ]
+    menuCoordinateY = [
+    60,
+    60,
+    180,
+    60
+    ]
+    home = [menuCoordinateX[0], menuCoordinateY[0]]
+    settings2 = [menuCoordinateX[1], menuCoordinateY[1]]
+    leaderboard = [menuCoordinateX[2], menuCoordinateY[2]]
+    easterEgg = [menuCoordinateX[3], menuCoordinateY[3]]
 }
 sprites.onCreated(SpriteKind.MissilePickup, function (sprite) {
     spriteutils.moveToAtSpeed(sprite, spriteutils.pos(randint(5, 155), randint(5, 115)), randint(2, 8))
@@ -2853,7 +2891,7 @@ controller.menu.onEvent(ControllerButtonEvent.Pressed, function () {
     if (playing) {
         createMenuContent()
     } else if (!(playing)) {
-    	
+        enterSettings(currentSettings, entries)
     }
 })
 function spawnPowerUp (params: Sprite) {
@@ -3193,9 +3231,23 @@ function initializeTemp () {
     bombTotal = 0
     previousStage = 0
     playing = false
+    overlappingExit = false
     difficulty = 0
     powerupsRemaining = 0
     currentAngle = 0
+    // 0 - difficulty (0-3)
+    // 1 - prompt confirm restart (bool)
+    // 2 - intro splash (bool)
+    currentSettings = [0, 0, 0]
+    // 0 - default name
+    // enforce =<12char for UI
+    entries = ["unknown"]
+    cameraTerminus = []
+    // default is home
+    cameraOrigin = [menuCoordinateX[0], menuCoordinateY[0]]
+    viewingEasterEgg = false
+    viewingLeaderboard = false
+    isCameraMoving = false
 }
 function initializeProtossAssets () {
     protossAssets = [
@@ -3586,7 +3638,14 @@ function loadGameAssets () {
         f 
         `
     ]
-    gameUIAssets = [img`
+    // 0 - infinity
+    // 1 - score text
+    // 2 - cursor
+    // 3 - toggle (true)
+    // 4 - toggle (false)
+    // 5 - toggle highlight
+    gameUIAssets = [
+    img`
         ....555........555555...
         ..5577755.....557777755.
         .577777775...57777777775
@@ -3600,13 +3659,82 @@ function loadGameAssets () {
         .88777777788.67777777788
         ..888777888...667777888.
         ....8888........88888...
-        `, img`
+        `,
+    img`
         5 5 5 . 5 5 5 . 5 5 5 . 5 5 5 . 5 5 5 
         5 . . . 5 . . . 5 . 5 . 5 . 5 . 5 . . 
         5 5 5 . 5 . . . 5 . 5 . 5 5 . . 5 5 . 
         . . 5 . 5 . . . 5 . 5 . 5 . 5 . 5 . . 
         5 5 5 . 5 5 5 . 5 5 5 . 5 . 5 . 5 5 5 
-        `]
+        `,
+    img`
+        b b b b . . . . . . . . . . 
+        b 1 1 b b b b b . . . . . . 
+        b 1 1 1 1 1 1 b b b b b . . 
+        c b 1 1 1 1 1 1 1 1 1 b b b 
+        . b 1 1 1 1 1 1 1 1 1 1 b c 
+        . b 1 1 1 1 1 1 1 1 1 b c . 
+        . c b 1 1 1 1 1 1 1 b c . . 
+        . . b 1 1 1 1 1 1 b b . . . 
+        . . b 1 1 1 1 1 1 1 b b . . 
+        . . b b 1 1 1 b 1 1 1 b b . 
+        . . c b 1 1 b b b 1 1 1 b b 
+        . . . b 1 b c . c b 1 1 1 b 
+        . . . b b c . . . c b 1 b c 
+        . . . c c . . . . . c b c . 
+        . . . . . . . . . . . c . . 
+        `,
+    img`
+        ....cccccccccccccccccccccccc....
+        ..cc777777ee6666666666666666cc..
+        .c7775555777e77777777777776666c.
+        .c7557777557ee7777777777777776c.
+        c777777777577677777777777777766c
+        c777777777777677777777777777776c
+        c777777777777677777777777777776c
+        c777777777757677777777777777776c
+        c757777777757677777777777777776c
+        c757777777757677777777777777766c
+        .c7577777757887777777777777776c.
+        .c7755775577877777777777777666c.
+        ..cc777777886666666666666666cc..
+        ....cccccccccccccccccccccccc....
+        `,
+    img`
+        ....cccccccccccccccccccccccc....
+        ..cceeeeeeeeeeeeeeeeaa222222cc..
+        .ceeee2222222222222a2224433222c.
+        .ce222222222222222aa2442222442c.
+        cee222222222222222e224222222222c
+        ce2222222222222222e222223322222c
+        ce2222222222222222e222232232222c
+        ce2222222222222222e242242242222c
+        ce2222222222222222e242223342242c
+        cee222222222222222e232222222242c
+        .ce222222222222222aa2322222232c.
+        .ceee22222222222222a2244224422c.
+        ..cceeeeeeeeeeeeeeeeaa222222cc..
+        ....cccccccccccccccccccccccc....
+        `,
+    img`
+        ....11111111111111111111111111....
+        ..111........................111..
+        .11............................11.
+        .1..............................1.
+        11..............................11
+        1................................1
+        1................................1
+        1................................1
+        1................................1
+        1................................1
+        1................................1
+        11..............................11
+        .1..............................1.
+        .11............................11.
+        ..111........................111..
+        ....11111111111111111111111111....
+        `
+    ]
     initializeZergAssets()
     initializeTerranAssets()
     initializeProtossAssets()
@@ -3639,6 +3767,20 @@ function createTrailEffects () {
     createDroneTrails()
     createDroneRocketTrails()
 }
+function moveCamera (previousCoordinates: number[], targetCoordinates: number[]) {
+    if (previousCoordinates != targetCoordinates && !(isCameraMoving)) {
+        isCameraMoving = true
+        cameraSprite = sprites.create(img`
+            . . 
+            . . 
+            `, SpriteKind.Camera)
+        scene.cameraFollowSprite(cameraSprite)
+        cameraSprite.setPosition(cameraOrigin[0], cameraOrigin[1])
+        cameraOrigin = [cameraSprite.x, cameraSprite.y]
+        cameraTerminus = [menuCoordinateX[targetCoordinates[0]], menuCoordinateY[targetCoordinates[1]]]
+        spriteutils.moveTo(cameraSprite, spriteutils.pos(cameraTerminus[0], cameraTerminus[1]), 1500)
+    }
+}
 function blastSequence (projectile: Sprite, target: Sprite, currentStage: number) {
     sprites.destroy(projectile)
     radialBlast(target.x, target.y, currentStage)
@@ -3653,9 +3795,13 @@ sprites.onCreated(SpriteKind.DroneRocket, function (sprite) {
     sprite.lifespan = playerProjectileLifespan
 })
 let projectile: Sprite = null
+let cameraSprite: Sprite = null
 let stardustSprite: Sprite = null
 let protossCombatAssets: Image[] = []
 let protossAssets: Image[] = []
+let isCameraMoving = false
+let viewingLeaderboard = false
+let cameraTerminus: number[] = []
 let currentAngle = 0
 let bombTotal = 0
 let sessionHighScore = 0
@@ -3665,6 +3811,8 @@ let playerX = 0
 let droneTotal = 0
 let currentScore = 0
 let powerupSprite: Sprite = null
+let entries: string[] = []
+let currentSettings: number[] = []
 let difficulty = 0
 let zergCombatAssets: Image[] = []
 let zergAssets: Image[] = []
@@ -3676,6 +3824,9 @@ let backdrops: Image[] = []
 let thrusterFire: Sprite = null
 let openingSplash: TextSprite = null
 let powerUpEffect: Sprite = null
+let leaderboard: number[] = []
+let menuCoordinateY: number[] = []
+let menuCoordinateX: number[] = []
 let pointValues: number[] = []
 let starColor = 0
 let droneMissileColor = 0
@@ -3694,17 +3845,28 @@ let causedByBomb = false
 let invulnerable = false
 let gameUIAssets: Image[] = []
 let scoreHeaderSprite: Sprite = null
+let previousStage = 0
+let weapon = 0
+let overlappingExit = false
 let powerupsRemaining = 0
 let terranCombatAssets: Image[] = []
 let terranAssets: Image[] = []
 let notCausedByBomb = false
 let playerAssets: Image[] = []
 let senseiDerick: Sprite = null
+let home: number[] = []
+let easterEgg: number[] = []
+let viewingEasterEgg = false
 let colorPaths: number[][] = []
 let particles2: Image[] = []
 let blastFire: Sprite = null
 let effectColorSelector = 0
+let settings2: number[] = []
+let cameraOrigin: number[] = []
+let viewingSettings = false
+let currentLevel = 0
 let levelNumberSprite: TextSprite = null
+let currentStage = 0
 let levelTextSprite: TextSprite = null
 let plasma: Sprite = null
 let playerProjectileLifespan = 0
@@ -3722,10 +3884,6 @@ let playerCombatAssets: Image[] = []
 let rocketSprite: Sprite = null
 let cannonOffset = 0
 let spawnOffset = 0
-let currentLevel = 0
-let previousStage = 0
-let weapon = 0
-let currentStage = 0
 let settingsText: TextSprite = null
 let settingsSprite: Sprite = null
 let difficultySkullSprite: Sprite = null
