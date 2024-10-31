@@ -586,7 +586,7 @@ sprites.onOverlap(SpriteKind.Viking, SpriteKind.PlasmaPickup, function (sprite, 
 })
 function spawnLoot (x: Sprite, y: Sprite, remaining: number) {
     if (remaining > 0) {
-        if (Math.percentChance(80)) {
+        if (Math.percentChance(10)) {
             spawnPowerUp(x)
             powerupsRemaining += -1
         }
@@ -2878,7 +2878,7 @@ function createDroneRocketTrails () {
     }
 }
 sprites.onCreated(SpriteKind.PowerEffect, function (sprite) {
-    sprite.lifespan = 2000
+    sprite.lifespan = 1500
 })
 function initializePlayerAssets () {
     // 0 - placeholder
