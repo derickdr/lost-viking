@@ -21,6 +21,8 @@ namespace SpriteKind {
     export const UI = SpriteKind.create()
     export const PowerEffect = SpriteKind.create()
     export const Camera = SpriteKind.create()
+    export const BottomEdge = SpriteKind.create()
+    export const TopEdge = SpriteKind.create()
 }
 function createPlasmaHelp () {
     demoAsset = sprites.create(supportAssets[2], SpriteKind.MenuUI)
@@ -32,42 +34,39 @@ function createPlasmaHelp () {
     textSprite.lifespan = 1000
     textSprite.setKind(SpriteKind.MenuUI)
 }
-sprites.onOverlap(SpriteKind.BackgroundElement, SpriteKind.Edge, function (sprite, otherSprite) {
-    sprites.destroy(sprite)
-})
 sprites.onCreated(SpriteKind.BombPickup, function (sprite) {
     spriteutils.moveToAtSpeed(sprite, spriteutils.pos(randint(5, 155), randint(5, 115)), randint(2, 8))
     sprite.lifespan = randint(5000, 7000)
 })
 function introSplashText () {
     textDelay = 0
-    if (playing == false) {
+    if (!(playInitiated)) {
         timer.after(textDelay, function () {
             introText1 = textsprite.create("You, Mighty Viking,", 0, 1)
             introText1.setKind(SpriteKind.SplashText)
             introText1.setPosition(80, 18)
-            if (playing == false) {
+            if (!(playInitiated)) {
                 timer.after(textDelay, function () {
                     introText2 = textsprite.create("are lost!!! Find your", 0, 1)
                     introText2.setKind(SpriteKind.SplashText)
                     introText2.setPosition(80, 28)
-                    if (playing == false) {
+                    if (!(playInitiated)) {
                         timer.after(textDelay, function () {
                             introText3 = textsprite.create("way home to Vikingville,", 0, 1)
                             introText3.setKind(SpriteKind.SplashText)
                             introText3.setPosition(80, 38)
-                            if (playing == false) {
+                            if (!(playInitiated)) {
                                 timer.after(textDelay, function () {
                                     introText4 = textsprite.create("but beware the Evil", 0, 1)
                                     introText4.setKind(SpriteKind.SplashText)
                                     introText4.setPosition(80, 48)
-                                    if (playing == false) {
+                                    if (!(playInitiated)) {
                                         timer.after(textDelay, function () {
                                             introText5 = textsprite.create("Terra-Tron!!!", 0, 4)
                                             scaling.scaleToPercent(introText5, 180, ScaleDirection.Uniformly, ScaleAnchor.Middle)
                                             introText5.setKind(SpriteKind.SplashText)
                                             introText5.setPosition(80, 62)
-                                            if (playing == false) {
+                                            if (!(playInitiated)) {
                                                 timer.after(textDelay, function () {
                                                     introText6 = sprites.create(img`
                                                         2..2.2222....222...222...2222...22.....2..2..222..22222....2.....222..2..2..2222....2...2..222...2..2..2...2...2
@@ -120,121 +119,127 @@ function introSplashText () {
                                                     )
                                                     scaling.scaleToPercent(introText6, 120, ScaleDirection.Uniformly, ScaleAnchor.Middle)
                                                     introText6.setPosition(80, 80)
-                                                    timer.after(2000, function () {
-                                                        if (playing == false) {
-                                                            aButtonSprite = sprites.create(img`
-                                                                . . . . 6 6 6 6 6 6 6 . . . . 
-                                                                . . 6 6 7 7 7 7 7 7 7 6 6 . . 
-                                                                . 6 6 7 7 7 8 8 8 7 7 7 6 6 . 
-                                                                . 6 7 7 7 8 8 7 8 8 7 7 7 6 . 
-                                                                . c 7 7 8 8 8 8 8 8 8 7 7 c . 
-                                                                . c 9 7 8 7 7 7 7 7 8 7 9 c . 
-                                                                . c 9 9 7 7 7 7 7 7 7 9 9 c . 
-                                                                . c 6 6 9 9 9 9 9 9 9 6 6 c . 
-                                                                c c 6 6 6 6 6 6 6 6 6 6 6 c c 
-                                                                c d c c 6 6 6 6 6 6 6 c c d c 
-                                                                c d d d c c c c c c c d d d c 
-                                                                c c b d d d d d d d d d b c c 
-                                                                c c c c c b b b b b c c c c c 
-                                                                c c b b b b b b b b b b b c c 
-                                                                . c c b b b b b b b b b c c . 
-                                                                . . . c c c c c c c c c . . . 
-                                                                `, SpriteKind.MenuUI)
-                                                            aButtonSprite.setPosition(120, 99)
-                                                            animation.runImageAnimation(
-                                                            aButtonSprite,
-                                                            [img`
-                                                                . . . . 6 6 6 6 6 6 6 . . . . 
-                                                                . . 6 6 7 7 7 7 7 7 7 6 6 . . 
-                                                                . 6 6 7 7 7 8 8 8 7 7 7 6 6 . 
-                                                                . 6 7 7 7 8 8 7 8 8 7 7 7 6 . 
-                                                                . c 7 7 8 8 8 8 8 8 8 7 7 c . 
-                                                                . c 9 7 8 7 7 7 7 7 8 7 9 c . 
-                                                                . c 9 9 7 7 7 7 7 7 7 9 9 c . 
-                                                                . c 6 6 9 9 9 9 9 9 9 6 6 c . 
-                                                                c c 6 6 6 6 6 6 6 6 6 6 6 c c 
-                                                                c d c c 6 6 6 6 6 6 6 c c d c 
-                                                                c d d d c c c c c c c d d d c 
-                                                                c c b d d d d d d d d d b c c 
-                                                                c c c c c b b b b b c c c c c 
-                                                                c c b b b b b b b b b b b c c 
-                                                                . c c b b b b b b b b b c c . 
-                                                                . . . c c c c c c c c c . . . 
-                                                                `,img`
-                                                                . . . . . . . . . . . . . . . 
-                                                                . . . . . . . . . . . . . . . 
-                                                                . . . . 6 6 6 6 6 6 6 . . . . 
-                                                                . . 6 6 7 7 7 7 7 7 7 6 6 . . 
-                                                                . 6 6 7 7 7 8 8 8 7 7 7 6 6 . 
-                                                                . 6 7 7 7 8 8 7 8 8 7 7 7 6 . 
-                                                                . e 7 7 8 8 8 8 8 8 8 7 7 e . 
-                                                                . c 9 7 8 7 7 7 7 7 8 7 9 c . 
-                                                                c c 9 9 7 7 7 7 7 7 7 9 9 c c 
-                                                                c d c c 9 9 9 9 9 9 9 c c d c 
-                                                                c d d d c c c c c c c d d d c 
-                                                                c c b d d d d d d d d d b c c 
-                                                                c c c c c b b b b b c c c c c 
-                                                                c c b b b b b b b b b b b c c 
-                                                                . c c b b b b b b b b b c c . 
-                                                                . . . c c c c c c c c c . . . 
-                                                                `],
-                                                            150,
-                                                            true
-                                                            )
-                                                            continueText = textsprite.create("START GAME", 0, 7)
-                                                            scaling.scaleToPercent(continueText, 120, ScaleDirection.Uniformly, ScaleAnchor.Middle)
-                                                            scaling.scaleToPercent(continueText, 95, ScaleDirection.Horizontally, ScaleAnchor.Middle)
-                                                            continueText.setPosition(122, 113)
-                                                            continueText.setKind(SpriteKind.SplashText)
-                                                            difficultySkullSprite = sprites.create(img`
-                                                                ......cccccbb.....
-                                                                ....ccd1111dbbb...
-                                                                ..eed11111111dbb..
-                                                                ..ed1111111111db..
-                                                                .ed111111111111db.
-                                                                .ed111111111111db.
-                                                                ced111111111111dbc
-                                                                ced1111d1111111dbc
-                                                                cedffff1d11ffffdbc
-                                                                ced1ccf1d11fff1dbc
-                                                                ced11111d111111dbc
-                                                                ced11111d111111dbc
-                                                                .ce1111c11c1111dc.
-                                                                .ce1111c11c1111dc.
-                                                                ..ce1111dd1111dc..
-                                                                ...ccb1111111cc...
-                                                                ....cbd1d1dd1c....
-                                                                ....cbdcdcdcbc....
-                                                                ....cbbcbcbccc....
-                                                                ....cccccccccc....
-                                                                `, SpriteKind.MenuUI)
-                                                            difficultySkullSprite.setPosition(80, 100)
-                                                            settingsSprite = sprites.create(img`
-                                                                ....................................
-                                                                .9999996666666666666666666666999999.
-                                                                996666666cccccccccccccccccc666666699
-                                                                966cccccccccccccccccccccccccccccc669
-                                                                966c11ccc11c111111c11cc11c11cc11c669
-                                                                66cc111c111c111111c111c11c11cc11cc66
-                                                                66cc1111111c11ccccc111c11c11cc11cc66
-                                                                66cc1111111c11111cc111111c11cc11cc66
-                                                                66cc11c1c11c11111cc111111c11cc11cc66
-                                                                66cc11ccc11c11ccccc11c111c11cc11cc66
-                                                                66cc11ccc11c111111c11c111c111111cc66
-                                                                966c11ccc11c111111c11cc11c111111c669
-                                                                966cccccccccccccccccccccccccccccc669
-                                                                996666666cccccccccccccccccc666666699
-                                                                .9999996666666666666666666666999999.
-                                                                ....................................
-                                                                `, SpriteKind.MenuUI)
-                                                            settingsSprite.setPosition(40, 100)
-                                                            settingsText = textsprite.create("SETTINGS", 0, 2)
-                                                            scaling.scaleToPercent(settingsText, 120, ScaleDirection.Uniformly, ScaleAnchor.Middle)
-                                                            scaling.scaleToPercent(settingsText, 95, ScaleDirection.Horizontally, ScaleAnchor.Middle)
-                                                            settingsText.setPosition(40, 113)
-                                                            settingsText.setKind(SpriteKind.SplashText)
-                                                        }
-                                                    })
+                                                    if (!(playInitiated)) {
+                                                        timer.after(textDelay, function () {
+                                                            if (!(playInitiated)) {
+                                                                aButtonSprite = sprites.create(img`
+                                                                    . . . . 6 6 6 6 6 6 6 . . . . 
+                                                                    . . 6 6 7 7 7 7 7 7 7 6 6 . . 
+                                                                    . 6 6 7 7 7 8 8 8 7 7 7 6 6 . 
+                                                                    . 6 7 7 7 8 8 7 8 8 7 7 7 6 . 
+                                                                    . c 7 7 8 8 8 8 8 8 8 7 7 c . 
+                                                                    . c 9 7 8 7 7 7 7 7 8 7 9 c . 
+                                                                    . c 9 9 7 7 7 7 7 7 7 9 9 c . 
+                                                                    . c 6 6 9 9 9 9 9 9 9 6 6 c . 
+                                                                    c c 6 6 6 6 6 6 6 6 6 6 6 c c 
+                                                                    c d c c 6 6 6 6 6 6 6 c c d c 
+                                                                    c d d d c c c c c c c d d d c 
+                                                                    c c b d d d d d d d d d b c c 
+                                                                    c c c c c b b b b b c c c c c 
+                                                                    c c b b b b b b b b b b b c c 
+                                                                    . c c b b b b b b b b b c c . 
+                                                                    . . . c c c c c c c c c . . . 
+                                                                    `, SpriteKind.MenuUI)
+                                                                aButtonSprite.setPosition(120, 99)
+                                                                animation.runImageAnimation(
+                                                                aButtonSprite,
+                                                                [img`
+                                                                    . . . . 6 6 6 6 6 6 6 . . . . 
+                                                                    . . 6 6 7 7 7 7 7 7 7 6 6 . . 
+                                                                    . 6 6 7 7 7 8 8 8 7 7 7 6 6 . 
+                                                                    . 6 7 7 7 8 8 7 8 8 7 7 7 6 . 
+                                                                    . c 7 7 8 8 8 8 8 8 8 7 7 c . 
+                                                                    . c 9 7 8 7 7 7 7 7 8 7 9 c . 
+                                                                    . c 9 9 7 7 7 7 7 7 7 9 9 c . 
+                                                                    . c 6 6 9 9 9 9 9 9 9 6 6 c . 
+                                                                    c c 6 6 6 6 6 6 6 6 6 6 6 c c 
+                                                                    c d c c 6 6 6 6 6 6 6 c c d c 
+                                                                    c d d d c c c c c c c d d d c 
+                                                                    c c b d d d d d d d d d b c c 
+                                                                    c c c c c b b b b b c c c c c 
+                                                                    c c b b b b b b b b b b b c c 
+                                                                    . c c b b b b b b b b b c c . 
+                                                                    . . . c c c c c c c c c . . . 
+                                                                    `,img`
+                                                                    . . . . . . . . . . . . . . . 
+                                                                    . . . . . . . . . . . . . . . 
+                                                                    . . . . 6 6 6 6 6 6 6 . . . . 
+                                                                    . . 6 6 7 7 7 7 7 7 7 6 6 . . 
+                                                                    . 6 6 7 7 7 8 8 8 7 7 7 6 6 . 
+                                                                    . 6 7 7 7 8 8 7 8 8 7 7 7 6 . 
+                                                                    . e 7 7 8 8 8 8 8 8 8 7 7 e . 
+                                                                    . c 9 7 8 7 7 7 7 7 8 7 9 c . 
+                                                                    c c 9 9 7 7 7 7 7 7 7 9 9 c c 
+                                                                    c d c c 9 9 9 9 9 9 9 c c d c 
+                                                                    c d d d c c c c c c c d d d c 
+                                                                    c c b d d d d d d d d d b c c 
+                                                                    c c c c c b b b b b c c c c c 
+                                                                    c c b b b b b b b b b b b c c 
+                                                                    . c c b b b b b b b b b c c . 
+                                                                    . . . c c c c c c c c c . . . 
+                                                                    `],
+                                                                150,
+                                                                true
+                                                                )
+                                                            }
+                                                            if (!(playInitiated)) {
+                                                                continueText = textsprite.create("START GAME", 0, 7)
+                                                                scaling.scaleToPercent(continueText, 120, ScaleDirection.Uniformly, ScaleAnchor.Middle)
+                                                                scaling.scaleToPercent(continueText, 95, ScaleDirection.Horizontally, ScaleAnchor.Middle)
+                                                                continueText.setPosition(122, 113)
+                                                                continueText.setKind(SpriteKind.SplashText)
+                                                                if (!(playInitiated)) {
+                                                                    difficultySkullSprite = sprites.create(img`
+                                                                        ......cccccbb.....
+                                                                        ....ccd1111dbbb...
+                                                                        ..eed11111111dbb..
+                                                                        ..ed1111111111db..
+                                                                        .ed111111111111db.
+                                                                        .ed111111111111db.
+                                                                        ced111111111111dbc
+                                                                        ced1111d1111111dbc
+                                                                        cedffff1d11ffffdbc
+                                                                        ced1ccf1d11fff1dbc
+                                                                        ced11111d111111dbc
+                                                                        ced11111d111111dbc
+                                                                        .ce1111c11c1111dc.
+                                                                        .ce1111c11c1111dc.
+                                                                        ..ce1111dd1111dc..
+                                                                        ...ccb1111111cc...
+                                                                        ....cbd1d1dd1c....
+                                                                        ....cbdcdcdcbc....
+                                                                        ....cbbcbcbccc....
+                                                                        ....cccccccccc....
+                                                                        `, SpriteKind.MenuUI)
+                                                                    difficultySkullSprite.setPosition(80, 100)
+                                                                    settingsSprite = sprites.create(img`
+                                                                        ....................................
+                                                                        .9999996666666666666666666666999999.
+                                                                        996666666cccccccccccccccccc666666699
+                                                                        966cccccccccccccccccccccccccccccc669
+                                                                        966c11ccc11c111111c11cc11c11cc11c669
+                                                                        66cc111c111c111111c111c11c11cc11cc66
+                                                                        66cc1111111c11ccccc111c11c11cc11cc66
+                                                                        66cc1111111c11111cc111111c11cc11cc66
+                                                                        66cc11c1c11c11111cc111111c11cc11cc66
+                                                                        66cc11ccc11c11ccccc11c111c11cc11cc66
+                                                                        66cc11ccc11c111111c11c111c111111cc66
+                                                                        966c11ccc11c111111c11cc11c111111c669
+                                                                        966cccccccccccccccccccccccccccccc669
+                                                                        996666666cccccccccccccccccc666666699
+                                                                        .9999996666666666666666666666999999.
+                                                                        ....................................
+                                                                        `, SpriteKind.MenuUI)
+                                                                    settingsSprite.setPosition(40, 100)
+                                                                    settingsText = textsprite.create("SETTINGS", 0, 2)
+                                                                    scaling.scaleToPercent(settingsText, 120, ScaleDirection.Uniformly, ScaleAnchor.Middle)
+                                                                    scaling.scaleToPercent(settingsText, 95, ScaleDirection.Horizontally, ScaleAnchor.Middle)
+                                                                    settingsText.setPosition(40, 113)
+                                                                    settingsText.setKind(SpriteKind.SplashText)
+                                                                }
+                                                            }
+                                                        })
+                                                    }
                                                 })
                                             }
                                         })
@@ -257,6 +262,16 @@ function endCameraMovement (previousCoordinates: any[], targetCoordinates: any[]
         }
     }
 }
+function cleanUp () {
+    for (let value of sprites.allOfKind(SpriteKind.Rocket)) {
+        if (value.y < 5) {
+            sprites.destroy(value)
+        }
+    }
+}
+sprites.onOverlap(SpriteKind.DroneRocket, SpriteKind.TopEdge, function (sprite, otherSprite) {
+    sprites.destroy(sprite)
+})
 function createRocket2 () {
     for (let value of sprites.allOfKind(SpriteKind.Viking)) {
         music.play(music.melodyPlayable(music.knock), music.PlaybackMode.InBackground)
@@ -307,6 +322,7 @@ function createProjectile (weapon: number) {
 }
 sprites.onCreated(SpriteKind.Rocket, function (sprite) {
     sprite.lifespan = playerProjectileLifespan
+    sprite.setFlag(SpriteFlag.GhostThroughWalls, false)
 })
 function createPlasma2 () {
     for (let value of sprites.allOfKind(SpriteKind.Viking)) {
@@ -352,14 +368,25 @@ function loadMap (lvl: number) {
         introSplashText()
     } else if (lvl == 0 && currentLevel > 0) {
         mapSequence(lvl)
+        timer.after(5000, function () {
+            playing = true
+        })
     } else if (lvl == 1) {
         mapSequence(lvl)
+        timer.after(5000, function () {
+            playing = true
+        })
     } else if (lvl == 2) {
         mapSequence(lvl)
+        timer.after(5000, function () {
+            playing = true
+        })
     } else if (lvl == 3) {
         mapSequence(lvl)
+        timer.after(5000, function () {
+            playing = true
+        })
     }
-    playing = true
 }
 function frontBlast (x: number, y: number, lvl: number) {
     if (lvl == 1) {
@@ -377,7 +404,7 @@ function frontBlast (x: number, y: number, lvl: number) {
     }
 }
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (!(playing) && !(viewingSettings)) {
+    if (!(playing) && !(playInitiated)) {
         moveCamera(cameraOrigin, easterEgg)
         viewingEasterEgg = true
     } else if (viewingEasterEgg) {
@@ -605,21 +632,25 @@ function spawnLoot (x: Sprite, y: Sprite, remaining: number) {
 }
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (currentStage != 0) {
-        createProjectile(weapon)
+        if (!(weaponCooldown)) {
+            createProjectile(weapon)
+            weaponCooldown = true
+            timer.after(250, function () {
+                weaponCooldown = false
+            })
+        }
     } else if (currentStage == 0 && !(viewingSettings)) {
         currentStage = previousStage + 1
         currentLevel += 1
         cycleStages(currentStage)
         loadMap(currentStage)
         levelAnnouncer(currentLevel)
+        playInitiated = true
     } else if (viewingSettings && !(overlappingExit)) {
     	
     } else if (viewingSettings && overlappingExit) {
     	
     }
-})
-sprites.onOverlap(SpriteKind.Plasma, SpriteKind.Edge, function (sprite, otherSprite) {
-    sprites.destroy(sprite)
 })
 sprites.onDestroyed(SpriteKind.DronePickup, function (sprite) {
     spawnPowerUp(sprite)
@@ -629,12 +660,22 @@ function loadUI () {
     scoreHeaderSprite = sprites.create(gameUIAssets[1], SpriteKind.UI)
     scoreHeaderSprite.setPosition(15, 4)
 }
+controller.menu.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (playing) {
+        createMenuContent()
+    } else if (!(playing)) {
+        enterSettings(currentSettings, entries)
+    }
+})
 sprites.onDestroyed(SpriteKind.MissilePickup, function (sprite) {
     spawnPowerUp(sprite)
     radialBlast(sprite.x, sprite.x, 2)
 })
 sprites.onDestroyed(SpriteKind.Shield, function (sprite) {
     invulnerable = false
+})
+sprites.onOverlap(SpriteKind.BackgroundElement, SpriteKind.BottomEdge, function (sprite, otherSprite) {
+    sprites.destroy(sprite)
 })
 sprites.onCreated(SpriteKind.PlasmaPickup, function (sprite) {
     spriteutils.moveToAtSpeed(sprite, spriteutils.pos(randint(5, 155), randint(5, 115)), randint(2, 8))
@@ -2061,13 +2102,15 @@ function loadMapAssets () {
         `
     ]
     edgeSprite = sprites.create(img`
-        f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f 
-        `, SpriteKind.Edge)
-    edgeSprite.y = 161
+        ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+        ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+        `, SpriteKind.BottomEdge)
+    edgeSprite.y = 119
     edgeSprite = sprites.create(img`
-        f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f 
-        `, SpriteKind.Edge)
-    edgeSprite.y = -8
+        ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+        ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+        `, SpriteKind.TopEdge)
+    edgeSprite.y = 1
 }
 function createShield (cause: boolean) {
     for (let value of sprites.allOfKind(SpriteKind.Viking)) {
@@ -2658,6 +2701,7 @@ spriteutils.onSpriteKindUpdateInterval(SpriteKind.MissilePickup, randint(3000, 7
 })
 sprites.onCreated(SpriteKind.Plasma, function (sprite) {
     sprite.lifespan = playerProjectileLifespan
+    sprite.setStayInScreen(false)
 })
 function createRocket1 () {
     for (let value of sprites.allOfKind(SpriteKind.Viking)) {
@@ -2991,9 +3035,6 @@ function createDroneTrails () {
         thrusterFire.lifespan = randint(20, 40)
     }
 }
-sprites.onOverlap(SpriteKind.DroneRocket, SpriteKind.Edge, function (sprite, otherSprite) {
-    sprites.destroy(sprite)
-})
 sprites.onDestroyed(SpriteKind.BombPickup, function (sprite) {
     spawnPowerUp(sprite)
     radialBlast(sprite.x, sprite.x, 2)
@@ -3019,13 +3060,6 @@ function radialBlast (x: number, y: number, lvl: number) {
     sideBlast(x, y, lvl)
     backBlast(x, y, lvl)
 }
-controller.menu.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (playing) {
-        createMenuContent()
-    } else if (!(playing)) {
-        enterSettings(currentSettings, entries)
-    }
-})
 function spawnPowerUp (params: Sprite) {
     powerupSprite = sprites.create(supportAssets._pickRandom(), SpriteKind.Effect)
     if (powerupSprite.image.equals(supportAssets[0])) {
@@ -3380,7 +3414,12 @@ function initializeTemp () {
     viewingEasterEgg = false
     viewingLeaderboard = false
     isCameraMoving = false
+    playInitiated = false
+    weaponCooldown = false
 }
+sprites.onOverlap(SpriteKind.Plasma, SpriteKind.TopEdge, function (sprite, otherSprite) {
+    sprites.destroy(sprite)
+})
 function initializeProtossAssets () {
     protossAssets = [
     img`
@@ -3988,6 +4027,7 @@ function cycleStages (currentLvl: number) {
 }
 sprites.onCreated(SpriteKind.DroneRocket, function (sprite) {
     sprite.lifespan = playerProjectileLifespan
+    sprite.setFlag(SpriteFlag.GhostThroughWalls, false)
 })
 let projectile: Sprite = null
 let cameraSprite: Sprite = null
@@ -4007,8 +4047,6 @@ let playerX = 0
 let droneTotal = 0
 let currentScore = 0
 let powerupSprite: Sprite = null
-let entries: string[] = []
-let currentSettings: number[] = []
 let difficulty = 0
 let zergCombatAssets: Image[] = []
 let zergAssets: Image[] = []
@@ -4038,10 +4076,13 @@ let thrusterOffset = 0
 let causedByBomb = false
 let menuBG: Sprite = null
 let invulnerable = false
+let entries: string[] = []
+let currentSettings: number[] = []
 let gameUIAssets: Image[] = []
 let scoreHeaderSprite: Sprite = null
 let previousStage = 0
 let weapon = 0
+let weaponCooldown = false
 let overlappingExit = false
 let powerupsRemaining = 0
 let terranCombatAssets: Image[] = []
@@ -4056,6 +4097,7 @@ let colorPaths: number[][] = []
 let particles2: Image[] = []
 let blastFire: Sprite = null
 let effectColorSelector = 0
+let playing = false
 let settings2: number[] = []
 let cameraOrigin: number[] = []
 let viewingSettings = false
@@ -4092,7 +4134,7 @@ let introText4: TextSprite = null
 let introText3: TextSprite = null
 let introText2: TextSprite = null
 let introText1: TextSprite = null
-let playing = false
+let playInitiated = false
 let textDelay = 0
 let textSprite: TextSprite = null
 let supportAssets: Image[] = []
@@ -4127,6 +4169,7 @@ game.onUpdateInterval(randint(1000, 1500), function () {
     }
 })
 forever(function () {
+    cleanUp()
     createVikingThrusterTrail()
     createTrailEffects()
     createSpaceDust(currentStage)
